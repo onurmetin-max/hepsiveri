@@ -1,7 +1,7 @@
 ---
 title: "TEPAV ve Bakanlık verileri: Kadın emeğinde çifte kıskaç - %29 kayıt dışı, %10 sendikalı"
 description: "TEPAV'ın SGK verilerine dayanan İstihdam İzleme Bülteni ve Çalışma Bakanlığı istatistikleri, kadın çalışanların güvencesiz tablosunu ortaya koydu: Her üç kadından biri sosyal güvenliksiz çalışırken, sendikalaşma oranı yüzde 10,8'de kaldı."
-pubDate: 2026-11-01 22:30
+pubDate: 2026-11-02 10:00
 category: "Sosyal Göstergeler"
 author: "Onur Metin"
 status: "Yayında"
