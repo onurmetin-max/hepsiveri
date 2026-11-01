@@ -1,0 +1,152 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead
+			title="Yayın İlkeleri ve Editoryal Standartlar | HepsiVeri"
+			description="HepsiVeri'nin bağımsız yayıncılık ilkeleri, doğrulama süreçleri, düzeltme politikası ve editoryal şeffaflık standartları."
+		/>
+		<style>
+			.policy-container {
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 5rem;
+			}
+			.policy-header {
+				margin-bottom: 2.5rem;
+				border-bottom: 2px solid var(--border-subtle);
+				padding-bottom: 1.5rem;
+			}
+			.policy-tag {
+				font-size: 0.85rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				letter-spacing: 0.3px;
+			}
+			.policy-title {
+				font-family: var(--font-serif);
+				font-size: 2.4rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				margin: 0.5rem 0 0.75rem 0;
+			}
+			.policy-lead {
+				font-size: 1.15rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+			}
+			.policy-section {
+				margin-bottom: 2.5rem;
+			}
+			.policy-section h2 {
+				font-family: var(--font-sans);
+				font-size: 1.35rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				margin-bottom: 0.75rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+			.policy-section p, .policy-section li {
+				font-size: 1rem;
+				line-height: 1.7;
+				color: var(--text-secondary);
+			}
+			.policy-section ul {
+				padding-left: 1.25rem;
+				margin: 0.75rem 0;
+			}
+			.policy-section li {
+				margin-bottom: 0.5rem;
+			}
+			.callout-box {
+				background: #f8fafc;
+				border-left: 4px solid var(--brand-green);
+				padding: 1.25rem 1.5rem;
+				border-radius: 0 8px 8px 0;
+				margin: 1.5rem 0;
+			}
+			.callout-box p {
+				margin: 0;
+				color: #334155;
+				font-size: 0.95rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="policy-container">
+			<header class="policy-header">
+				<span class="policy-tag">Şeffaflık & Güvenilirlik</span>
+				<h1 class="policy-title">Yayın İlkeleri ve Editoryal Standartlar</h1>
+				<p class="policy-lead">
+					HepsiVeri, kamusal çıkarı ve kanıta dayalı haberciliği temel alan bağımsız bir veri gazeteciliği mecrasıdır. Bu ilkeler, tüm içerik üretim süreçlerimizin bağlayıcı kurallarıdır.
+				</p>
+			</header>
+
+			<section id="editoryal-bagimsizlik" class="policy-section">
+				<h2>1. Editoryal Bağımsızlık ve Tarafsızlık</h2>
+				<p>
+					HepsiVeri; hiçbir siyasi parti, kamu kurumu, ticari kuruluş veya sermaye grubuna bağlı değildir. Habercilik kararlarımız yalnızca kamu yararı ve nesnel verilerin doğrulanması temelinde alınır. Editoryal kadro, reklamveren veya sponsor müdahalesine karşı tam koruma altındadır.
+				</p>
+			</section>
+
+			<section id="dogrulama-ve-kaynak" class="policy-section">
+				<h2>2. Doğrulama ve Kaynak Gösterme Standartları</h2>
+				<p>
+					Haberlerimizde kullanılan her veri, grafik ve analitik bulgu doğrulanabilir birincil kaynaklara dayanır:
+				</p>
+				<ul>
+					<li><strong>Resmi İstatistikler:</strong> TÜİK, TCMB, Sayıştay, BDDK ve ilgili bakanlıkların resmi veri tabanları.</li>
+					<li><strong>Uluslararası Kurumlar:</strong> Dünya Bankası, OECD, Eurostat, IMF ve BM veritabanları.</li>
+					<li><strong>Akademik ve Bilimsel Çalışmalar:</strong> Hakemli dergilerde yayımlanan araştırmalar.</li>
+					<li><strong>Açık Kaynak İstihbaratı:</strong> Uydu görüntüleri, CBS verileri ve teyitli kamu ihaleleri.</li>
+				</ul>
+				<div class="callout-box">
+					<p>Her haber dosyasında kullanılan veri kaynağı açıkça belirtilir ve teknik imkân elverdiğince ham veri seti indirilebilir formatta sunulur.</p>
+				</div>
+			</section>
+
+			<section id="duzeltme-ve-guncelleme" class="policy-section">
+				<h2>3. Düzeltme ve Güncelleme (Errata) Politikası</h2>
+				<p>
+					Veri haberciliğinde doğruluk kadar, hataların şeffaf bir şekilde kabul edilip düzeltilmesi de esastır:
+				</p>
+				<ul>
+					<li>Haberde olgusal, hesaplama veya bağlamsal bir hata saptandığında gecikmeksizin düzeltme yapılır.</li>
+					<li>Düzeltilen haberin en üstünde veya altında "Düzeltme Notu" başlığıyla neyin, ne zaman ve nasıl değiştirildiği okuyucuya bildirilir.</li>
+					<li>Yeni verilerin eklenmesiyle güncellenen haberlerde "Son Güncelleme" tarihi ve gerekçesi belirtilir.</li>
+				</ul>
+			</section>
+
+			<section id="cikar-catismasi" class="policy-section">
+				<h2>4. Çıkar Çatışması ve Etik</h2>
+				<p>
+					Yazarlarımız ve araştırmacılarımız, haber konusu olan sektör veya şirketlerle doğrudan finansal ya da ticari ilişki içerisinde bulunamaz. Kişisel çıkarların haberciliği etkilediği veya etkileyebileceği durumlarda haber dosyası başka bir araştırmacıya devredilir.
+				</p>
+			</section>
+
+			<section id="telif-haklari" class="policy-section">
+				<h2>5. Telif Hakları ve Açık Lisanslama</h2>
+				<p>
+					HepsiVeri'de üretilen orijinal analiz ve veri görselleştirmeleri, aksi belirtilmedikçe Creative Commons Attribution 4.0 International (CC BY 4.0) lisansı altındadır. Kaynak belirtilmek şartıyla kamusal amaçlarla alıntılanabilir ve yeniden dağıtılabilir.
+				</p>
+			</section>
+
+			<section id="iletisim-ve-bildirim" class="policy-section">
+				<h2>6. İletişim ve Geri Bildirim</h2>
+				<p>
+					Yayın ilkelerimize ilişkin sorularınız, düzeltme talepleriniz veya doğrulama bildirimleriniz için <a href="/iletisim">İletişim sayfamızı</a> ziyaret edebilir ya da doğrudan <strong>iletisim@hepsiveri.com</strong> (ve yedek: <strong>hepsiveri@gmail.com</strong>) adresine yazabilirsiniz.
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+

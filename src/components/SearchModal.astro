@@ -1,0 +1,469 @@
+---
+interface SearchItem {
+	id: string;
+	title: string;
+	desc?: string;
+	cat?: string;
+	date?: string;
+}
+
+interface Props {
+	items: SearchItem[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+<div id="search-modal" class="search-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+	<div class="search-container">
+		<div class="search-header">
+			<svg class="search-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+				<circle cx="11" cy="11" r="8"></circle>
+				<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+			</svg>
+			<input
+				type="search"
+				id="search-input"
+				placeholder="Dosya, veri seti veya analiz ara... (örn: enflasyon, nüfus, kadın)"
+				autocomplete="off"
+				spellcheck="false"
+			/>
+			<kbd class="search-esc-badge">ESC</kbd>
+			<button id="search-close-btn" class="search-close" type="button" aria-label="Aramayı Kapat">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		</div>
+
+		<div class="search-body">
+			<div id="search-results" class="search-results"></div>
+			<div id="search-empty" class="search-empty" style="display: none;">
+				<div class="empty-icon">🔍</div>
+				<p class="empty-title">Aramanızla eşleşen dosya bulunamadı</p>
+				<p class="empty-sub">Farklı anahtar kelimeler veya genel kategoriler deneyebilirsiniz.</p>
+			</div>
+		</div>
+
+		<div class="search-footer">
+			<div class="search-hints">
+				<span><kbd>↑</kbd> <kbd>↓</kbd> Gezin</span>
+				<span><kbd>↵</kbd> Aç</span>
+				<span><kbd>ESC</kbd> Kapat</span>
+			</div>
+			<div class="search-count" id="search-count">
+				{items.length} yayınlanmış dosya
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.search-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(15, 23, 42, 0.6);
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+		z-index: 99999;
+		display: none;
+		align-items: flex-start;
+		justify-content: center;
+		padding: 4rem 1.25rem 2rem;
+		opacity: 0;
+		transition: opacity 0.15s ease;
+	}
+
+	.search-backdrop.is-open {
+		display: flex;
+		opacity: 1;
+	}
+
+	.search-container {
+		background: #ffffff;
+		width: 100%;
+		max-width: 640px;
+		border-radius: 12px;
+		box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.08);
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		max-height: 80vh;
+		animation: modalPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	@keyframes modalPop {
+		from {
+			opacity: 0;
+			transform: scale(0.96) translateY(-8px);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1) translateY(0);
+		}
+	}
+
+	.search-header {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.9rem 1.25rem;
+		border-bottom: 1px solid #e2e8f0;
+		position: relative;
+	}
+
+	.search-input-icon {
+		color: #64748b;
+		flex-shrink: 0;
+	}
+
+	.search-header input {
+		flex: 1;
+		border: none;
+		outline: none;
+		font-size: 1rem;
+		color: #0f172a;
+		font-family: inherit;
+		background: transparent;
+		padding: 0.25rem 0;
+	}
+
+	.search-header input::placeholder {
+		color: #94a3b8;
+		font-size: 0.92rem;
+	}
+
+	.search-esc-badge {
+		background: #f1f5f9;
+		border: 1px solid #cbd5e1;
+		color: #64748b;
+		font-size: 0.68rem;
+		font-weight: 700;
+		padding: 0.15rem 0.4rem;
+		border-radius: 4px;
+	}
+
+	.search-close {
+		background: none;
+		border: none;
+		color: #94a3b8;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		padding: 0.25rem;
+		border-radius: 4px;
+		transition: color 0.15s ease;
+	}
+
+	.search-close:hover {
+		color: #0f172a;
+	}
+
+	.search-body {
+		flex: 1;
+		overflow-y: auto;
+		max-height: calc(80vh - 120px);
+		padding: 0.5rem;
+	}
+
+	.search-results {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	:global(.search-item) {
+		display: block;
+		padding: 0.75rem 0.9rem;
+		border-radius: 8px;
+		text-decoration: none;
+		color: inherit;
+		transition: background 0.12s ease;
+	}
+
+	:global(.search-item:hover),
+	:global(.search-item.is-selected) {
+		background: #f8fafc;
+	}
+
+	:global(.search-item.is-selected) {
+		box-shadow: inset 3px 0 0 #1f9a77;
+	}
+
+	:global(.search-item-meta) {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-size: 0.72rem;
+		margin-bottom: 0.25rem;
+	}
+
+	:global(.search-item-cat) {
+		font-weight: 700;
+		color: #1f9a77;
+		background: #f0fdf4;
+		border: 1px solid #bbf7d0;
+		padding: 0.1rem 0.45rem;
+		border-radius: 3px;
+	}
+
+	:global(.search-item-date) {
+		color: #94a3b8;
+	}
+
+	:global(.search-item-title) {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: #0f172a;
+		line-height: 1.35;
+	}
+
+	:global(.search-item-desc) {
+		font-size: 0.8rem;
+		color: #64748b;
+		margin-top: 0.2rem;
+		line-height: 1.4;
+	}
+
+	.search-empty {
+		padding: 3rem 1.5rem;
+		text-align: center;
+	}
+
+	.empty-icon {
+		font-size: 2.2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.empty-title {
+		font-weight: 700;
+		color: #1e293b;
+		margin: 0 0 0.25rem;
+		font-size: 1rem;
+	}
+
+	.empty-sub {
+		font-size: 0.84rem;
+		color: #64748b;
+		margin: 0;
+	}
+
+	.search-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.65rem 1.25rem;
+		border-top: 1px solid #e2e8f0;
+		background: #fafaf9;
+		font-size: 0.75rem;
+		color: #64748b;
+	}
+
+	.search-hints {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+	}
+
+	.search-hints kbd {
+		background: #ffffff;
+		border: 1px solid #cbd5e1;
+		border-radius: 3px;
+		padding: 0.1rem 0.35rem;
+		font-size: 0.68rem;
+		font-weight: 700;
+		color: #475569;
+	}
+
+	.search-count {
+		font-weight: 500;
+		color: #94a3b8;
+	}
+
+	@media (max-width: 640px) {
+		.search-backdrop {
+			padding: 1.5rem 0.75rem;
+		}
+		.search-footer {
+			display: none;
+		}
+	}
+</style>
+
+<script is:inline define:vars={{ items }}>
+	(function() {
+		const modal = document.getElementById('search-modal');
+		const input = document.getElementById('search-input');
+		const resultsContainer = document.getElementById('search-results');
+		const emptyState = document.getElementById('search-empty');
+		const countEl = document.getElementById('search-count');
+		const closeBtn = document.getElementById('search-close-btn');
+		const openBtn = document.getElementById('search-btn');
+
+		if (!modal || !input || !resultsContainer) return;
+
+		let selectedIndex = 0;
+		let currentResults = [];
+
+		function normalize(str) {
+			if (!str) return '';
+			return str
+				.toLowerCase()
+				.replace(/ğ/g, 'g')
+				.replace(/ü/g, 'u')
+				.replace(/ş/g, 's')
+				.replace(/ı/g, 'i')
+				.replace(/ö/g, 'o')
+				.replace(/ç/g, 'c')
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '');
+		}
+
+		function openModal() {
+			modal.classList.add('is-open');
+			modal.setAttribute('aria-hidden', 'false');
+			document.body.style.overflow = 'hidden';
+			input.value = '';
+			renderResults(items.slice(0, 8), false);
+			setTimeout(() => input.focus(), 50);
+		}
+
+		function closeModal() {
+			modal.classList.remove('is-open');
+			modal.setAttribute('aria-hidden', 'true');
+			document.body.style.overflow = '';
+		}
+
+		function renderResults(list, isFiltered) {
+			currentResults = list;
+			selectedIndex = 0;
+			resultsContainer.innerHTML = '';
+
+			if (list.length === 0) {
+				emptyState.style.display = 'block';
+				resultsContainer.style.display = 'none';
+				if (countEl) countEl.textContent = '0 sonuç';
+				return;
+			}
+
+			emptyState.style.display = 'none';
+			resultsContainer.style.display = 'block';
+			if (countEl) countEl.textContent = isFiltered ? `${list.length} sonuç bulundu` : `${items.length} yayınlanmış dosya`;
+
+			list.forEach((item, idx) => {
+				const a = document.createElement('a');
+				a.href = `/haber/${item.id}/`;
+				a.className = `search-item ${idx === 0 ? 'is-selected' : ''}`;
+				a.dataset.index = idx;
+
+				a.innerHTML = `
+					<div class="search-item-meta">
+						<span class="search-item-cat">${escapeHtml(item.cat || 'Veri')}</span>
+						<span class="search-item-date">${escapeHtml(item.date || '')}</span>
+					</div>
+					<div class="search-item-title">${escapeHtml(item.title)}</div>
+					${item.desc ? `<div class="search-item-desc">${escapeHtml(item.desc.slice(0, 120))}...</div>` : ''}
+				`;
+
+				a.addEventListener('mouseenter', () => {
+					setSelectedIndex(idx);
+				});
+
+				resultsContainer.appendChild(a);
+			});
+		}
+
+		function setSelectedIndex(idx) {
+			const itemsEl = resultsContainer.querySelectorAll('.search-item');
+			itemsEl.forEach((el, i) => {
+				el.classList.toggle('is-selected', i === idx);
+			});
+			selectedIndex = idx;
+			if (itemsEl[idx]) {
+				itemsEl[idx].scrollIntoView({ block: 'nearest' });
+			}
+		}
+
+		function escapeHtml(str) {
+			return String(str)
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;');
+		}
+
+		function performSearch() {
+			const rawQuery = input.value.trim();
+			if (!rawQuery) {
+				renderResults(items.slice(0, 8), false);
+				return;
+			}
+			const q = normalize(rawQuery);
+			const terms = q.split(/\s+/).filter(Boolean);
+
+			const filtered = items.filter(item => {
+				const titleNorm = normalize(item.title);
+				const descNorm = normalize(item.desc);
+				const catNorm = normalize(item.cat);
+				return terms.every(t => titleNorm.includes(t) || descNorm.includes(t) || catNorm.includes(t));
+			});
+
+			renderResults(filtered.slice(0, 20), true);
+		}
+
+		input.addEventListener('input', performSearch);
+
+		input.addEventListener('keydown', (e) => {
+			if (e.key === 'ArrowDown') {
+				e.preventDefault();
+				if (currentResults.length > 0) {
+					setSelectedIndex((selectedIndex + 1) % currentResults.length);
+				}
+			} else if (e.key === 'ArrowUp') {
+				e.preventDefault();
+				if (currentResults.length > 0) {
+					setSelectedIndex((selectedIndex - 1 + currentResults.length) % currentResults.length);
+				}
+			} else if (e.key === 'Enter') {
+				e.preventDefault();
+				if (currentResults[selectedIndex]) {
+					window.location.href = `/haber/${currentResults[selectedIndex].id}/`;
+				}
+			} else if (e.key === 'Escape') {
+				closeModal();
+			}
+		});
+
+		if (openBtn) {
+			openBtn.addEventListener('click', (e) => {
+				e.preventDefault();
+				openModal();
+			});
+		}
+
+		if (closeBtn) {
+			closeBtn.addEventListener('click', closeModal);
+		}
+
+		modal.addEventListener('click', (e) => {
+			if (e.target === modal) {
+				closeModal();
+			}
+		});
+
+		document.addEventListener('keydown', (e) => {
+			if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+				e.preventDefault();
+				if (modal.classList.contains('is-open')) {
+					closeModal();
+				} else {
+					openModal();
+				}
+			} else if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+				closeModal();
+			}
+		});
+	})();
+</script>
+

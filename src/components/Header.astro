@@ -1,0 +1,370 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import SearchModal from './SearchModal.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => data.status !== 'Taslak');
+const featuredPosts = allPosts.filter((p) => p.data.featured);
+
+const searchItems = allPosts.map((post) => ({
+	id: post.id,
+	title: post.data.title,
+	desc: post.data.description || '',
+	cat: post.data.category || 'Veri Haberciliği',
+	date: new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' }).format(post.data.pubDate)
+}));
+
+const todayFormatted = new Intl.DateTimeFormat('tr-TR', {
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric',
+	weekday: 'long'
+}).format(new Date());
+---
+
+<header class="publica-header">
+	<!-- 1. Top Utility Strip -->
+	<div class="utility-strip">
+		<div class="utility-inner">
+			<div class="utility-left">
+				<span class="utility-date" id="live-date">{todayFormatted}</span>
+				<span class="utility-divider">•</span>
+				<span class="utility-edition">Açık Veri Gazetesi</span>
+			</div>
+			<div class="utility-center">
+				<span class="edition-pill">Bağımsız Araştırmacı Gazetecilik</span>
+			</div>
+			<div class="utility-right">
+				<span class="utility-badge">Açık Veri & Analiz</span>
+				<button class="search-trigger" id="search-btn" type="button" title="Dosyalarda Ara (Ctrl+K)">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+					</svg>
+					<span>Ara</span>
+					<kbd>⌘K</kbd>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 2. Grand Newspaper Masthead -->
+	<div class="masthead-section">
+		<div class="masthead-inner">
+			<div class="masthead-wings left">
+				<span class="wing-text">TARAFI VERİ OLANLARIN GAZETESİ</span>
+				<div class="wing-rule"></div>
+			</div>
+
+			<div class="masthead-brand">
+				<a href="/" class="masthead-logo-link" aria-label="HepsiVeri Ana Sayfa">
+					<picture>
+						<source media="(max-width: 768px)" srcset="/logo-mobile.png" />
+						<img src="/logo-desktop.png" alt="HepsiVeri" class="masthead-logo-img" />
+					</picture>
+				</a>
+				<div class="masthead-tagline">
+					Haberden Veri, Veriden Haber • Kanıta Dayalı Araştırmacı Gazetecilik
+				</div>
+			</div>
+
+			<div class="masthead-wings right">
+				<span class="wing-text">RESMİ RAPORLAR & AÇIK KAYNAKLAR</span>
+				<div class="wing-rule"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 3. Desk Navigation Bar -->
+	<nav class="desk-nav">
+		<div class="desk-inner">
+			<HeaderLink href="/">Manşet</HeaderLink>
+			<HeaderLink href="/kategori/ekonomi">Ekonomi</HeaderLink>
+			<HeaderLink href="/kategori/datanews">DataNews</HeaderLink>
+			<HeaderLink href="/kategori/verihaberciligi">Veri Haberciliği</HeaderLink>
+			<HeaderLink href="/kategori/nufus">Nüfus</HeaderLink>
+			<HeaderLink href="/kategori/cocuk">Çocuk</HeaderLink>
+			<HeaderLink href="/kategori/egitim">Eğitim</HeaderLink>
+			<HeaderLink href="/kategori/kadin">Kadın</HeaderLink>
+			<HeaderLink href="/kategori/rapor">Rapor</HeaderLink>
+			<HeaderLink href="/kategori/engel">Engel</HeaderLink>
+			<HeaderLink href="/haber">Tüm Haberler</HeaderLink>
+		</div>
+	</nav>
+
+	<!-- 4. Trending Data Ticker (Publica Signature) - Only shown when featured posts exist -->
+	{featuredPosts.length > 0 && (
+		<div class="ticker-ribbon">
+			<div class="ticker-inner">
+				<div class="ticker-badge">
+					<span>📊 Öne Çıkan Dosyalar</span>
+				</div>
+				<div class="ticker-flow">
+					{featuredPosts.map((post, idx) => (
+						<>
+							{idx > 0 && <span class="ticker-sep">/</span>}
+							<a href={`/haber/${post.id}/`} class="ticker-link">
+								<span class="ticker-cat">{post.data.category || 'Veri'}:</span> {post.data.title}
+							</a>
+						</>
+					))}
+				</div>
+			</div>
+		</div>
+	)}
+</header>
+
+<SearchModal items={searchItems} />
+
+<style>
+	.publica-header {
+		background: #ffffff;
+		border-bottom: 2px solid var(--text-primary);
+	}
+
+	/* Top Utility Strip */
+	.utility-strip {
+		border-bottom: 1px solid var(--border-subtle);
+		background: #fafaf9;
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		padding: 0.35rem 1.5rem;
+	}
+	.utility-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.utility-left {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 500;
+	}
+	.utility-divider {
+		color: #cbd5e1;
+	}
+	.edition-pill {
+		font-size: 0.7rem;
+		font-weight: 800;
+		letter-spacing: 0.8px;
+		color: #1e293b;
+		background: #f1f5f9;
+		padding: 0.2rem 0.6rem;
+		border-radius: 4px;
+		border: 1px solid #e2e8f0;
+	}
+	.utility-right {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+	}
+	.utility-badge {
+		font-size: 0.76rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		letter-spacing: 0.2px;
+	}
+	.search-trigger {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		background: #ffffff;
+		border: 1px solid var(--border-subtle);
+		padding: 0.25rem 0.55rem;
+		border-radius: 4px;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		cursor: pointer;
+		font-family: inherit;
+	}
+	.search-trigger kbd {
+		background: #f1f5f9;
+		border: 1px solid #cbd5e1;
+		border-radius: 3px;
+		padding: 0 0.25rem;
+		font-size: 0.7rem;
+		color: #475569;
+	}
+
+	/* Grand Masthead */
+	.masthead-section {
+		padding: 2rem 1.5rem 1.75rem;
+		border-bottom: 3px double #0f172a;
+	}
+	.masthead-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+	}
+	.masthead-wings {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.wing-text {
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.5px;
+		color: #64748b;
+	}
+	.masthead-wings.right {
+		text-align: right;
+	}
+	.wing-rule {
+		height: 2px;
+		background: #e2e8f0;
+		width: 100%;
+	}
+	.masthead-brand {
+		text-align: center;
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.masthead-logo-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		transition: transform 0.15s ease, opacity 0.15s ease;
+	}
+	.masthead-logo-link:hover {
+		opacity: 0.92;
+		transform: translateY(-1px);
+	}
+	.masthead-logo-img {
+		height: 82px;
+		width: auto;
+		max-width: 100%;
+		object-fit: contain;
+		display: block;
+	}
+	.masthead-tagline {
+		font-family: var(--font-sans);
+		font-style: normal;
+		font-weight: 500;
+		font-size: 0.88rem;
+		color: #64748b;
+		margin-top: 0.6rem;
+		letter-spacing: 0.2px;
+	}
+
+	/* Desk Nav */
+	.desk-nav {
+		border-bottom: 1px solid var(--border-subtle);
+		background: #ffffff;
+	}
+	.desk-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 2.25rem;
+		flex-wrap: wrap;
+	}
+	.desk-inner :global(a) {
+		color: #1e293b;
+		text-decoration: none;
+		font-size: 0.92rem;
+		font-weight: 700;
+		letter-spacing: 0.2px;
+		padding: 0.75rem 0;
+		border-bottom: 2px solid transparent;
+		transition: all 0.15s ease;
+	}
+	.desk-inner :global(a:hover),
+	.desk-inner :global(a.active) {
+		color: #1f9a77;
+		border-bottom-color: #1f9a77;
+	}
+
+	/* Ticker Ribbon */
+	.ticker-ribbon {
+		background: #f8fafc;
+		border-bottom: 1px solid var(--border-subtle);
+		padding: 0.45rem 1.5rem;
+		font-size: 0.82rem;
+	}
+	.ticker-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		overflow: hidden;
+	}
+	.ticker-badge {
+		background: #0f172a;
+		color: #ffffff;
+		font-weight: 800;
+		font-size: 0.72rem;
+		letter-spacing: 0.8px;
+		padding: 0.2rem 0.55rem;
+		border-radius: 3px;
+		flex-shrink: 0;
+	}
+	.ticker-flow {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		overflow-x: auto;
+		scrollbar-width: none;
+		white-space: nowrap;
+	}
+	.ticker-link {
+		color: #334155;
+		text-decoration: none;
+	}
+	.ticker-link:hover {
+		color: #1f9a77;
+		text-decoration: underline;
+	}
+	.ticker-cat {
+		font-weight: 800;
+		color: #1f9a77;
+		margin-right: 0.25rem;
+	}
+	.ticker-sep {
+		color: #cbd5e1;
+	}
+
+	@media (max-width: 900px) {
+		.masthead-wings {
+			display: none;
+		}
+		.masthead-logo-img {
+			height: 100px;
+		}
+		.utility-center {
+			display: none;
+		}
+		.desk-inner {
+			gap: 1rem;
+			justify-content: flex-start;
+			overflow-x: auto;
+			padding: 0.25rem 1rem;
+		}
+	}
+	@media (max-width: 600px) {
+		.masthead-section {
+			padding: 1.25rem 1rem 1rem;
+		}
+		.masthead-logo-img {
+			height: 85px;
+		}
+		.masthead-tagline {
+			font-size: 0.78rem;
+		}
+	}
+</style>

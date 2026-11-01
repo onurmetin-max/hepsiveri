@@ -1,0 +1,475 @@
+---
+// Decap CMS Yönetim Paneli
+---
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>HepsiVeri İçerik Yönetim Paneli | Decap CMS</title>
+    <!-- Netlify Identity Widget -->
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- Global CSS: is:global sayesinde Astro'nun data-astro-cid kapsamlandırması olmadan Decap CMS React elemanlarına doğrudan etki eder -->
+    <style is:global>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f8fafc;
+      }
+
+      /* --- WordPress Tarzı 2 Kolon Editör Düzeni --- */
+      
+      /* Önizleme butonunu gizle */
+      button[class*="EditorToggle"] {
+        display: none !important;
+      }
+
+      /* Editör Arka Planı */
+      div[class*="EditorContainer"] {
+        background-color: #f8fafc !important;
+      }
+
+      /* Dış Scroll Kapsayıcısı (qF - e1nx103k2): Tam genişlikte blok olmalı, grid olmamalı */
+      div[class*="e1nx103k2"],
+      div[class*="NoPreviewContainer"] > div,
+      .hepsiveri-outer-pane {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+      }
+
+      /* İç Alanlar Konteyneri (IN - e11hw0lx4): 2 Kolonlu WordPress Grid */
+      div[class*="e11hw0lx4"],
+      .hepsiveri-wordpress-grid {
+        max-width: 1440px !important;
+        width: 96% !important;
+        margin: 0 auto !important;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) 360px !important;
+        column-gap: 28px !important;
+        row-gap: 16px !important;
+        align-items: start !important;
+        padding: 24px 16px 80px 16px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Tüm alanların üst boşluğunu grid row-gap ile senkronize et */
+      div[class*="e11hw0lx4"] > div,
+      .hepsiveri-wordpress-grid > div {
+        margin-top: 0 !important;
+      }
+
+      /* --- SOL KOLON (ANA İÇERİK ALANI) --- */
+      div[class*="e11hw0lx4"] > div:has(label[for^="title-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-title,
+      .hepsiveri-field-title {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+      }
+      div[class*="e11hw0lx4"] > div:has(label[for^="title-field-"]) input,
+      .hepsiveri-field-title input {
+        font-size: 1.35rem !important;
+        font-weight: 700 !important;
+        padding: 12px 14px !important;
+        border-radius: 6px !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="description-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-description,
+      .hepsiveri-field-description {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="body-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-body,
+      .hepsiveri-field-body {
+        grid-column: 1 !important;
+        grid-row: 3 / span 6 !important;
+        min-height: 580px !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="datasetUrl-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-datasetUrl,
+      .hepsiveri-field-datasetUrl {
+        grid-column: 1 !important;
+        grid-row: 9 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="tags-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-tags,
+      .hepsiveri-field-tags {
+        grid-column: 1 !important;
+        grid-row: 10 !important;
+      }
+
+      /* --- SAĞ KOLON (WORDPRESS TARZI KENAR ÇUBUĞU) --- */
+      div[class*="e11hw0lx4"] > div:has(label[for^="heroImage-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-heroImage,
+      .hepsiveri-field-heroImage {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="heroImageCaption-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-heroImageCaption,
+      .hepsiveri-field-heroImageCaption {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="status-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-status,
+      .hepsiveri-field-status {
+        grid-column: 2 !important;
+        grid-row: 3 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="pubDate-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-pubDate,
+      .hepsiveri-field-pubDate {
+        grid-column: 2 !important;
+        grid-row: 4 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="updatedDate-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-updatedDate,
+      .hepsiveri-field-updatedDate {
+        grid-column: 2 !important;
+        grid-row: 5 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="category-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-category,
+      .hepsiveri-field-category {
+        grid-column: 2 !important;
+        grid-row: 6 !important;
+      }
+
+      div[class*="e11hw0lx4"] > div:has(label[for^="author-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-author,
+      .hepsiveri-field-author {
+        grid-column: 2 !important;
+        grid-row: 7 !important;
+      }
+
+      /* Sağ Kolon Elemanları İçin WordPress Blok Kutusu Stili */
+      div[class*="e11hw0lx4"] > div:has(label[for^="heroImage-field-"]),
+      div[class*="e11hw0lx4"] > div:has(label[for^="heroImageCaption-field-"]),
+      div[class*="e11hw0lx4"] > div:has(label[for^="status-field-"]),
+      div[class*="e11hw0lx4"] > div:has(label[for^="pubDate-field-"]),
+      div[class*="e11hw0lx4"] > div:has(label[for^="updatedDate-field-"]),
+      div[class*="e11hw0lx4"] > div:has(label[for^="category-field-"]),
+      div[class*="e11hw0lx4"] > div:has(label[for^="author-field-"]),
+      .hepsiveri-wordpress-grid > .hepsiveri-field-heroImage,
+      .hepsiveri-wordpress-grid > .hepsiveri-field-heroImageCaption,
+      .hepsiveri-wordpress-grid > .hepsiveri-field-status,
+      .hepsiveri-wordpress-grid > .hepsiveri-field-pubDate,
+      .hepsiveri-wordpress-grid > .hepsiveri-field-updatedDate,
+      .hepsiveri-wordpress-grid > .hepsiveri-field-category,
+      .hepsiveri-wordpress-grid > .hepsiveri-field-author {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-left: 3px solid #2563eb !important;
+        border-radius: 8px !important;
+        padding: 12px 14px 14px 14px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Responsive Düzen: 1024px altında doğal akışa dön */
+      @media (max-width: 1024px) {
+        div[class*="e11hw0lx4"],
+        .hepsiveri-wordpress-grid {
+          grid-template-columns: 1fr !important;
+        }
+        div[class*="e11hw0lx4"] > div,
+        .hepsiveri-wordpress-grid > div {
+          grid-column: auto !important;
+          grid-row: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Decap CMS Manuel Başlatma Ayarı -->
+    <script is:inline>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+
+    <!-- Decap CMS Script -->
+    <script is:inline src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+
+    <script is:inline>
+      // Admin oturumunu aktifleştir
+      try {
+        localStorage.setItem('hepsiveri_admin', 'true');
+      } catch (e) {}
+
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", function(user) {
+          if (user) {
+            localStorage.setItem('hepsiveri_admin', 'true');
+          } else {
+            window.netlifyIdentity.on("login", function() {
+              localStorage.setItem('hepsiveri_admin', 'true');
+              document.location.href = "/admin/";
+            });
+          }
+        });
+        window.netlifyIdentity.on("logout", function() {
+          localStorage.removeItem('hepsiveri_admin');
+          localStorage.removeItem('decap-cms-user');
+        });
+      }
+
+      // Medya Dosyalarını Tarihe Göre Sıralama Sistemi (En Yeni En Üstte)
+      (async function initHepsiVeriCMS() {
+        // 1. Medya manifestini (tarih haritasını) yükle
+        let mediaManifest = {};
+        try {
+          const resp = await fetch('/admin/media-manifest.json');
+          if (resp.ok) {
+            mediaManifest = await resp.json();
+          }
+        } catch (err) {
+          console.warn('Medya manifesti yüklenemedi:', err);
+        }
+
+        // 2. Tarayıcıda yeni yüklenen dosyaların tarihlerini localStorage'dan al
+        let localMediaDates = {};
+        try {
+          localMediaDates = JSON.parse(localStorage.getItem('hepsiveri_media_dates') || '{}');
+        } catch (e) {}
+
+        function getFileDate(fileName) {
+          if (!fileName) return 0;
+          if (localMediaDates[fileName]) return new Date(localMediaDates[fileName]).getTime();
+          if (mediaManifest[fileName]) return new Date(mediaManifest[fileName]).getTime();
+
+          const match = fileName.match(/(\d{4})[-_](\d{2})[-_](\d{2})/);
+          if (match) {
+            return new Date(`${match[1]}-${match[2]}-${match[3]}`).getTime();
+          }
+          return 0;
+        }
+
+        function sortMediaList(files) {
+          if (!Array.isArray(files)) return files;
+          return files
+            .filter(f => f && f.name && !f.name.startsWith('.'))
+            .sort((a, b) => {
+              const timeA = getFileDate(a.name);
+              const timeB = getFileDate(b.name);
+              if (timeA !== timeB) {
+                return timeB - timeA;
+              }
+              return (a.name || '').localeCompare(b.name || '');
+            });
+        }
+
+        // 3. Desteklenen tüm backend'lerde getMedia ve persistMedia metodlarını sarmala
+        const backendNames = ['proxy', 'github', 'git-gateway', 'gitlab', 'bitbucket', 'test-repo'];
+        backendNames.forEach(bName => {
+          const BackendClass = window.CMS && window.CMS.getBackend ? window.CMS.getBackend(bName) : null;
+          if (BackendClass && BackendClass.prototype) {
+            if (BackendClass.prototype.getMedia && !BackendClass.prototype._hepsiveri_sorted) {
+              const origGetMedia = BackendClass.prototype.getMedia;
+              BackendClass.prototype.getMedia = async function(...args) {
+                const files = await origGetMedia.apply(this, args);
+                return sortMediaList(files);
+              };
+              BackendClass.prototype._hepsiveri_sorted = true;
+            }
+
+            if (BackendClass.prototype.persistMedia && !BackendClass.prototype._hepsiveri_tracked) {
+              const origPersistMedia = BackendClass.prototype.persistMedia;
+              BackendClass.prototype.persistMedia = async function(fileObj, ...rest) {
+                const result = await origPersistMedia.apply(this, [fileObj, ...rest]);
+                try {
+                  const fname = (fileObj && fileObj.file && fileObj.file.name) || 
+                                (fileObj && fileObj.name) || 
+                                (result && result.name);
+                  if (fname) {
+                    localMediaDates[fname] = new Date().toISOString();
+                    localStorage.setItem('hepsiveri_media_dates', JSON.stringify(localMediaDates));
+                  }
+                } catch (err) {}
+                return result;
+              };
+              BackendClass.prototype._hepsiveri_tracked = true;
+            }
+          }
+        });
+
+        // 4. Tablo Ekleme Bileşeni (Excel / Google Sheets / CSV Uyumlu)
+        if (window.CMS && typeof window.CMS.registerEditorComponent === 'function') {
+          window.CMS.registerEditorComponent({
+            id: 'table',
+            label: '📊 Tablo Ekle',
+            icon: 'table',
+            fields: [
+              {
+                name: 'title',
+                label: 'Tablo Başlığı (İsteğe Bağlı)',
+                widget: 'string',
+                required: false
+              },
+              {
+                name: 'content',
+                label: 'Tablo Verileri (Excel, Google Sheets veya CSV\'den doğrudan kopyalayıp buraya yapıştırabilirsiniz)',
+                widget: 'text',
+                required: true
+              }
+            ],
+            pattern: /^\|(.+)\|\n\|(?:\s*:?-+:?\s*\|)+\n([\s\S]+?)(?=\n\n|\n?$)/,
+            fromBlock: function(match) {
+              return {
+                content: match[0]
+              };
+            },
+            toBlock: function(data) {
+              if (!data.content) return '';
+              const raw = data.content.trim();
+              if (raw.startsWith('|')) {
+                return (data.title ? `**${data.title}**\n\n` : '') + raw;
+              }
+              const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+              if (lines.length === 0) return '';
+
+              let delimiter = '\t';
+              const firstLine = lines[0];
+              if (!firstLine.includes('\t')) {
+                if (firstLine.includes(';')) delimiter = ';';
+                else if (firstLine.includes(',')) delimiter = ',';
+              }
+
+              const rows = lines.map(line => line.split(delimiter).map(cell => cell.trim()));
+              const colCount = Math.max(...rows.map(r => r.length));
+
+              const headerRow = rows[0];
+              while (headerRow.length < colCount) headerRow.push('');
+
+              const headerStr = '| ' + headerRow.join(' | ') + ' |';
+              const separatorStr = '| ' + headerRow.map(() => '---').join(' | ') + ' |';
+
+              const bodyRows = rows.slice(1).map(row => {
+                while (row.length < colCount) row.push('');
+                return '| ' + row.join(' | ') + ' |';
+              });
+
+              let result = '';
+              if (data.title) {
+                result += `**${data.title}**\n\n`;
+              }
+              result += [headerStr, separatorStr, ...bodyRows].join('\n');
+              return result;
+            },
+            toPreview: function(data) {
+              return `<div style="padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid #1f9a77;border-radius:6px;font-size:13px;">
+                ${data.title ? `<strong>📊 ${data.title}</strong><br>` : '<strong>📊 Tablo</strong><br>'}
+                <span style="color:#64748b;">(Haber yayınlandığında tam biçimlendirilmiş veri tablosu olarak görünecektir)</span>
+              </div>`;
+            }
+          });
+
+          // 4.2 Flourish Grafiği Ekleme Bileşeni
+          window.CMS.registerEditorComponent({
+            id: 'flourish',
+            label: '📈 Flourish Grafiği Ekle',
+            icon: 'code',
+            fields: [
+              {
+                name: 'id',
+                label: 'Flourish ID veya Tam Embed Linki (Örn: 16729389 veya visualisation/16729389)',
+                widget: 'string',
+                required: true
+              },
+              {
+                name: 'type',
+                label: 'Grafik Türü (chart, hierarchy, table vb.)',
+                widget: 'string',
+                default: 'chart',
+                required: false
+              }
+            ],
+            pattern: /<div class="flourish-wrapper">\s*<div class="flourish-embed flourish-([^"]+)" data-src="visualisation\/([0-9]+)"[^>]*><\/div>\s*<\/div>/,
+            fromBlock: function(match) {
+              return {
+                type: match[1] || 'chart',
+                id: match[2]
+              };
+            },
+            toBlock: function(data) {
+              if (!data.id) return '';
+              let id = String(data.id).trim();
+              const match = id.match(/visualisation\/([0-9]+)/) || id.match(/([0-9]{5,})/);
+              if (match) id = match[1];
+              const type = (data.type || 'chart').trim();
+              return `<div class="flourish-wrapper">\n<div class="flourish-embed flourish-${type}" data-src="visualisation/${id}"></div>\n</div>`;
+            },
+            toPreview: function(data) {
+              let id = String(data.id || '').trim();
+              const match = id.match(/visualisation\/([0-9]+)/) || id.match(/([0-9]{5,})/);
+              if (match) id = match[1];
+              return `<div style="padding:14px;background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:6px;font-size:13px;color:#166534;">
+                <strong>📈 Flourish Görselleştirmesi (ID: ${id || 'Belirtilmedi'})</strong><br>
+                <span style="color:#4b5563;font-size:12px;">Haber yayınlandığında sayfa üzerinde interaktif Flourish grafiği olarak görüntülenecektir.</span>
+              </div>`;
+            }
+          });
+        }
+
+        // 5. CMS'i başlat
+        if (window.CMS && typeof window.CMS.init === 'function') {
+          window.CMS.init();
+        }
+      })();
+
+      // 5. DOM Observer: Editör açıldığında alanlara yardımcı CSS sınıflarını ekler
+      function tagEditorFields() {
+        const outerPane = document.querySelector('div[class*="e1nx103k2"]');
+        if (outerPane && !outerPane.classList.contains('hepsiveri-outer-pane')) {
+          outerPane.classList.add('hepsiveri-outer-pane');
+        }
+
+        const innerContainer = document.querySelector('div[class*="e11hw0lx4"]');
+        if (innerContainer) {
+          if (!innerContainer.classList.contains('hepsiveri-wordpress-grid')) {
+            innerContainer.classList.add('hepsiveri-wordpress-grid');
+          }
+
+          const labels = innerContainer.querySelectorAll('label[for*="-field-"]');
+          labels.forEach(lbl => {
+            const forAttr = lbl.getAttribute('for') || '';
+            const match = forAttr.match(/^([a-zA-Z0-9_]+)-field-/);
+            if (match && match[1]) {
+              const fieldName = match[1];
+              let cur = lbl;
+              while (cur && cur.parentElement && cur.parentElement !== innerContainer) {
+                cur = cur.parentElement;
+              }
+              if (cur && cur.parentElement === innerContainer) {
+                if (!cur.classList.contains('hepsiveri-field-' + fieldName)) {
+                  cur.classList.add('hepsiveri-field-' + fieldName);
+                  cur.setAttribute('data-field-name', fieldName);
+                }
+              }
+            }
+          });
+        }
+      }
+
+      // DOM değişikliklerini izle
+      const observer = new MutationObserver(() => {
+        tagEditorFields();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+  </body>
+</html>

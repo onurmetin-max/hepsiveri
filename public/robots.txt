@@ -1,0 +1,16 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://hepsiveri.com/sitemap-index.xml
+Sitemap: https://hepsiveri.com/news-sitemap.xml
+Sitemap: https://hepsiveri.com/newsmap.xml
+Sitemap: https://hepsiveri.com/sitemap-news.xml
+
+
+

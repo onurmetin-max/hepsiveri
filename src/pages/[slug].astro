@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+	const staticPages = new Set([
+		'about',
+		'kunye',
+		'iletisim',
+		'yazarlar',
+		'yayin-ilkeleri',
+		'cerez-politikasi',
+		'gizlilik-politikasi',
+		'kullanim-kosullari-ve-yasal-uyari',
+		'kisisel-verilerin-korunmasi-hakkinda-aydinlatma-metni-kvkk',
+		'admin',
+		'blog',
+		'haber',
+		'kategori',
+		'yazar',
+		'news-sitemap.xml',
+		'newsmap.xml',
+		'sitemap-news.xml',
+		'rss.xml',
+	]);
+
+	const posts = await getCollection('blog', ({ data }) => data.status !== 'Taslak');
+
+	return posts
+		.filter((post) => !staticPages.has(post.id))
+		.map((post) => ({
+			params: { slug: post.id },
+			props: { target: `/haber/${post.id}/` },
+		}));
+}
+
+const { target } = Astro.props;
+return Astro.redirect(target, 301);
+---
+

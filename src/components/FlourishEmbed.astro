@@ -1,0 +1,40 @@
+---
+interface Props {
+	chartId: string;
+	title?: string;
+	caption?: string;
+}
+
+const { chartId, title, caption } = Astro.props;
+const embedSrc = chartId.includes('/') ? chartId : `visualisation/${chartId}`;
+---
+
+<figure class="flourish-wrapper">
+	{title && <figcaption class="flourish-title">{title}</figcaption>}
+	<div class="flourish-embed flourish-chart" data-src={embedSrc}></div>
+	{caption && <p class="flourish-caption">{caption}</p>}
+</figure>
+
+<script is:inline src="https://public.flourish.studio/resources/embed.js"></script>
+
+<style>
+	.flourish-wrapper {
+		margin: 2rem 0;
+		padding: 1.25rem;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		border-radius: 12px;
+	}
+	.flourish-title {
+		font-weight: 700;
+		font-size: 1.1rem;
+		margin-bottom: 0.75rem;
+		color: #0f172a;
+	}
+	.flourish-caption {
+		font-size: 0.85rem;
+		color: #64748b;
+		margin-top: 0.5rem;
+		font-style: italic;
+	}
+</style>

@@ -1,0 +1,156 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import avatarImg from '../assets/onur.webp';
+import { Image } from 'astro:assets';
+
+const aboutSchema = {
+	"@context": "https://schema.org",
+	"@type": "AboutPage",
+	"name": "Hakkımızda & Metodoloji | HepsiVeri",
+	"url": "https://hepsiveri.com/about/",
+	"description": "HepsiVeri'nin veri toplama, doğrulama, açık veri standartları ve editoryal ilkeleri.",
+	"mainEntity": {
+		"@type": "NewsMediaOrganization",
+		"name": "HepsiVeri",
+		"url": "https://hepsiveri.com/",
+		"foundingDate": "2022",
+		"founder": {
+			"@type": "Person",
+			"name": "Onur Metin"
+		},
+		"masthead": "https://hepsiveri.com/kunye/",
+		"publishingPrinciples": "https://hepsiveri.com/yayin-ilkeleri/"
+	}
+};
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead
+			title="Hakkımızda, Metodoloji ve Editoryal İlkeler | HepsiVeri"
+			description="HepsiVeri'nin veri toplama, doğrulama, açık veri standartları ve bağımsız araştırmacı gazetecilik ilkeleri."
+		/>
+		<script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+		<style>
+			.about-container {
+				max-width: 780px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 5rem;
+			}
+			.about-header {
+				margin-bottom: 2.5rem;
+				border-bottom: 2px solid var(--border-subtle);
+				padding-bottom: 1.5rem;
+			}
+			.about-tag {
+				font-size: 0.85rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				letter-spacing: 0.3px;
+			}
+			.about-title {
+				font-family: var(--font-serif);
+				font-size: 2.6rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				margin: 0.5rem 0 0.75rem 0;
+			}
+			.about-lead {
+				font-size: 1.2rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+			}
+			.about-section {
+				margin-bottom: 3rem;
+			}
+			.about-section h2 {
+				font-family: var(--font-sans);
+				font-size: 1.45rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				border-bottom: none;
+				margin-bottom: 0.75rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+			.author-card {
+				display: flex;
+				gap: 1.5rem;
+				align-items: center;
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				padding: 1.75rem;
+				border-radius: var(--radius-md);
+				margin: 2rem 0;
+			}
+			.author-card img {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				border: 2px solid var(--brand-green);
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="about-container">
+			<header class="about-header">
+				<span class="about-tag">Şeffaflık & Standartlar</span>
+				<h1 class="about-title">Metodoloji, İlkeler ve Künye</h1>
+				<p class="about-lead">
+					HepsiVeri; resmi istatistikleri, kamu harcamalarını ve bilimsel raporları tarafsız, makinece okunabilir ve kanıta dayalı habercilikle kamusal faydaya dönüştürür.
+				</p>
+			</header>
+
+			<section class="about-section">
+				<h2>🎯 1. Veri Gazeteciliği İlkelerimiz</h2>
+				<p>
+					HepsiVeri'deki her haber, doğrulanabilir birincil veri kaynaklarına dayanır. Basın açıklamaları veya iddialar doğrudan haberleştirilmez; resmi mahkeme kararları, Sayıştay denetim raporları, TÜİK bültenleri veya uydu/CBS modelleriyle çapraz doğrulamadan geçirilir.
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>📂 2. Açık Veri Taahhüdü</h2>
+				<p>
+					Haberlerimizde kullanılan her veri tablosunun ham veya temizlenmiş sürümü (CSV, Excel veya GeoJSON) okuyucularımızın ve meslektaşlarımızın kullanımına açılır. Veriyi tekelleştirmek değil, kamusallaştırmak temel görevimizdir.
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>✍️ 3. Editoryal Kadro ve Künye</h2>
+				<div class="author-card">
+					<Image src={avatarImg} alt="Onur Metin" />
+					<div>
+						<h3 style="margin: 0 0 0.25rem 0; font-size: 1.2rem;">Onur Metin</h3>
+						<p style="margin: 0 0 0.5rem 0; font-size: 0.88rem; color: #64748b;">Kurucu & Genel Yayın Yönetmeni</p>
+						<p style="margin: 0; font-size: 0.9rem; line-height: 1.5;">
+							ODTÜ Jeoloji Mühendisliği ve Anadolu Üniversitesi Gazetecilik yüksek lisansı mezunudur. Açık veri madenciliği, kamu bütçesi denetimi ve araştırmacı gazetecilik dosyaları üretmektedir.
+						</p>
+					</div>
+				</div>
+				<p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
+					HepsiVeri'nin tüm araştırmacı yazar ve muhabir kadrosunu incelemek için <a href="/yazarlar" style="color: var(--brand-green); font-weight: 700;">Yazarlarımız</a> sayfasını, kurumsal tüzel künye için <a href="/kunye" style="color: var(--brand-green); font-weight: 700;">Künye</a> sayfamızı inceleyebilirsiniz.
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>📮 4. Hata ve Düzeltme (Errata) Politikası</h2>
+				<p>
+					Veri gazeteciliğinde şeffaflık, hataların da açıkça kabul edilmesini gerektirir. Herhangi bir haberimizde hesaplama, metodoloji veya kaynak hatası tespit ederseniz lütfen <code>iletisim@hepsiveri.com</code> adresine bildirin. Düzeltmeler haberin başında tarih ve açıklama notuyla yayınlanır. Ayrıntılı bilgi için <a href="/yayin-ilkeleri#duzeltme-ve-guncelleme" style="color: var(--brand-green); font-weight: 700;">Düzeltme Politikamızı</a> okuyabilirsiniz.
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>🏢 5. İletişim ve Bürolar</h2>
+				<p>
+					Haber ihbarları, veri seti paylaşımları ve kurumsal irtibat için <a href="/iletisim" style="color: var(--brand-green); font-weight: 700;">İletişim sayfamızdan</a> Ankara ve Eskişehir haber merkezlerimize ulaşabilirsiniz.
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,73 @@
+---
+interface Props {
+	title?: string;
+	sources?: { name: string; url?: string }[];
+}
+
+const { title = 'Veri Notu ve Metodoloji', sources = [] } = Astro.props;
+---
+
+<div class="methodology-box">
+	<div class="methodology-header">
+		<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<circle cx="12" cy="12" r="10"></circle>
+			<line x1="12" y1="16" x2="12" y2="12"></line>
+			<line x1="12" y1="8" x2="12.01" y2="8"></line>
+		</svg>
+		<span>{title}</span>
+	</div>
+	<div class="methodology-content">
+		<slot />
+	</div>
+	{sources.length > 0 && (
+		<div class="methodology-sources">
+			<strong>Doğrudan Kaynaklar:</strong>
+			<ul>
+				{sources.map(s => (
+					<li>
+						{s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer">{s.name}</a> : s.name}
+					</li>
+				))}
+			</ul>
+		</div>
+	)}
+</div>
+
+<style>
+	.methodology-box {
+		margin: 2.5rem 0;
+		padding: 1.5rem;
+		background: #f8fafc;
+		border: 1px solid #cbd5e1;
+		border-radius: 10px;
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: #334155;
+	}
+	.methodology-header {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 700;
+		color: #0f172a;
+		font-size: 1.05rem;
+		margin-bottom: 0.75rem;
+	}
+	.methodology-content :global(p) {
+		margin: 0.5rem 0;
+	}
+	.methodology-sources {
+		margin-top: 1rem;
+		padding-top: 0.75rem;
+		border-top: 1px dashed #cbd5e1;
+		font-size: 0.85rem;
+	}
+	.methodology-sources ul {
+		margin: 0.25rem 0 0 1.25rem;
+		padding: 0;
+	}
+	.methodology-sources a {
+		color: #1f9a77;
+		text-decoration: underline;
+	}
+</style>

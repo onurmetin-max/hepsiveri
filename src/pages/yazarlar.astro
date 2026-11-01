@@ -1,0 +1,208 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+import authorsData from '../data/authors.json';
+import fs from 'node:fs';
+
+const allPosts = await getCollection('blog', ({ data }) => data.status !== 'Taslak');
+
+function getAuthorAvatar(id: string) {
+	for (const ext of ['webp', 'jpg', 'jpeg', 'png']) {
+		if (fs.existsSync(`public/yazarlar/${id}.${ext}`)) {
+			return `/yazarlar/${id}.${ext}`;
+		}
+	}
+	return null;
+}
+
+const authorsList = Array.isArray(authorsData) ? authorsData : (authorsData.authors || []);
+const authors = authorsList.map((author) => ({
+	...author,
+	postCount: allPosts.filter(p => (p.data.author || '').toLowerCase().includes(author.name.toLowerCase().split(' ')[0])).length,
+}));
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead
+			title="Yazarlar & Araştırmacılar | HepsiVeri"
+			description="HepsiVeri'nin bağımsız veri haberciliği kadrosu, araştırmacıları ve katkıda bulunan uzman yazarları."
+		/>
+		<style>
+			.authors-container {
+				max-width: 860px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 5rem;
+			}
+			.authors-header {
+				margin-bottom: 2.5rem;
+				border-bottom: 2px solid var(--border-subtle);
+				padding-bottom: 1.5rem;
+			}
+			.authors-tag {
+				font-size: 0.85rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				letter-spacing: 0.3px;
+			}
+			.authors-title {
+				font-family: var(--font-serif);
+				font-size: 2.4rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				margin: 0.5rem 0 0.75rem 0;
+			}
+			.authors-lead {
+				font-size: 1.15rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+			}
+			.authors-list {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+				margin-top: 2rem;
+			}
+			.author-row {
+				display: flex;
+				gap: 1.5rem;
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				padding: 1.75rem;
+				align-items: flex-start;
+			}
+			.author-avatar-col {
+				flex-shrink: 0;
+			}
+			.author-avatar {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				border: 2px solid var(--brand-green);
+				object-fit: cover;
+			}
+			.author-avatar-fallback {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				background: #f1f5f9;
+				border: 2px solid #cbd5e1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 1.8rem;
+				font-weight: 700;
+				color: #475569;
+			}
+			.author-content {
+				flex: 1;
+			}
+			.author-name {
+				font-size: 1.25rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				margin: 0 0 0.25rem 0;
+			}
+			.author-role {
+				font-size: 0.88rem;
+				color: var(--brand-green);
+				font-weight: 600;
+				margin: 0 0 0.75rem 0;
+			}
+			.author-bio {
+				font-size: 0.95rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+				margin: 0 0 1rem 0;
+			}
+			.author-stats {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				font-size: 0.82rem;
+				color: #64748b;
+			}
+			.author-name-link {
+				color: inherit;
+				text-decoration: none;
+				transition: color 0.15s ease;
+			}
+			.author-name-link:hover {
+				color: var(--brand-green) !important;
+			}
+			.author-articles-btn {
+				background: #f0fdf4;
+				color: #15803d;
+				padding: 0.35rem 0.75rem;
+				border-radius: 4px;
+				border: 1px solid #bbf7d0;
+				font-weight: 700;
+				text-decoration: none;
+				transition: all 0.15s ease;
+			}
+			.author-articles-btn:hover {
+				background: #dcfce7;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="authors-container">
+			<header class="authors-header">
+				<span class="authors-tag">Editoryal Kadro</span>
+				<h1 class="authors-title">Yazarlar & Araştırmacılar</h1>
+				<p class="authors-lead">
+					HepsiVeri bünyesinde kamusal verileri inceleyen, doğrulanmış analizler üreten ve araştırmacı gazetecilik dosyaları hazırlayan yazar ve araştırmacılarımız.
+				</p>
+			</header>
+
+			<div class="authors-list">
+				{authors.map((author) => (
+					<div class="author-row">
+						<div class="author-avatar-col">
+							<a href={`/yazar/${author.id}/`} class="author-avatar-link">
+								{getAuthorAvatar(author.id) ? (
+									<img src={getAuthorAvatar(author.id)} alt={author.name} class="author-avatar" />
+								) : (
+									<div class="author-avatar-fallback">
+										{author.name.charAt(0)}
+									</div>
+								)}
+							</a>
+						</div>
+						<div class="author-content">
+							<h2 class="author-name">
+								<a href={`/yazar/${author.id}/`} class="author-name-link">
+									{author.name}
+								</a>
+							</h2>
+							<div class="author-role">{author.role}</div>
+							<p class="author-bio">{author.bio}</p>
+							<div class="author-stats">
+								<a href={`/yazar/${author.id}/`} class="author-articles-btn">
+									📝 {author.postCount} Haber Dosyası →
+								</a>
+								{author.social && (
+									<a href={author.social} target="_blank" rel="noopener noreferrer" style="color: var(--brand-green); font-weight: 600; text-decoration: none;">
+										X / Twitter ↗
+									</a>
+								)}
+								{author.website && (
+									<a href={author.website} target="_blank" rel="noopener noreferrer" style="color: var(--brand-green); font-weight: 600; text-decoration: none;">
+										Web Sitesi ↗
+									</a>
+								)}
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+

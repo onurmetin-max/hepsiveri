@@ -1,0 +1,72 @@
+---
+title: "Ankapark'ta 111 milyon TL'lik zararın %94'ü aslında bitkilerden çıktı"
+description: "Dönemin haberlerinde Ankapark'ın zararı sıklıkla çürüyen oyuncaklar görüntüsüyle anlatıldı. Ancak 111 milyon TL'lik resmi mahkeme tespitinin detayları çok farklı bir hikâye anlatıyor."
+pubDate: 2026-10-20
+category: "Ekonomi & Rapor"
+author: "Onur Metin"
+status: "Yayında"
+readTime: "4 dk okuma"
+datasetUrl: "/data/ankapark-111m-zarar.csv"
+heroImage: '/uploads/ankapark-bitkiler.jpg'
+heroImageCaption: "Ankapark sahasında kuruyan ağaçlar ve dikilmeyen peyzaj malzemeleri / Fotoğraf: HepsiVeri Arşivi"
+---
+
+import FlourishEmbed from '../../components/FlourishEmbed.astro';
+import DataDownload from '../../components/DataDownload.astro';
+import StatCard from '../../components/StatCard.astro';
+import MethodologyBox from '../../components/MethodologyBox.astro';
+
+Dönemin haberlerinde Ankapark'ın zararı sıklıkla *"kırılmış, çürüyen oyuncaklar"* görüntüsüyle anlatıldı. Oyuncaklardaki kayıp gerçek, bunu HepsiVeri içinde ayrı dosyalarda da ele aldık. 
+
+Ancak mahkeme kayıtlarına giren **111 milyon TL'lik** resmi hasar tespitinin detayları incelendiğinde, zararın büyük kısmının sanılanın aksine oyuncaklardan değil, **peyzaj ve kuruyan bitkilerden** kaynaklandığı ortaya çıkıyor.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+  <StatCard number="111 Milyon ₺" label="Mahkeme Tespiti Zarar" subtext="Bilirkişi heyeti kesin raporu" highlightColor="#aa3584" />
+  <StatCard number="%93.5" label="Bitki ve Peyzaj Payı" subtext="Kuruyan ve dikilmeyen fidanlar" highlightColor="#1f9a77" />
+  <StatCard number="61.2 Milyon ₺" label="Dikilmeyen Malzeme" subtext="Depolarda çürüyen peyzaj" highlightColor="#e11d48" />
+</div>
+
+## Beş Kalem, Tek Devasa Fark
+
+Ankara Büyükşehir Belediyesi'nin yaptırdığı resmi bilirkişi raporuna göre 111 milyon liralık zarar 5 ana başlıkta toplanıyor. Verileri oransal olarak görselleştirdiğimizde tablonun ezici ağırlığı netleşiyor:
+
+<FlourishEmbed 
+  chartId="30381427" 
+  title="Ankapark Zarar Kalemlerinin Dağılımı (TL)" 
+  caption="Kaynak: Ankara 7. Sulh Hukuk Mahkemesi Bilirkişi Raporu / HepsiVeri Analizi" 
+/>
+
+Aşağıdaki dökümde görüleceği üzere; makine ve oyuncaklardaki eksiklikler **2.5 milyon TL** (%2.2) iken, yalnızca dikilmeyen ve kuruyan bitkilerin toplamı **103.8 milyon TL**'yi buluyor.
+
+| Kalem | Tutar (TL) | Toplam İçindeki Payı |
+| :--- | :---: | :---: |
+| **Elektrik özür ve eksiklikler** | 76.619 TL | %0.07 |
+| **Makine özür ve eksiklikler** | 2.505.376 TL | %2.26 |
+| **İnşaat işleri özür ve eksiklikler** | 4.619.510 TL | %4.16 |
+| **Peyzaj: Kuruyan bitkiler** | 42.520.587 TL | %38.30 |
+| **Peyzaj: Dikilmeyen malzeme** | 61.286.908 TL | %55.21 |
+| **GENEL TOPLAM** | **111.009.000 TL** | **%100.00** |
+
+## Açık Veri ve Ham Dosya
+
+HepsiVeri şeffaflık ilkeleri gereğince, bu haberde kullandığımız tüm veri setini temizlenmiş ve makinece okunabilir CSV formatında araştırmacıların ve meslektaşlarımızın kullanımına açıyoruz:
+
+<DataDownload 
+  fileName="ankapark-111m-zarar-bilirkisi.csv"
+  fileUrl="/data/ankapark-111m-zarar.csv"
+  format="CSV"
+  size="1.2 KB"
+  license="Açık Veri / CC-BY 4.0"
+/>
+
+<MethodologyBox 
+  title="Veri Notu ve Metodoloji" 
+  sources={[
+    { name: "Ankara 7. Sulh Hukuk Mahkemesi Bilirkişi Raporu Dökümü", url: "https://hepsiveri.com" },
+    { name: "Ankara Büyükşehir Belediyesi Ankapark Harcama Kayıtları", url: "https://ankara.bel.tr" }
+  ]}
+>
+  <p>
+    Bu analizde yer alan veriler mahkeme tespit dosyasında yer alan bilirkişi heyeti kalemlerinden derlenmiştir. Dava sürecinde işletmecinin sorumluluğundaki alanlar ile belediye envanterindeki kalemler karşılaştırılmış, enflasyon güncellemesi yapılmadan rapor tarihindeki nominal Türk Lirası değerleri baz alınmıştır.
+  </p>
+</MethodologyBox>

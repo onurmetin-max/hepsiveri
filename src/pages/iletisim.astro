@@ -1,0 +1,256 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const contactSchema = {
+	"@context": "https://schema.org",
+	"@type": "NewsMediaOrganization",
+	"name": "HepsiVeri",
+	"url": "https://hepsiveri.com/",
+	"logo": {
+		"@type": "ImageObject",
+		"url": "https://hepsiveri.com/logo-horizontal.png",
+		"width": 569,
+		"height": 222
+	},
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "Ankara",
+		"addressRegion": "Çankaya",
+		"addressCountry": "TR"
+	},
+	"contactPoint": [
+		{
+			"@type": "ContactPoint",
+			"telephone": "+90-312-911-28-40",
+			"contactType": "editorial",
+			"email": "editor@hepsiveri.com"
+		},
+		{
+			"@type": "ContactPoint",
+			"contactType": "general support",
+			"email": "iletisim@hepsiveri.com"
+		}
+	]
+};
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead
+			title="İletişim & Basın İrtibat | HepsiVeri"
+			description="HepsiVeri editoryal ekibiyle iletişime geçin. Haber ihbarları, veri seti paylaşımları, düzeltme talepleri ve kurumsal iletişim bilgileri."
+		/>
+		<script type="application/ld+json" set:html={JSON.stringify(contactSchema)} />
+		<style>
+			.contact-container {
+				max-width: 860px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 5rem;
+			}
+			.contact-header {
+				margin-bottom: 2.5rem;
+				border-bottom: 2px solid var(--border-subtle);
+				padding-bottom: 1.5rem;
+			}
+			.contact-tag {
+				font-size: 0.85rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				letter-spacing: 0.3px;
+			}
+			.contact-title {
+				font-family: var(--font-serif);
+				font-size: 2.4rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				margin: 0.5rem 0 0.75rem 0;
+			}
+			.contact-lead {
+				font-size: 1.15rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+			}
+			.contact-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 1.5rem;
+				margin: 2.5rem 0;
+			}
+			.contact-card {
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				padding: 1.5rem;
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+			}
+			.contact-card:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+			}
+			.card-icon {
+				font-size: 1.8rem;
+				margin-bottom: 0.75rem;
+			}
+			.card-title {
+				font-size: 1.1rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				margin: 0 0 0.5rem 0;
+			}
+			.card-desc {
+				font-size: 0.9rem;
+				color: var(--text-secondary);
+				line-height: 1.5;
+				margin: 0 0 1rem 0;
+			}
+			.card-link {
+				display: inline-block;
+				font-weight: 700;
+				color: var(--brand-green);
+				text-decoration: none;
+				word-break: break-all;
+			}
+			.card-link:hover {
+				text-decoration: underline;
+			}
+			.bureaus-section {
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				padding: 1.75rem;
+				margin-top: 2rem;
+			}
+			.bureaus-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.5rem;
+				margin-top: 1rem;
+			}
+			@media (max-width: 640px) {
+				.bureaus-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+			.bureau-card {
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				border-radius: var(--radius-sm);
+				padding: 1.25rem;
+			}
+			.bureau-card h4 {
+				margin: 0 0 0.5rem 0;
+				color: var(--text-primary);
+				font-size: 1.05rem;
+			}
+			.bureau-card p {
+				margin: 0 0 0.4rem 0;
+				font-size: 0.9rem;
+				color: #475569;
+				line-height: 1.5;
+			}
+			.info-box {
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				border-radius: var(--radius-md);
+				padding: 1.75rem;
+				margin-top: 2rem;
+			}
+			.info-box h3 {
+				margin: 0 0 0.75rem 0;
+				font-size: 1.15rem;
+				color: var(--text-primary);
+			}
+			.info-box p {
+				margin: 0 0 0.5rem 0;
+				font-size: 0.95rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="contact-container">
+			<header class="contact-header">
+				<span class="contact-tag">Bize Ulaşın</span>
+				<h1 class="contact-title">İletişim & Editoryal İrtibat</h1>
+				<p class="contact-lead">
+					Veri gazeteciliği araştırmalarımız, veri seti paylaşımları, düzeltme ve tekzip bildirimleri ile editoryal iş birlikleri için aşağıdaki resmi kanallardan bize ulaşabilirsiniz.
+				</p>
+			</header>
+
+			<div class="contact-grid">
+				<div class="contact-card">
+					<div class="card-icon">📬</div>
+					<h2 class="card-title">Genel & Kurumsal İletişim</h2>
+					<p class="card-desc">Resmi yazışmalar, basın bültenleri ve kurumsal iş birlikleri:</p>
+					<a href="mailto:iletisim@hepsiveri.com" class="card-link">iletisim@hepsiveri.com</a>
+					<div style="margin-top: 0.35rem; font-size: 0.8rem; color: #64748b;">(Yedek: hepsiveri@gmail.com)</div>
+				</div>
+
+				<div class="contact-card">
+					<div class="card-icon">🗞️</div>
+					<h2 class="card-title">Haber Masası & Editör</h2>
+					<p class="card-desc">Haber önerileri, özel araştırma dosyaları ve editoryal temas:</p>
+					<a href="mailto:editor@hepsiveri.com" class="card-link">editor@hepsiveri.com</a>
+					<div style="margin-top: 0.35rem; font-size: 0.8rem; color: #64748b;">Santral: +90 (312) 911 28 40</div>
+				</div>
+
+				<div class="contact-card">
+					<div class="card-icon">🔍</div>
+					<h2 class="card-title">Hata & Düzeltme Masası</h2>
+					<p class="card-desc">Haber ve veri tablolarındaki tespitleriniz için ivedi hat:</p>
+					<a href="mailto:iletisim@hepsiveri.com?subject=Düzeltme%20ve%20Hata%20Bildirimi" class="card-link">iletisim@hepsiveri.com</a>
+					<div style="margin-top: 0.35rem; font-size: 0.8rem; color: #64748b;">Maksimum inceleme: 24 saat</div>
+				</div>
+
+				<div class="contact-card">
+					<div class="card-icon">🌐</div>
+					<h2 class="card-title">Sosyal Ağlar</h2>
+					<p class="card-desc">Canlı veri akışı ve anlık analiz özetleri:</p>
+					<div style="display: flex; flex-direction: column; gap: 0.4rem;">
+						<a href="https://twitter.com/hepsiveri" target="_blank" rel="noopener noreferrer" class="card-link">X (Twitter): @hepsiveri</a>
+						<a href="https://instagram.com/hepsiveri" target="_blank" rel="noopener noreferrer" class="card-link">Instagram: @hepsiveri</a>
+					</div>
+				</div>
+			</div>
+
+			<section class="bureaus-section">
+				<h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: var(--text-primary);">📍 Haber Büroları & İrtibat Merkezleri</h3>
+				<p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0 0 1rem 0;">
+					HepsiVeri araştırmacı gazetecilik faaliyetlerini Ankara ve Eskişehir merkezli çalışma ofisleri üzerinden yürütmektedir.
+				</p>
+				<div class="bureaus-grid">
+					<div class="bureau-card">
+						<h4>🏛️ Ankara Bürosu</h4>
+						<p><strong>Adres:</strong> Çankaya, Ankara, Türkiye</p>
+						<p><strong>Santral:</strong> +90 (312) 911 28 40</p>
+						<p><strong>E-posta:</strong> ankara@hepsiveri.com</p>
+					</div>
+					<div class="bureau-card">
+						<h4>🎓 Eskişehir Bürosu</h4>
+						<p><strong>Adres:</strong> Tepebaşı, Eskişehir, Türkiye</p>
+						<p><strong>İrtibat:</strong> +90 (222) 000 00 00</p>
+						<p><strong>E-posta:</strong> eskisehir@hepsiveri.com</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="info-box">
+				<h3>🏢 Yayın Künyesi ve Yasal Bilgiler</h3>
+				<p><strong>Yayıncı & Genel Yayın Yönetmeni:</strong> Onur Metin</p>
+				<p><strong>Yayın Türü:</strong> Süreli Elektronik Yayın (Bağımsız Açık Veri Platformu)</p>
+				<p><strong>Yer Sağlayıcı:</strong> Vercel Inc. / Cloudflare Inc.</p>
+				<p style="margin-top: 1rem;">
+					Ayrıntılı editoryal kadro için <a href="/kunye" style="color: var(--brand-green); font-weight: 600;">Künye sayfamızı</a>, denetlenebilir doğruluk taahhütlerimiz için <a href="/yayin-ilkeleri" style="color: var(--brand-green); font-weight: 600;">Yayın İlkelerimizi</a> inceleyebilirsiniz.
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+

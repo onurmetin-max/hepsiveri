@@ -1,0 +1,68 @@
+{
+  "authors": [
+    {
+      "id": "onur-metin",
+      "aliases": [
+        "onurmetin"
+      ],
+      "name": "Onur Metin",
+      "role": "Kurucu & Araştırmacı Veri Gazetecisi",
+      "bio": "ODTÜ Jeoloji Mühendisliği lisansının ardından Anadolu Üniversitesi'nde Gazetecilik yüksek lisansını tamamladı. Resmi istatistikler, uluslararası veri tabanları, kamu bütçesi ve birçok konudaki Kurum raporlarını kanıta dayalı ve denetlenebilir haber dosyalarına dönüştürmektedir. Demokrasi, emek, eğitim, kent politikaları ve dijital haklar odağında karmaşık verileri şeffaf ve açık veri odaklı görselleştirmelere dönüştüren HepsiVeri'nin kurucusudur.",
+      "social": "https://twitter.com/onurmetins",
+      "website": "https://onurmetin.com.tr"
+    },
+    {
+      "id": "bugu-begum-orhan",
+      "aliases": [
+        "bugu",
+        "bugu-b-basar",
+        "bugu-basar"
+      ],
+      "name": "Buğu B. Başar",
+      "displayName": "Buğu B. Başar",
+      "role": "Gazeteci",
+      "bio": "2011 yılında Ankara Üniversitesi İletişim Fakültesi Gazetecilik Bölümü'nden mezun oldu. Gazetecilik kariyerine haber merkezlerinde editörlük, muhabirlik ve haber sunuculuğu görevleriyle başladı. Medya, iletişim ve metin yazarlığı çalışmalarının yanı sıra; hak odaklı habercilik, çocuk hakları, adalet ve sosyal göstergeler üzerine veri temelli araştırmalar yürütmektedir.",
+      "social": "https://twitter.com/hepsiveri"
+    },
+    {
+      "id": "sevinc-kocak",
+      "aliases": [
+        "sevinc"
+      ],
+      "name": "Sevinç Koçak",
+      "role": "Araştırmacı & Hak Savunucusu",
+      "bio": "Uzun yıllardır sivil toplum, edebiyat ve bağımsız medya alanında çalışmalar yürütmektedir. Bianet ve BirGün başta olmak üzere çeşitli yayın organlarında güncel politika ve edebiyat eleştirileri kaleme aldı. İzleme-raporlama, çocuk hakları, toplumsal cinsiyet eşitliği ve Roman hakları alanlarında eğitimler vermekte; iş cinayetleri, MESEM sistemi, güvencesiz çalışma ve çocuk politikaları üzerine veri temelli analitik dosyalar hazırlamaktadır.",
+      "social": "https://twitter.com/11incitez"
+    },
+    {
+      "id": "ulas-akyol",
+      "aliases": [
+        "ulasakyol"
+      ],
+      "name": "Ulaş Akyol",
+      "role": "Araştırmacı Haberci & Görsel İletişim Uzmanı",
+      "bio": "Anadolu Üniversitesi İktisat Bölümü mezunudur. Yayıncılık dünyasında mizanpaj, infografik tasarım ve görselleştirme alanında uzun yıllara dayanan deneyime sahiptir. İnadına Haber sitesinin kurucuları arasında yer almış; DİSK Basın-İş ve İnsan Hakları Derneği üyesi olarak yurttaş haberciliği alanında aktif görevler üstlenmiştir. Demografik veriler, aile yapıları, kent dinamikleri ve toplumsal eşitsizlikler üzerine veri dosyaları hazırlamaktadır.",
+      "social": "https://twitter.com/hepsiveri"
+    },
+    {
+      "id": "fatih-ozcan",
+      "aliases": [
+        "fatihozcan"
+      ],
+      "name": "Fatih Özcan",
+      "role": "Gazeteci",
+      "bio": "Anadolu Üniversitesi Gazetecilik Bölümü mezunudur. Medya kariyerine ajans haberciliği ile başlamış, ardından veri analizi ve istatistiksel görselleştirme alanlarında çalışmıştır. Makroekonomik göstergeler, gelir dağılımı eşitsizliği ve Avrupa Birliği karşılaştırmalı istatistiklerini sayısal veriler ve interaktif grafiklerle haberleştirmektedir.",
+      "social": "https://twitter.com/hepsiveri"
+    },
+    {
+      "id": "meltem-suat",
+      "aliases": [
+        "meltemsuat"
+      ],
+      "name": "Meltem Suat",
+      "role": "Gazeteci & Podcast Yapımcısı",
+      "bio": "Ege Üniversitesi İletişim Fakültesi mezunudur. 2021 yılından bu yana bağımsız medya platformlarında özel röportajlar hazırlamakta ve toplumsal cinsiyet odaklı podcast yapımları gerçekleştirmektedir. Demografik dönüşüm, nüfus dinamikleri, halk sağlığı göstergeleri, kadın emeği ve toplumsal cinsiyet verilerini hak odaklı gazetecilik ilkeleriyle analiz etmektedir.",
+      "social": "https://twitter.com/meltemsuatt"
+    }
+  ]
+}

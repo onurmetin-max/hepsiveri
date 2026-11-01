@@ -1,0 +1,114 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Yerel geliştirme sırasında dosyaları doğrudan diske kaydetmek için local_backend kullanılır.
+local_backend: true
+
+locale: 'tr'
+display_url: https://hepsiveri.com
+logo_url: /logo.png
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: "blog"
+    label: "Haberler & Analizler"
+    label_singular: "Haber / Analiz"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    preview_path: "haber/{{slug}}"
+    summary: "{{title}} — ✍️ {{author}} — 📅 {{pubDate}} [{{status}}]"
+    sortable_fields:
+      - "pubDate"
+      - "title"
+      - "author"
+      - "status"
+      - "category"
+    view_filters:
+      - label: "Yayındakiler"
+        field: status
+        pattern: "Yayında"
+      - label: "Taslaklar"
+        field: status
+        pattern: "Taslak"
+    view_groups:
+      - label: "Yayın Durumu"
+        field: status
+      - label: "Yazar"
+        field: author
+      - label: "Kategori"
+        field: category
+    editor:
+      preview: false
+    fields:
+      # Sol Kolon (Ana İçerik Alanı)
+      - { label: "Başlık", name: "title", widget: "string" }
+      - { label: "Açıklama (Özet / Spot)", name: "description", widget: "text" }
+      - { label: "Haber Metni & Görselleştirmeler (Flourish/HTML)", name: "body", widget: "markdown" }
+      - { label: "Açık Veri Seti URL'si (Varsa)", name: "datasetUrl", widget: "string", required: false }
+      - { label: "Etiketler", name: "tags", widget: "list", required: false }
+
+      # Sağ Kolon (WordPress Tarzı Kenar Çubuğu)
+      - { label: "🖼️ Kapak Görseli", name: "heroImage", widget: "image", required: false }
+      - { label: "📝 Kapak Görseli Kaynağı / Alt Yazısı", name: "heroImageCaption", widget: "string", required: false }
+      - label: "📌 Yayın Durumu"
+        name: "status"
+        widget: "select"
+        default: "Yayında"
+        options:
+          - "Yayında"
+          - "Taslak"
+      - { label: "📅 Yayın Tarihi", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "🕒 Son Güncelleme Tarihi", name: "updatedDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - label: "📂 Kategori"
+        name: "category"
+        widget: "select"
+        default: "Veri Haberciliği"
+        options:
+          - "Veri Haberciliği"
+          - "Kamu Harcamaları"
+          - "Adliye"
+          - "Ekonomi"
+          - "Eğitim"
+          - "Demokrasi"
+          - "Sağlık"
+          - "Çevre"
+          - "Sosyal Göstergeler"
+          - "Gündem"
+      - label: "✍️ Yazar"
+        name: "author"
+        widget: "select"
+        default: "Onur Metin"
+        options:
+          - "Onur Metin"
+          - "Buğu Begüm Orhan"
+          - "Sevinç Koçak"
+          - "Ulaş Akyol"
+          - "Fatih Özcan"
+          - "Meltem Suat"
+
+  - name: "authors_settings"
+    label: "Yazarlar & Kadro"
+    files:
+      - label: "Yazar Profilleri ve Biyografiler"
+        name: "authors"
+        file: "src/data/authors.json"
+        fields:
+          - label: "Yazarlar Listesi"
+            name: "authors"
+            widget: "list"
+            fields:
+              - { label: "Yazar ID (örn: onur-metin)", name: "id", widget: "string" }
+              - { label: "İsim Soyisim", name: "name", widget: "string" }
+              - { label: "Görevi / Unvanı", name: "role", widget: "string" }
+              - { label: "Biyografi Metni", name: "bio", widget: "text" }
+              - { label: "Sosyal Medya / Web Bağlantısı", name: "social", widget: "string", required: false }
+

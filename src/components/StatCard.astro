@@ -1,0 +1,45 @@
+---
+interface Props {
+	number: string;
+	label: string;
+	subtext?: string;
+	highlightColor?: string;
+}
+
+const { number, label, subtext, highlightColor = '#1f9a77' } = Astro.props;
+---
+
+<div class="stat-card" style={`--stat-accent: ${highlightColor}`}>
+	<div class="stat-number">{number}</div>
+	<div class="stat-label">{label}</div>
+	{subtext && <div class="stat-subtext">{subtext}</div>}
+</div>
+
+<style>
+	.stat-card {
+		padding: 1.25rem;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		border-left: 4px solid var(--stat-accent);
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+	}
+	.stat-number {
+		font-size: 2.25rem;
+		font-weight: 800;
+		color: var(--stat-accent);
+		line-height: 1;
+		font-family: inherit;
+	}
+	.stat-label {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: #1e293b;
+		margin-top: 0.5rem;
+	}
+	.stat-subtext {
+		font-size: 0.8rem;
+		color: #64748b;
+		margin-top: 0.25rem;
+	}
+</style>

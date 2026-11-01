@@ -1,0 +1,1475 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import fs from 'node:fs';
+import { getReadingTime } from '../utils/readTime';
+import authorsData from '../data/authors.json';
+
+type Props = CollectionEntry<'blog'>['data'] & { body?: string; postSlug?: string };
+
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	heroImageCaption,
+	category = "Veri Haberciliği",
+	author = "Onur Metin",
+	readTime,
+	datasetUrl,
+	tags = [],
+	body,
+	postSlug = ''
+} = Astro.props;
+
+const displayReadTime = getReadingTime(body, readTime);
+
+const trMap: Record<string, string> = { 'ı': 'i', 'ğ': 'g', 'ü': 'u', 'ş': 's', 'ö': 'o', 'ç': 'c', 'İ': 'i' };
+let rawAuthorSlug = author.toLowerCase();
+for (const [k, v] of Object.entries(trMap)) rawAuthorSlug = rawAuthorSlug.replaceAll(k, v);
+rawAuthorSlug = rawAuthorSlug.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+const authorsList = Array.isArray(authorsData) ? authorsData : ((authorsData as any).authors || []);
+const matchedAuthor = authorsList.find((a: any) =>
+	a.id === rawAuthorSlug ||
+	(a.aliases && a.aliases.includes(rawAuthorSlug)) ||
+	(a.name && a.name.toLowerCase() === author.toLowerCase()) ||
+	(a.displayName && a.displayName.toLowerCase() === author.toLowerCase()) ||
+	(a.name && a.name.toLowerCase().includes(author.toLowerCase().split(' ')[0]))
+);
+
+const canonicalAuthorSlug = matchedAuthor?.id || rawAuthorSlug;
+const authorDisplayName = matchedAuthor?.displayName || matchedAuthor?.name || author;
+const authorRole = matchedAuthor?.role || 'Araştırmacı Gazeteci';
+const authorBio = matchedAuthor?.bio || 'HepsiVeri bünyesinde açık veri analizleri ve araştırmacı haber dosyaları hazırlamaktadır.';
+const authorSocial = matchedAuthor?.social;
+const authorWebsite = matchedAuthor?.website;
+
+function getAuthorAvatar(slug: string, fallbackSlug?: string) {
+	for (const s of [slug, fallbackSlug].filter(Boolean) as string[]) {
+		for (const ext of ['webp', 'jpg', 'jpeg', 'png']) {
+			if (fs.existsSync(`public/yazarlar/${s}.${ext}`)) {
+				return `/yazarlar/${s}.${ext}`;
+			}
+		}
+	}
+	return null;
+}
+const authorAvatarUrl = getAuthorAvatar(canonicalAuthorSlug, rawAuthorSlug);
+
+interface TocHeading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+function extractHeadings(content?: string): TocHeading[] {
+	if (!content) return [];
+	const headings: TocHeading[] = [];
+	const regex = /(?:^(#{2,3})\s+(.+)$|<h([23])[^>]*>(.*?)<\/h\3>)/gim;
+	let match;
+	let index = 0;
+	const usedSlugs = new Set<string>();
+
+	while ((match = regex.exec(content)) !== null) {
+		const isMarkdown = !!match[1];
+		const depth = isMarkdown ? match[1].length : parseInt(match[3], 10);
+		const rawText = isMarkdown ? match[2] : match[4];
+		const text = rawText.replace(/<[^>]+>/g, '').trim();
+		if (text) {
+			index++;
+			let baseSlug = text.toLowerCase()
+				.replace(/[ıİ]/g, 'i')
+				.replace(/[ğĞ]/g, 'g')
+				.replace(/[üÜ]/g, 'u')
+				.replace(/[şŞ]/g, 's')
+				.replace(/[öÖ]/g, 'o')
+				.replace(/[çÇ]/g, 'c')
+				.replace(/[^a-z0-9]+/g, '-')
+				.replace(/^-|-$/g, '');
+			if (!baseSlug) baseSlug = `bolum-${index}`;
+			
+			let slug = baseSlug;
+			let counter = 1;
+			while (usedSlugs.has(slug)) {
+				slug = `${baseSlug}-${counter}`;
+				counter++;
+			}
+			usedSlugs.add(slug);
+			headings.push({ depth, slug, text });
+		}
+	}
+	return headings;
+}
+
+const tocHeadings = extractHeadings(body);
+
+const allBlogPosts = await getCollection('blog', ({ data }) => data.status !== 'Taslak');
+const relatedPosts = allBlogPosts
+	.filter(p => p.data.title !== title)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+const authorPostsCount = allBlogPosts.filter(p => (p.data.author || '').toLowerCase().includes(authorDisplayName.toLowerCase().split(' ')[0])).length;
+
+const siteOrigin = (Astro.site?.href || 'https://hepsiveri.com').replace(/\/+$/, '');
+const canonicalArticleUrl = `${siteOrigin}/haber/${postSlug || Astro.url.pathname.replace(/^\/haber\/|\/$/g, '')}/`;
+const absoluteHeroImageUrl = heroImage
+	? (typeof heroImage === 'string'
+		? (heroImage.startsWith('http') ? heroImage : `${siteOrigin}${heroImage.startsWith('/') ? '' : '/'}${heroImage}`)
+		: new URL(heroImage.src, siteOrigin).href)
+	: undefined;
+const authorProfileUrl = `${siteOrigin}/yazar/${canonicalAuthorSlug}/`;
+const fullAuthorAvatarUrl = authorAvatarUrl ? `${siteOrigin}${authorAvatarUrl}` : undefined;
+---
+
+<html lang="tr">
+	<head>
+		<BaseHead title={`${title} | HepsiVeri`} description={description} image={heroImage} isArticle={true} pubDate={pubDate} updatedDate={updatedDate} author={authorDisplayName} category={category} tags={tags} />
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "NewsArticle",
+			"mainEntityOfPage": {
+				"@type": "WebPage",
+				"@id": canonicalArticleUrl
+			},
+			"headline": title,
+			"description": description,
+			"image": absoluteHeroImageUrl ? [absoluteHeroImageUrl] : undefined,
+			"datePublished": pubDate.toISOString(),
+			"dateModified": updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+			"author": [{
+				"@type": "Person",
+				"name": authorDisplayName,
+				"jobTitle": authorRole,
+				"url": authorProfileUrl,
+				"image": fullAuthorAvatarUrl
+			}],
+			"publisher": {
+				"@type": "NewsMediaOrganization",
+				"name": "HepsiVeri",
+				"url": "https://hepsiveri.com/",
+				"logo": {
+					"@type": "ImageObject",
+					"url": "https://hepsiveri.com/logo-horizontal.png",
+					"width": 569,
+					"height": 222
+				},
+				"publishingPrinciples": "https://hepsiveri.com/yayin-ilkeleri/",
+				"correctionsPolicy": "https://hepsiveri.com/yayin-ilkeleri/#duzeltme-ve-guncelleme",
+				"masthead": "https://hepsiveri.com/kunye/"
+			},
+			"articleSection": category,
+			"inLanguage": "tr-TR",
+			"isAccessibleForFree": true,
+			"keywords": tags && tags.length > 0 ? tags.join(", ") : category
+		})} />
+		<style>
+			/* Sticky Top Mini Reader Bar */
+			.sticky-reader-bar {
+				position: sticky;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 100;
+				background: rgba(255, 255, 255, 0.94);
+				backdrop-filter: blur(12px);
+				-webkit-backdrop-filter: blur(12px);
+				border-bottom: 1px solid var(--border-subtle);
+				transform: translateY(-100%);
+				transition: transform 0.25s ease;
+			}
+			.sticky-reader-bar.visible {
+				transform: translateY(0);
+			}
+			.reader-bar-content {
+				max-width: 1240px;
+				margin: 0 auto;
+				padding: 0.65rem 1.5rem;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1rem;
+				font-size: 0.88rem;
+			}
+			.reader-bar-title {
+				font-weight: 600;
+				color: var(--text-primary);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 600px;
+			}
+			.reader-progress-track {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 3px;
+				background: transparent;
+			}
+			.reader-progress-fill {
+				height: 100%;
+				width: 0%;
+				background: var(--brand-green);
+				transition: width 0.1s ease-out;
+			}
+
+			/* 2-Column Portal Layout (Dense & Functional) */
+			.portal-layout {
+				max-width: 1240px;
+				margin: 0 auto;
+				padding: 2.5rem 1.5rem 5rem;
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) 340px;
+				gap: 3rem;
+				align-items: start;
+			}
+
+			/* Main Article Column */
+			.article-col {
+				min-width: 0;
+			}
+
+			.category-tag {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.45rem;
+				font-size: 0.82rem;
+				font-weight: 700;
+				letter-spacing: 0.2px;
+				color: var(--brand-green);
+				background: var(--brand-green-light);
+				border: 1px solid var(--brand-green-border);
+				padding: 0.35rem 0.8rem;
+				border-radius: var(--radius-full);
+				margin-bottom: 1rem;
+			}
+			.pulse-dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: var(--brand-green);
+			}
+
+			.headline {
+				font-family: var(--font-display);
+				font-size: 2.75rem;
+				line-height: 1.15;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: -0.025em;
+				margin: 0 0 1rem 0;
+			}
+
+			.lead-paragraph {
+				font-size: 1.22rem;
+				line-height: 1.6;
+				color: #334155;
+				margin-bottom: 1.75rem;
+			}
+
+			.byline-bar {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 1rem;
+				padding: 1rem 0;
+				border-top: 1px solid var(--border-subtle);
+				border-bottom: 1px solid var(--border-subtle);
+				margin-bottom: 2rem;
+			}
+			.author-group {
+				display: flex;
+				align-items: center;
+				gap: 0.85rem;
+			}
+			.avatar-img {
+				width: 44px;
+				height: 44px;
+				border-radius: 50%;
+				object-fit: cover;
+				border: 2px solid var(--brand-green);
+			}
+			.avatar-initials {
+				width: 44px;
+				height: 44px;
+				border-radius: 50%;
+				background: #f1f5f9;
+				border: 2px solid var(--brand-green);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: 700;
+				color: var(--brand-green);
+				font-size: 1.1rem;
+			}
+			.author-details {
+				display: flex;
+				flex-direction: column;
+			}
+			.author-name-link {
+				text-decoration: none;
+				color: inherit;
+			}
+			.author-name-link:hover .author-name {
+				color: var(--brand-green);
+			}
+			.author-name {
+				font-size: 0.95rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				transition: color 0.15s ease;
+			}
+			.author-subtitle {
+				font-size: 0.8rem;
+				color: var(--text-muted);
+			}
+			.meta-badges {
+				display: flex;
+				align-items: center;
+				gap: 0.65rem;
+				font-size: 0.82rem;
+				color: var(--text-muted);
+			}
+			.badge-item {
+				background: var(--bg-surface);
+				border: 1px solid var(--border-subtle);
+				padding: 0.25rem 0.55rem;
+				border-radius: var(--radius-sm);
+				font-weight: 500;
+			}
+
+			.hero-wrapper {
+				margin: 0 0 2.5rem 0;
+			}
+			.hero-wrapper img {
+				width: 100%;
+				height: auto;
+				max-height: 440px;
+				object-fit: cover;
+				border-radius: var(--radius-md);
+				box-shadow: var(--shadow-sm);
+			}
+			.hero-caption-box {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				font-size: 0.8rem;
+				color: var(--text-muted);
+				margin-top: 0.5rem;
+			}
+
+			.article-content {
+				font-size: 1.125rem;
+				line-height: 1.8;
+				color: var(--text-secondary);
+			}
+			.article-content h2,
+			.article-content h3,
+			.article-content h4 {
+				scroll-margin-top: 90px;
+			}
+			.article-content figure {
+				margin: 2rem 0;
+			}
+			.article-content img {
+				max-width: 100%;
+				height: auto;
+				border-radius: var(--radius-sm);
+			}
+			.article-content figcaption {
+				font-size: 0.82rem;
+				color: var(--text-muted);
+				margin-top: 0.5rem;
+				font-style: italic;
+				text-align: center;
+			}
+			.article-content .flourish-wrapper,
+			.article-content .flourish-embed {
+				margin: 2.25rem 0;
+				background: #f8fafc;
+				padding: 1rem;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+			}
+			.article-content table {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 2rem 0;
+				font-size: 0.92rem;
+			}
+			.article-content th,
+			.article-content td {
+				padding: 0.75rem 1rem;
+				border: 1px solid var(--border-subtle);
+				text-align: left;
+			}
+			.article-content th {
+				background: #f8fafc;
+				font-weight: 700;
+				color: var(--text-primary);
+			}
+			.article-content tr:nth-child(even) td {
+				background: #fafafa;
+			}
+
+			/* Sticky Functional Sidebar (Rich Info Density) */
+			.sidebar-col {
+				position: sticky;
+				top: 80px;
+				display: flex;
+				flex-direction: column;
+				gap: 1.75rem;
+			}
+
+			.sidebar-widget {
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				padding: 1.25rem 1.5rem;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.widget-title {
+				font-family: var(--font-sans);
+				font-size: 0.88rem;
+				font-weight: 700;
+				letter-spacing: 0.2px;
+				color: var(--text-primary);
+				margin: 0 0 1rem 0;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				border-bottom: 2px solid var(--brand-green-light);
+				padding-bottom: 0.5rem;
+			}
+
+			/* Factsheet Key-Value List */
+			.factsheet-list {
+				list-style: none;
+				padding: 0;
+				margin: 0 0 1.25rem 0;
+				font-size: 0.88rem;
+			}
+			.factsheet-item {
+				display: flex;
+				justify-content: space-between;
+				padding: 0.55rem 0;
+				border-bottom: 1px dashed #f1f5f9;
+			}
+			.factsheet-item:last-child {
+				border-bottom: none;
+			}
+			.factsheet-label {
+				color: var(--text-muted);
+			}
+			.factsheet-val {
+				font-weight: 700;
+				color: var(--text-primary);
+				text-align: right;
+			}
+
+			.sidebar-download-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				background: var(--brand-green);
+				color: #ffffff;
+				text-decoration: none;
+				padding: 0.65rem 1rem;
+				border-radius: var(--radius-sm);
+				font-size: 0.88rem;
+				font-weight: 700;
+				transition: background 0.15s ease;
+				width: 100%;
+			}
+			.sidebar-download-btn:hover {
+				background: var(--brand-green-hover);
+			}
+
+			/* In-Article Table of Contents Box (tocwp / Wikipedia style) */
+			.article-toc-box {
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				border-left: 4px solid var(--brand-green);
+				border-radius: var(--radius-md);
+				padding: 1.25rem 1.5rem;
+				margin: 1rem 0 2.25rem 0;
+				font-size: 0.95rem;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+			}
+			.article-toc-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 0.75rem;
+				padding-bottom: 0.5rem;
+				border-bottom: 1px solid #f1f5f9;
+			}
+			.article-toc-title {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-weight: 700;
+				font-size: 1rem;
+				color: var(--text-primary);
+			}
+			.article-toc-title svg {
+				color: var(--brand-green);
+			}
+			.article-toc-toggle {
+				background: none;
+				border: none;
+				color: #64748b;
+				cursor: pointer;
+				font-size: 0.82rem;
+				font-weight: 600;
+				padding: 2px 6px;
+				border-radius: 4px;
+				transition: color 0.15s ease;
+			}
+			.article-toc-toggle:hover {
+				color: var(--brand-green);
+			}
+			.article-toc-nav {
+				margin: 0;
+				padding: 0 0 0 1.25rem;
+				list-style-type: decimal;
+			}
+			.article-toc-nav.collapsed {
+				display: none;
+			}
+			.article-toc-item {
+				margin-bottom: 0.45rem;
+				line-height: 1.5;
+			}
+			.article-toc-item.depth-3 {
+				margin-left: 1.25rem;
+				list-style-type: circle;
+				font-size: 0.9em;
+				color: #475569;
+			}
+			.article-toc-item a {
+				color: #0f766e;
+				text-decoration: underline;
+				text-decoration-color: #cbd5e1;
+				text-underline-offset: 3px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.15s ease;
+			}
+			.article-toc-item a:hover {
+				color: #047857;
+				text-decoration-color: #047857;
+				background: #f0fdf4;
+				border-radius: 3px;
+			}
+			.article-content h2,
+			.article-content h3 {
+				scroll-margin-top: 100px;
+				position: relative;
+			}
+			.heading-anchor {
+				opacity: 0;
+				margin-left: 0.5rem;
+				color: var(--brand-green);
+				text-decoration: none !important;
+				font-size: 0.85em;
+				transition: opacity 0.2s ease;
+				cursor: pointer;
+				font-weight: 600;
+			}
+			.article-content h2:hover .heading-anchor,
+			.article-content h3:hover .heading-anchor {
+				opacity: 0.75;
+			}
+			.heading-anchor:hover {
+				opacity: 1 !important;
+				color: #047857;
+			}
+
+			/* Sidebar Table of Contents (Sticky Scrollspy) */
+			.sidebar-toc-widget {
+				max-height: 420px;
+				overflow-y: auto;
+			}
+			.sidebar-toc-widget::-webkit-scrollbar {
+				width: 4px;
+			}
+			.sidebar-toc-widget::-webkit-scrollbar-thumb {
+				background: #cbd5e1;
+				border-radius: 4px;
+			}
+			.toc-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				font-size: 0.85rem;
+			}
+			.toc-item-sidebar {
+				margin-bottom: 0.45rem;
+				line-height: 1.4;
+			}
+			.toc-item-sidebar.depth-3 {
+				margin-left: 0.75rem;
+				font-size: 0.8rem;
+			}
+			.toc-item-sidebar a {
+				color: #64748b;
+				text-decoration: none;
+				display: flex;
+				align-items: flex-start;
+				gap: 0.4rem;
+				padding: 4px 6px;
+				border-radius: 4px;
+				transition: all 0.15s ease;
+			}
+			.toc-item-sidebar a:hover {
+				color: var(--brand-green);
+				background: #f0fdf4;
+			}
+			.toc-item-sidebar a.active {
+				color: var(--brand-green);
+				background: #ecfdf5;
+				font-weight: 700;
+				border-left: 2px solid var(--brand-green);
+			}
+			.toc-num {
+				color: var(--brand-green);
+				font-weight: 700;
+				font-family: var(--font-mono);
+				font-size: 0.8rem;
+				flex-shrink: 0;
+			}
+			.toc-title-text {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+
+			/* Related Stories in Sidebar */
+			.related-item {
+				display: flex;
+				flex-direction: column;
+				padding: 0.75rem 0;
+				border-bottom: 1px solid #f1f5f9;
+				text-decoration: none;
+			}
+			.related-item:last-child {
+				border-bottom: none;
+				padding-bottom: 0;
+			}
+			.related-badge {
+				font-size: 0.75rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				margin-bottom: 0.25rem;
+			}
+			.related-title {
+				font-size: 0.88rem;
+				font-weight: 600;
+				color: var(--text-primary);
+				line-height: 1.35;
+				margin: 0;
+				transition: color 0.15s;
+			}
+			.related-item:hover .related-title {
+				color: var(--brand-green);
+			}
+
+
+			@media (max-width: 992px) {
+				.portal-layout {
+					grid-template-columns: 1fr;
+					gap: 2rem;
+				}
+				.sidebar-col {
+					position: static;
+				}
+			}
+
+			/* Admin Quick Edit Bar (Only shown to authenticated admins) */
+			.admin-float-bar {
+				position: fixed;
+				bottom: 24px;
+				right: 24px;
+				z-index: 99999;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				background: #0f172a;
+				padding: 6px 10px;
+				border-radius: 9999px;
+				box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				animation: adminSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			@keyframes adminSlideIn {
+				from { transform: translateY(20px); opacity: 0; }
+				to { transform: translateY(0); opacity: 1; }
+			}
+
+			.admin-action-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				padding: 7px 14px;
+				font-size: 0.82rem;
+				font-weight: 600;
+				color: #ffffff !important;
+				text-decoration: none !important;
+				border-radius: 9999px;
+				transition: all 0.2s ease;
+				font-family: var(--font-sans);
+			}
+
+			.admin-action-btn.edit {
+				background: #10b981;
+			}
+
+			.admin-action-btn.edit:hover {
+				background: #059669;
+				transform: translateY(-1px);
+			}
+
+			.admin-action-btn.panel {
+				background: rgba(255, 255, 255, 0.12);
+			}
+
+			.admin-action-btn.panel:hover {
+				background: rgba(255, 255, 255, 0.22);
+			}
+
+			.admin-inline-btn {
+				background: #fef08a !important;
+				color: #854d0e !important;
+				border-color: #fde047 !important;
+				font-weight: 700 !important;
+				text-decoration: none !important;
+				transition: all 0.15s ease;
+			}
+
+			.admin-inline-btn:hover {
+				background: #fde047 !important;
+				transform: translateY(-1px);
+			}
+
+			/* Tags Section at article end */
+			.article-tags-wrap {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				margin: 2.5rem 0 2rem;
+				padding-top: 1.5rem;
+				border-top: 1px solid var(--border-subtle);
+			}
+			.article-tag-item {
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #475569;
+				background: #f1f5f9;
+				padding: 0.3rem 0.65rem;
+				border-radius: var(--radius-sm);
+				text-decoration: none;
+				border: 1px solid #e2e8f0;
+				transition: all 0.15s ease;
+			}
+			.article-tag-item:hover {
+				background: var(--brand-green-light);
+				color: var(--brand-green);
+				border-color: var(--brand-green-border);
+			}
+
+			/* Author Bio Box at bottom (Google News E-E-A-T) */
+			.article-author-card {
+				display: flex;
+				gap: 1.5rem;
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				padding: 1.75rem;
+				margin: 2.5rem 0 1.75rem;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+			}
+			.author-card-avatar-wrap {
+				flex-shrink: 0;
+			}
+			.author-card-avatar {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				object-fit: cover;
+				border: 3px solid var(--brand-green);
+				box-shadow: 0 2px 8px rgba(31, 154, 119, 0.15);
+			}
+			.author-card-initials {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				background: #f8fafc;
+				border: 3px solid var(--brand-green);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 1.8rem;
+				font-weight: 800;
+				color: var(--brand-green);
+			}
+			.author-card-body {
+				flex: 1;
+				min-width: 0;
+			}
+			.author-card-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+				margin-bottom: 0.5rem;
+			}
+			.author-card-role {
+				display: block;
+				font-size: 0.8rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				letter-spacing: 0.2px;
+				margin-bottom: 0.2rem;
+			}
+			.author-card-name {
+				font-family: var(--font-display);
+				font-size: 1.25rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				margin: 0;
+			}
+			.author-card-name a {
+				color: inherit;
+				text-decoration: none;
+				transition: color 0.15s ease;
+			}
+			.author-card-name a:hover {
+				color: var(--brand-green);
+			}
+			.author-card-links {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+			}
+			.author-link-pill {
+				font-size: 0.78rem;
+				font-weight: 600;
+				color: #475569;
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				padding: 0.25rem 0.6rem;
+				border-radius: var(--radius-sm);
+				text-decoration: none;
+				transition: all 0.15s ease;
+			}
+			.author-link-pill:hover {
+				color: var(--brand-green);
+				border-color: var(--brand-green-border);
+			}
+			.author-link-pill.primary {
+				background: var(--brand-green-light);
+				color: var(--brand-green);
+				border-color: var(--brand-green-border);
+				font-weight: 700;
+			}
+			.author-link-pill.primary:hover {
+				background: var(--brand-green);
+				color: #ffffff;
+			}
+			.author-card-bio {
+				font-size: 0.92rem;
+				color: #475569;
+				line-height: 1.6;
+				margin: 0;
+			}
+			.author-card-meta {
+				display: flex;
+				align-items: center;
+				gap: 1.25rem;
+				flex-wrap: wrap;
+				margin-top: 0.85rem;
+				padding-top: 0.75rem;
+				border-top: 1px dashed var(--border-subtle);
+				font-size: 0.82rem;
+				color: #64748b;
+			}
+			.author-meta-date strong {
+				color: #334155;
+			}
+			.author-meta-date.updated {
+				color: #0369a1;
+			}
+
+			/* Editorial Trust Signals Box */
+			.editorial-trust-box {
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				border-left: 4px solid var(--brand-green);
+				border-radius: var(--radius-sm);
+				padding: 1.25rem 1.5rem;
+				margin: 1.75rem 0 2rem;
+			}
+			.trust-box-header {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				margin-bottom: 0.5rem;
+			}
+			.trust-badge {
+				font-size: 0.82rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: 0.2px;
+			}
+			.trust-box-text {
+				font-size: 0.88rem;
+				color: #475569;
+				line-height: 1.6;
+				margin: 0 0 0.85rem 0;
+			}
+			.trust-box-text a {
+				color: var(--brand-green);
+				font-weight: 600;
+				text-decoration: underline;
+			}
+			.trust-box-footer {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.25rem;
+				font-size: 0.8rem;
+				border-top: 1px solid #e2e8f0;
+				padding-top: 0.75rem;
+			}
+			.trust-box-footer a {
+				color: #64748b;
+				text-decoration: none;
+				font-weight: 600;
+				transition: color 0.15s ease;
+			}
+			.trust-box-footer a:hover {
+				color: var(--brand-green);
+				text-decoration: underline;
+			}
+
+			@media (max-width: 640px) {
+				.article-author-card {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 1rem;
+				}
+				.author-card-avatar {
+					width: 64px;
+					height: 64px;
+				}
+				.author-card-initials {
+					width: 64px;
+					height: 64px;
+					font-size: 1.5rem;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- Sticky Top Bar -->
+		<aside id="sticky-bar" class="sticky-reader-bar" aria-label="Okuma İlerlemesi">
+			<div class="reader-bar-content">
+				<a href="/" style="display: inline-flex; align-items: center; text-decoration: none;" aria-label="HepsiVeri Ana Sayfa">
+					<img src="/logo-desktop.png" alt="HepsiVeri" style="height: 30px; width: auto; display: block;" />
+				</a>
+				<div class="reader-bar-title">{title}</div>
+				{datasetUrl ? (
+					<a href={datasetUrl} download style="text-decoration: none; font-weight: 700; font-size: 0.82rem; color: #15803d; background: #f0fdf4; padding: 0.25rem 0.6rem; border-radius: 4px; border: 1px solid #bbf7d0; white-space: nowrap;">
+						📥 CSV İndir
+					</a>
+				) : (
+					<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background: #ffffff; border: 1px solid var(--border-subtle); font-weight: 600; font-size: 0.78rem; color: #64748b; padding: 0.25rem 0.6rem; border-radius: 4px; cursor: pointer; white-space: nowrap;">
+						↑ Başa Dön
+					</button>
+				)}
+			</div>
+			<div class="reader-progress-track">
+				<div id="reading-fill" class="reader-progress-fill"></div>
+			</div>
+		</aside>
+
+		<Header />
+
+		<div class="portal-layout">
+			<!-- MAIN EDITORIAL CONTENT -->
+			<main class="article-col">
+				<article>
+					<header>
+						<div class="category-tag">
+							<span class="pulse-dot"></span>
+							<span>{category}</span>
+						</div>
+						
+						<h1 class="headline">{title}</h1>
+						
+						{description && <p class="lead-paragraph">{description}</p>}
+
+						<div class="byline-bar">
+							<div class="author-group">
+								<a href={`/yazar/${canonicalAuthorSlug}/`} style="display: flex; align-items: center; text-decoration: none;">
+									{authorAvatarUrl ? (
+										<img src={authorAvatarUrl} alt={authorDisplayName} class="avatar-img" />
+									) : (
+										<div class="avatar-initials">
+											{authorDisplayName.charAt(0)}
+										</div>
+									)}
+								</a>
+								<div class="author-details">
+									<a href={`/yazar/${canonicalAuthorSlug}/`} class="author-name-link">
+										<span class="author-name">{authorDisplayName}</span>
+									</a>
+									<span class="author-subtitle">{authorRole} • HepsiVeri</span>
+								</div>
+							</div>
+
+							<div class="meta-badges">
+								<span class="badge-item" title={pubDate.toISOString()}>
+									📅 <FormattedDate date={pubDate} />
+								</span>
+								{updatedDate && (
+									<span class="badge-item" title={updatedDate.toISOString()}>
+										✏️ Güncelleme: <FormattedDate date={updatedDate} />
+									</span>
+								)}
+								<span class="badge-item">⏱️ {displayReadTime}</span>
+								{datasetUrl && (
+									<span class="badge-item" style="color: #15803d; background: #f0fdf4; border-color: #bbf7d0;">📊 Açık Veri Seti</span>
+								)}
+								{postSlug && (
+									<a
+										id="admin-inline-edit"
+										href={`/admin/#/collections/blog/entries/${postSlug}`}
+										class="badge-item admin-inline-btn"
+										style="display: none;"
+										target="_blank"
+										rel="noopener"
+										title="Bu haberi Decap CMS panelinde düzenle"
+									>
+										✏️ Haberi Düzenle
+									</a>
+								)}
+							</div>
+						</div>
+					</header>
+
+					{heroImage && (
+						<figure class="hero-wrapper">
+							{typeof heroImage === 'string' ? (
+								<img src={heroImage} alt={title} loading="lazy" />
+							) : (
+								<Image src={heroImage} alt={title} />
+							)}
+							{heroImageCaption && (
+								<figcaption class="hero-caption-box">
+									<span>{heroImageCaption}</span>
+									<span>Fotoğraf: HepsiVeri Arşivi</span>
+								</figcaption>
+							)}
+						</figure>
+					)}
+
+					<div class="article-content">
+						{tocHeadings.length >= 2 && (
+							<nav class="article-toc-box" aria-label="Haber İçindekiler Tablosu">
+								<div class="article-toc-header">
+									<div class="article-toc-title">
+										<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+											<line x1="8" y1="6" x2="21" y2="6"></line>
+											<line x1="8" y1="12" x2="21" y2="12"></line>
+											<line x1="8" y1="18" x2="21" y2="18"></line>
+											<line x1="3" y1="6" x2="3.01" y2="6"></line>
+											<line x1="3" y1="12" x2="3.01" y2="12"></line>
+											<line x1="3" y1="18" x2="3.01" y2="18"></line>
+										</svg>
+										<span>İçindekiler</span>
+									</div>
+									<button id="toc-toggle-btn" class="article-toc-toggle" type="button" aria-expanded="true">
+										[<span id="toc-toggle-text">Gizle</span>]
+									</button>
+								</div>
+								<ol id="toc-content-list" class="article-toc-nav">
+									{tocHeadings.map((h) => (
+										<li class={`article-toc-item depth-${h.depth}`}>
+											<a href={`#${h.slug}`}>{h.text}</a>
+										</li>
+									))}
+								</ol>
+							</nav>
+						)}
+						<slot />
+
+						{tags && tags.length > 0 && (
+							<div class="article-tags-wrap">
+								{tags.map((t) => (
+									<span class="article-tag-item">#{t}</span>
+								))}
+							</div>
+						)}
+
+						<!-- Author Bio Box (Google News E-E-A-T) -->
+						<div class="article-author-card">
+							<div class="author-card-avatar-wrap">
+								{authorAvatarUrl ? (
+									<img src={authorAvatarUrl} alt={authorDisplayName} class="author-card-avatar" />
+								) : (
+									<div class="author-card-initials">
+										{authorDisplayName.charAt(0)}
+									</div>
+								)}
+							</div>
+							<div class="author-card-body">
+								<div class="author-card-header">
+									<div>
+										<span class="author-card-role">{authorRole}</span>
+										<h4 class="author-card-name">
+											<a href={`/yazar/${canonicalAuthorSlug}/`}>{authorDisplayName}</a>
+										</h4>
+									</div>
+									<div class="author-card-links">
+										{authorSocial && (
+											<a href={authorSocial} target="_blank" rel="noopener noreferrer" class="author-link-pill">
+												X / Twitter ↗
+											</a>
+										)}
+										{authorWebsite && (
+											<a href={authorWebsite} target="_blank" rel="noopener noreferrer" class="author-link-pill">
+												Web ↗
+											</a>
+										)}
+										<a href={`/yazar/${canonicalAuthorSlug}/`} class="author-link-pill primary">
+											{authorPostsCount > 0 ? `${authorPostsCount} Dosyası` : 'Tüm Haberleri'} →
+										</a>
+									</div>
+								</div>
+								<p class="author-card-bio">{authorBio}</p>
+								<div class="author-card-meta">
+									<span class="author-meta-date">
+										📅 <strong>İlk Yayın:</strong> <FormattedDate date={pubDate} includeTime={true} />
+									</span>
+									{updatedDate && (
+										<span class="author-meta-date updated">
+											✏️ <strong>Son Güncelleme:</strong> <FormattedDate date={updatedDate} includeTime={true} />
+										</span>
+									)}
+								</div>
+							</div>
+						</div>
+
+						<!-- Editorial Trust & Transparency Box -->
+						<div class="editorial-trust-box">
+							<div class="trust-box-header">
+								<span class="trust-badge">🛡️ Editoryal Güvence & Şeffaflık Taahhüdü</span>
+							</div>
+							<p class="trust-box-text">
+								Bu haber dosyası kamu yararı gözetilerek, resmi istatistikler ve açık veri kaynakları teyit edilerek bağımsız gazetecilik ilkelerine uygun olarak hazırlanmıştır. İçerikte tespit ettiğiniz bir maddi hata, eksiklik ya da tekzip talebi için doğrudan <a href="mailto:iletisim@hepsiveri.com?subject=Haber%20D%C3%BCzeltme%20Talebi">iletisim@hepsiveri.com</a> üzerinden editör masamıza ulaşabilirsiniz.
+							</p>
+							<div class="trust-box-footer">
+								<a href="/yayin-ilkeleri#duzeltme-ve-guncelleme">Düzeltme ve Güncelleme Politikası →</a>
+								<a href="/kunye">Kurumsal Künye →</a>
+								<a href="/iletisim">Basın & Haber İrtibat →</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</main>
+
+			<!-- RIGHT FUNCTIONAL DATA SIDEBAR (Dynamically Adapts) -->
+			<aside class="sidebar-col">
+				{tocHeadings.length >= 2 && (
+					<div class="sidebar-widget sidebar-toc-widget">
+						<h4 class="widget-title">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="8" y1="6" x2="21" y2="6"></line>
+								<line x1="8" y1="12" x2="21" y2="12"></line>
+								<line x1="8" y1="18" x2="21" y2="18"></line>
+								<line x1="3" y1="6" x2="3.01" y2="6"></line>
+								<line x1="3" y1="12" x2="3.01" y2="12"></line>
+								<line x1="3" y1="18" x2="3.01" y2="18"></line>
+							</svg>
+							<span>İçindekiler</span>
+						</h4>
+						<ul class="toc-list" id="sidebar-toc-list">
+							{tocHeadings.map((h, i) => (
+								<li class={`toc-item-sidebar depth-${h.depth}`}>
+									<a href={`#${h.slug}`}>
+										<span class="toc-num">{i + 1}.</span>
+										<span class="toc-title-text">{h.text}</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+				{datasetUrl ? (
+					<div class="sidebar-widget">
+						<h4 class="widget-title">📊 Dosya Veri Künyesi</h4>
+						<ul class="factsheet-list">
+							<li class="factsheet-item">
+								<span class="factsheet-label">Kategori:</span>
+								<span class="factsheet-val">{category}</span>
+							</li>
+							<li class="factsheet-item">
+								<span class="factsheet-label">Birincil Kaynak:</span>
+								<span class="factsheet-val">Resmi Rapor</span>
+							</li>
+							<li class="factsheet-item">
+								<span class="factsheet-label">Açık Veri:</span>
+								<span class="factsheet-val" style="color: #15803d;">CSV Mevcut</span>
+							</li>
+						</ul>
+						<a href={datasetUrl} download class="sidebar-download-btn">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+								<polyline points="7 10 12 15 17 10"></polyline>
+								<line x1="12" y1="15" x2="12" y2="3"></line>
+							</svg>
+							<span>Ham Veri Setini İndir</span>
+						</a>
+					</div>
+				) : (
+					<div class="sidebar-widget">
+						<h4 class="widget-title">📌 Dosya Hakkında</h4>
+						<p style="font-size: 0.88rem; color: #64748b; line-height: 1.5; margin: 0 0 1rem 0;">
+							Bu içerik <strong>{category}</strong> kategorisinde yayınlanmıştır. HepsiVeri açık kaynak araştırmaları kapsamında hazırlanmıştır.
+						</p>
+						<div style="font-size: 0.82rem; color: #1f9a77; font-weight: 700;">
+							✓ Doğrulanmış Kaynak
+						</div>
+					</div>
+				)}
+
+				<!-- Related Data Stories (Dynamic) -->
+				<div class="sidebar-widget">
+					<h4 class="widget-title">🔍 Son Haberler</h4>
+					{relatedPosts.map((post) => (
+						<a href={`/haber/${post.id}/`} class="related-item">
+							<span class="related-badge">{post.data.category || 'VERİ'}</span>
+							<h5 class="related-title">{post.data.title}</h5>
+						</a>
+					))}
+				</div>
+
+
+			</aside>
+		</div>
+
+		<Footer />
+
+		<!-- Scroll progress and sticky bar script -->
+		<script is:inline>
+			const stickyBar = document.getElementById('sticky-bar');
+			const progressFill = document.getElementById('reading-fill');
+
+			window.addEventListener('scroll', () => {
+				const scrollTop = window.scrollY || document.documentElement.scrollTop;
+				const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+				const percent = Math.min((scrollTop / docHeight) * 100, 100);
+
+				if (progressFill) {
+					progressFill.style.width = percent + '%';
+				}
+
+				if (scrollTop > 260) {
+					stickyBar?.classList.add('visible');
+				} else {
+					stickyBar?.classList.remove('visible');
+				}
+			}, { passive: true });
+		</script>
+		<!-- Flourish Embed Script for Data Visualizations -->
+		<script is:inline src="https://public.flourish.studio/resources/embed.js"></script>
+
+		<!-- Table of Contents ID matching & Scrollspy Script -->
+		<script is:inline define:vars={{ serverSlugs: tocHeadings.map(h => h.slug) }}>
+			(function() {
+				function initToc() {
+					const headings = document.querySelectorAll('.article-content h2, .article-content h3');
+					if (!headings.length) return;
+
+					// 1. Sunucudan gelen kesin slug'ları sırasıyla başlıklara ata
+					headings.forEach((el, index) => {
+						if (serverSlugs && serverSlugs[index]) {
+							el.id = serverSlugs[index];
+						} else if (!el.id) {
+							el.id = 'bolum-' + (index + 1);
+						}
+
+						// Başlığa fareyle gelindiğinde tıklanabilir bağlantı simgesi (#) ekle
+						if (!el.querySelector('.heading-anchor')) {
+							const anchor = document.createElement('a');
+							anchor.className = 'heading-anchor';
+							anchor.href = '#' + el.id;
+							anchor.title = 'Bu alt başlığa doğrudan bağlantı';
+							anchor.textContent = '#';
+							anchor.addEventListener('click', function(e) {
+								e.preventDefault();
+								scrollToHeading(el.id);
+							});
+							el.appendChild(anchor);
+						}
+					});
+
+					// 2. Yumuşak kaydırma fonksiyonu (Üst menü ve okuma çubuğu payı ile)
+					function scrollToHeading(targetId) {
+						const targetEl = document.getElementById(targetId);
+						if (!targetEl) return;
+						const headerOffset = 95;
+						const elementPosition = targetEl.getBoundingClientRect().top;
+						const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+						window.scrollTo({
+							top: offsetPosition,
+							behavior: 'smooth'
+						});
+
+						try {
+							history.pushState(null, '', '#' + targetId);
+						} catch (e) {}
+					}
+
+					// 3. İçindekiler kutusu ve kenar çubuğundaki tüm linklere tıklama dinleyicisi bağla
+					document.querySelectorAll('.article-toc-nav a, .toc-list a').forEach(link => {
+						link.addEventListener('click', function(e) {
+							const href = this.getAttribute('href');
+							if (href && href.startsWith('#')) {
+								e.preventDefault();
+								const targetId = href.substring(1);
+								scrollToHeading(targetId);
+							}
+						});
+					});
+
+					// 4. Doğrudan hash URL ile gelinmişse (örn: #suca-suruklenen-cocuklar) oraya kaydır
+					if (window.location.hash) {
+						const initialId = window.location.hash.substring(1);
+						setTimeout(() => scrollToHeading(initialId), 300);
+					}
+
+					// 5. İçindekiler kutusu aç/kapa (Gizle / Göster)
+					const toggleBtn = document.getElementById('toc-toggle-btn');
+					const toggleText = document.getElementById('toc-toggle-text');
+					const tocNav = document.getElementById('toc-content-list');
+					if (toggleBtn && tocNav && toggleText) {
+						toggleBtn.addEventListener('click', () => {
+							const isCollapsed = tocNav.classList.toggle('collapsed');
+							toggleText.textContent = isCollapsed ? 'Göster' : 'Gizle';
+							toggleBtn.setAttribute('aria-expanded', !isCollapsed);
+						});
+					}
+
+					// 6. Sidebar Scrollspy: Okunan başlığı yeşil renkle vurgula
+					const sidebarLinks = document.querySelectorAll('.toc-item-sidebar a');
+					if (sidebarLinks.length && 'IntersectionObserver' in window) {
+						const observer = new IntersectionObserver((entries) => {
+							entries.forEach(entry => {
+								if (entry.isIntersecting) {
+									const id = entry.target.getAttribute('id');
+									sidebarLinks.forEach(link => {
+										if (link.getAttribute('href') === '#' + id) {
+											link.classList.add('active');
+										} else {
+											link.classList.remove('active');
+										}
+									});
+								}
+							});
+						}, {
+							rootMargin: '-80px 0px -70% 0px'
+						});
+
+						headings.forEach(h => observer.observe(h));
+					}
+				}
+
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', initToc);
+				} else {
+					initToc();
+				}
+			})();
+		</script>
+
+		<!-- Admin Quick Actions (Floating bar, only visible to authenticated admins) -->
+		{postSlug && (
+			<div id="admin-bar-root" class="admin-float-bar" style="display: none;" aria-label="Yönetici Hızlı Eylemleri">
+				<a
+					href={`/admin/#/collections/blog/entries/${postSlug}`}
+					class="admin-action-btn edit"
+					target="_blank"
+					rel="noopener"
+					title="Bu haberi yönetim panelinde anında düzenle"
+				>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+						<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+					</svg>
+					<span>Haberi Düzenle</span>
+				</a>
+				<a
+					href="/admin/"
+					class="admin-action-btn panel"
+					target="_blank"
+					rel="noopener"
+					title="CMS Yönetim Paneline Git"
+				>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="3" width="7" height="7"></rect>
+						<rect x="14" y="3" width="7" height="7"></rect>
+						<rect x="14" y="14" width="7" height="7"></rect>
+						<rect x="3" y="14" width="7" height="7"></rect>
+					</svg>
+					<span>Panel</span>
+				</a>
+			</div>
+		)}
+
+		<!-- Admin Authentication Check Script -->
+		<script is:inline>
+			(function() {
+				function checkAdminAuth() {
+					try {
+						const isAdmin = localStorage.getItem('hepsiveri_admin') === 'true' ||
+						                localStorage.getItem('decap-cms-user') !== null ||
+						                localStorage.getItem('netlify-cms-user') !== null ||
+						                (window.netlifyIdentity && window.netlifyIdentity.currentUser() !== null);
+						if (isAdmin) {
+							const floatBar = document.getElementById('admin-bar-root');
+							if (floatBar) floatBar.style.display = 'flex';
+							const inlineBtn = document.getElementById('admin-inline-edit');
+							if (inlineBtn) inlineBtn.style.display = 'inline-flex';
+						}
+					} catch (e) {}
+				}
+
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', checkAdminAuth);
+				} else {
+					checkAdminAuth();
+				}
+			})();
+		</script>
+	</body>
+</html>

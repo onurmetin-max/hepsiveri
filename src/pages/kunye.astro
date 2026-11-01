@@ -1,0 +1,262 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import avatarImg from '../assets/onur.webp';
+import { Image } from 'astro:assets';
+
+const orgSchema = {
+	"@context": "https://schema.org",
+	"@type": "NewsMediaOrganization",
+	"name": "HepsiVeri",
+	"alternateName": "HepsiVeri Bağımsız Açık Veri Platformu",
+	"url": "https://hepsiveri.com/",
+	"logo": {
+		"@type": "ImageObject",
+		"url": "https://hepsiveri.com/logo-horizontal.png",
+		"width": 569,
+		"height": 222
+	},
+	"foundingDate": "2022",
+	"founder": {
+		"@type": "Person",
+		"name": "Onur Metin",
+		"jobTitle": "Kurucu & Genel Yayın Yönetmeni",
+		"url": "https://hepsiveri.com/yazar/onur-metin/"
+	},
+	"masthead": "https://hepsiveri.com/kunye/",
+	"publishingPrinciples": "https://hepsiveri.com/yayin-ilkeleri/",
+	"correctionsPolicy": "https://hepsiveri.com/yayin-ilkeleri/#duzeltme-ve-guncelleme",
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "Ankara",
+		"addressRegion": "Çankaya",
+		"addressCountry": "TR"
+	},
+	"contactPoint": [
+		{
+			"@type": "ContactPoint",
+			"telephone": "+90-312-911-28-40",
+			"contactType": "editorial",
+			"email": "editor@hepsiveri.com",
+			"availableLanguage": ["Turkish", "English"]
+		},
+		{
+			"@type": "ContactPoint",
+			"contactType": "general support",
+			"email": "iletisim@hepsiveri.com",
+			"availableLanguage": ["Turkish", "English"]
+		}
+	],
+	"sameAs": [
+		"https://twitter.com/hepsiveri",
+		"https://instagram.com/hepsiveri"
+	]
+};
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead
+			title="Künye & Editoryal Kadro | HepsiVeri"
+			description="HepsiVeri künyesi, imtiyaz sahibi, editoryal yönetim kadrosu ve kurumsal bilgileri."
+		/>
+		<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+		<style>
+			.kunye-container {
+				max-width: 860px;
+				margin: 0 auto;
+				padding: 3rem 1.5rem 5rem;
+			}
+			.kunye-header {
+				margin-bottom: 2.5rem;
+				border-bottom: 2px solid var(--border-subtle);
+				padding-bottom: 1.5rem;
+			}
+			.kunye-tag {
+				font-size: 0.85rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				letter-spacing: 0.3px;
+			}
+			.kunye-title {
+				font-family: var(--font-serif);
+				font-size: 2.4rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				margin: 0.5rem 0 0.75rem 0;
+			}
+			.kunye-lead {
+				font-size: 1.15rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+			}
+			.kunye-table {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 2rem 0;
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				overflow: hidden;
+			}
+			.kunye-table tr {
+				border-bottom: 1px solid #e2e8f0;
+			}
+			.kunye-table tr:last-child {
+				border-bottom: none;
+			}
+			.kunye-table th {
+				text-align: left;
+				padding: 1rem 1.25rem;
+				font-size: 0.92rem;
+				color: var(--text-secondary);
+				background: #f8fafc;
+				width: 32%;
+				font-weight: 600;
+				vertical-align: top;
+			}
+			.kunye-table td {
+				padding: 1rem 1.25rem;
+				font-size: 0.95rem;
+				color: var(--text-primary);
+				line-height: 1.6;
+			}
+			.author-highlight {
+				display: flex;
+				align-items: center;
+				gap: 1.25rem;
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				border-radius: var(--radius-md);
+				padding: 1.5rem;
+				margin: 2rem 0;
+			}
+			.author-highlight img {
+				width: 72px;
+				height: 72px;
+				border-radius: 50%;
+				border: 2px solid var(--brand-green);
+				object-fit: cover;
+			}
+			.notice-box {
+				background: #f8fafc;
+				border: 1px solid #e2e8f0;
+				border-radius: var(--radius-md);
+				padding: 1.25rem 1.5rem;
+				font-size: 0.9rem;
+				color: #475569;
+				line-height: 1.6;
+				margin-top: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="kunye-container">
+			<header class="kunye-header">
+				<span class="kunye-tag">Kurumsal Şeffaflık & E-E-A-T</span>
+				<h1 class="kunye-title">Künye</h1>
+				<p class="kunye-lead">
+					5187 sayılı Basın Kanunu ve 5651 sayılı İnternet Ortamında Yapılan Yayınların Düzenlenmesi Hakkında Kanun uyarınca HepsiVeri'ye ilişkin yasal künye, tüzel bilgiler ve editoryal yönetim kadrosu aşağıda kamuoyuna açıkça beyan edilmiştir.
+				</p>
+			</header>
+
+			<table class="kunye-table">
+				<tbody>
+					<tr>
+						<th>İmtiyaz Sahibi & Kurucu</th>
+						<td>
+							<strong>Onur Metin</strong><br />
+							<span style="font-size: 0.85rem; color: #64748b;">Araştırmacı Veri Gazetecisi</span>
+						</td>
+					</tr>
+					<tr>
+						<th>Genel Yayın Yönetmeni</th>
+						<td><strong>Onur Metin</strong> (<a href="mailto:editor@hepsiveri.com" style="color: var(--brand-green);">editor@hepsiveri.com</a>)</td>
+					</tr>
+					<tr>
+						<th>Sorumlu Yazı İşleri Müdürü</th>
+						<td><strong>Onur Metin</strong></td>
+					</tr>
+					<tr>
+						<th>Veri & Araştırma Masası</th>
+						<td>
+							HepsiVeri Araştırma & Açık Veri Ekibi
+						</td>
+					</tr>
+					<tr>
+						<th>Yazarlar & Muhabirler</th>
+						<td>
+							<a href="/yazarlar" style="color: var(--brand-green); font-weight: 600; text-decoration: underline;">Editoryal Kadro Listesi</a>:<br />
+							Onur Metin, Buğu B. Başar, Sevinç Koçak, Ulaş Akyol, Fatih Özcan, Meltem Suat
+						</td>
+					</tr>
+					<tr>
+						<th>Haber Merkezleri & Adres</th>
+						<td>
+							<strong>Ankara Bürosu:</strong> Çankaya, Ankara, Türkiye<br />
+							<strong>Eskişehir Bürosu:</strong> Tepebaşı, Eskişehir, Türkiye
+						</td>
+					</tr>
+					<tr>
+						<th>Telefon & İrtibat</th>
+						<td>
+							<strong>Haber İhbar & Santral:</strong> +90 (312) 911 28 40<br />
+							<strong>GSM & WhatsApp Hattı:</strong> +90 (532) 000 00 00
+						</td>
+					</tr>
+					<tr>
+						<th>Kurumsal E-Posta</th>
+						<td>
+							<strong>Genel & Kurumsal:</strong> <a href="mailto:iletisim@hepsiveri.com" style="color: var(--brand-green); font-weight: 600;">iletisim@hepsiveri.com</a><br />
+							<strong>Haber & Editör Masası:</strong> <a href="mailto:editor@hepsiveri.com" style="color: var(--brand-green); font-weight: 600;">editor@hepsiveri.com</a><br />
+							<strong>Yedek / Gmail:</strong> <a href="mailto:hepsiveri@gmail.com" style="color: var(--brand-green);">hepsiveri@gmail.com</a>
+						</td>
+					</tr>
+					<tr>
+						<th>Yayın Türü</th>
+						<td>Süreli Elektronik Yayın (Yaygın Bağımsız Dijital Veri Haberciliği)</td>
+					</tr>
+					<tr>
+						<th>Yayın Dili</th>
+						<td>Türkçe ve İngilizce (Turkish & English)</td>
+					</tr>
+					<tr>
+						<th>Yer Sağlayıcı (Hosting)</th>
+						<td>
+							Vercel Inc. (440 N Barranca Ave #4133 Covina, CA 91723 USA) / Cloudflare Inc.
+						</td>
+					</tr>
+					<tr>
+						<th>İnternet Alan Adı & Tescil</th>
+						<td><a href="https://hepsiveri.com" style="color: var(--brand-green); font-weight: 600;">https://hepsiveri.com</a></td>
+					</tr>
+					<tr>
+						<th>Yayın İlkeleri & Düzeltme</th>
+						<td><a href="/yayin-ilkeleri" style="color: var(--brand-green); font-weight: 600;">HepsiVeri Yayın ve Düzeltme Politikası</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="author-highlight">
+				<Image src={avatarImg} alt="Onur Metin" />
+				<div>
+					<h3 style="margin: 0 0 0.25rem 0; font-size: 1.15rem;"><a href="/yazar/onur-metin/" style="color: inherit; text-decoration: none;">Onur Metin</a></h3>
+					<p style="margin: 0 0 0.4rem 0; font-size: 0.85rem; color: #64748b; font-weight: 600;">Kurucu & Genel Yayın Yönetmeni</p>
+					<p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
+						ODTÜ Jeoloji Mühendisliği ve Anadolu Üniversitesi Gazetecilik yüksek lisans mezunudur. Açık veri madenciliği, kamu harcamaları denetimi, Sayıştay raporları ve veri görselleştirme alanlarında araştırmacı gazetecilik dosyaları üretmektedir.
+					</p>
+				</div>
+			</div>
+
+			<div class="notice-box">
+				<strong>Hukuki Uyarı & Telif:</strong> HepsiVeri'de yayımlanan özel araştırmalar ve veri görselleştirmeleri aksi belirtilmedikçe CC BY 4.0 lisanslıdır; kaynak gösterilmeksizin ticari amaçla kopyalanamaz. Doğrudan tekzip ve düzeltme talepleri için <strong>iletisim@hepsiveri.com</strong> adresi üzerinden Sorumlu Yazı İşleri Müdürlüğü'ne başvurulabilir.
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+

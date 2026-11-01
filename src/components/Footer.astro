@@ -1,0 +1,159 @@
+---
+const today = new Date();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="footer-brand">
+			<a href="/" class="footer-logo-link" aria-label="HepsiVeri Ana Sayfa">
+				<img src="/logo-dark-bg.png" alt="HepsiVeri" class="footer-logo-img" />
+			</a>
+			<p class="footer-mission">
+				Haberden veri, veriden haber. Resmi raporlar, istatistik bültenleri ve açık kaynak araştırmalarıyla kanıta dayalı gazetecilik platformu.
+			</p>
+			<div class="footer-license">
+				Tüm verilerimiz ve analizlerimiz <strong>Açık Veri (CC-BY 4.0)</strong> lisansıyla kamusal kullanıma açıktır.
+			</div>
+		</div>
+
+		<div class="footer-columns">
+			<div class="footer-col">
+				<h5>Kurumsal</h5>
+				<ul>
+					<li><a href="/about">Hakkımızda & Metodoloji</a></li>
+					<li><a href="/kunye">Künye</a></li>
+					<li><a href="/yazarlar">Yazarlarımız</a></li>
+					<li><a href="/yayin-ilkeleri">Yayın İlkeleri</a></li>
+				</ul>
+			</div>
+
+			<div class="footer-col">
+				<h5>İletişim & Akışlar</h5>
+				<ul>
+					<li><a href="/iletisim">İletişim Bilgileri</a></li>
+					<li><a href="mailto:iletisim@hepsiveri.com">iletisim@hepsiveri.com</a></li>
+					<li><a href="https://twitter.com/hepsiveri" target="_blank" rel="noopener">X / Twitter (@hepsiveri)</a></li>
+					<li><a href="https://instagram.com/hepsiveri" target="_blank" rel="noopener">Instagram (@hepsiveri)</a></li>
+					<li><a href="/rss.xml">RSS Akışı</a></li>
+					<li><a href="/news-sitemap.xml">Google News Sitemap</a></li>
+				</ul>
+			</div>
+
+			<div class="footer-col">
+				<h5>Yasal</h5>
+				<ul>
+					<li><a href="/kullanim-kosullari-ve-yasal-uyari">Kullanım Koşulları</a></li>
+					<li><a href="/gizlilik-politikasi">Gizlilik Politikası</a></li>
+					<li><a href="/cerez-politikasi">Çerez Politikası</a></li>
+					<li><a href="/kisisel-verilerin-korunmasi-hakkinda-aydinlatma-metni-kvkk">KVKK Metni</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer-bottom">
+		<div class="footer-bottom-inner">
+			<span>&copy; {today.getFullYear()} HepsiVeri. Bağımsız Veri Gazeteciliği.</span>
+			<span>Açık Kaynak Kodlu • Astro Altyapısıyla Güçlendirildi</span>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: #0f172a;
+		color: #94a3b8;
+		border-top: 1px solid #1e293b;
+		margin-top: auto;
+		font-size: 0.9rem;
+	}
+	.footer-inner {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 3.5rem 1.5rem 2.5rem;
+		display: grid;
+		grid-template-columns: 1.4fr 1fr;
+		gap: 3rem;
+	}
+	.footer-logo-link {
+		display: inline-block;
+		margin-bottom: 0.85rem;
+		text-decoration: none;
+		transition: opacity 0.15s ease;
+	}
+	.footer-logo-link:hover {
+		opacity: 0.85;
+	}
+	.footer-logo-img {
+		height: 44px;
+		width: auto;
+		display: block;
+	}
+	.footer-mission {
+		line-height: 1.6;
+		margin-bottom: 1rem;
+		color: #cbd5e1;
+		max-width: 480px;
+	}
+	.footer-license {
+		font-size: 0.85rem;
+		color: #e2e8f0;
+		font-weight: 500;
+		line-height: 1.5;
+		border-left: 2px solid #1f9a77;
+		padding-left: 0.75rem;
+	}
+	.footer-license strong {
+		color: #ffffff;
+		font-weight: 700;
+	}
+	.footer-columns {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+	}
+	.footer-col h5 {
+		font-family: var(--font-sans);
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: #ffffff;
+		letter-spacing: 0.2px;
+		margin: 0 0 1rem 0;
+	}
+	.footer-col ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.footer-col li {
+		margin-bottom: 0.5rem;
+	}
+	.footer-col a {
+		color: #94a3b8;
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+	.footer-col a:hover {
+		color: #34d399;
+	}
+	.footer-bottom {
+		border-top: 1px solid #1e293b;
+		padding: 1.25rem 1.5rem;
+		font-size: 0.8rem;
+		color: #64748b;
+	}
+	.footer-bottom-inner {
+		max-width: 1100px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	@media (max-width: 768px) {
+		.footer-inner {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+	}
+</style>

@@ -1,0 +1,756 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TAGLINE, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const posts = (await getCollection('blog', ({ data }) => data.status !== 'Taslak')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const featuredPosts = posts.filter((p) => p.data.featured).slice(0, 5);
+
+const leadStory = posts[0];
+const subLead1 = posts[1] || posts[0];
+const subLead2 = posts[2] || posts[0];
+
+const briefingPosts = posts.slice(3, 7);
+const economyPosts = posts.filter(p => p.data.category === 'Ekonomi').slice(0, 3);
+const societyPosts = posts.filter(p => ['Nüfus', 'Çocuk', 'Sağlık', 'Kadın'].includes(p.data.category)).slice(0, 3);
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead title={`${SITE_TITLE} - ${SITE_TAGLINE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.publica-container {
+				max-width: 1280px;
+				margin: 0 auto;
+				padding: 2rem 1.5rem 5rem;
+			}
+
+			/* ==========================================================================
+			   PUBLICA 3-COLUMN FRONT-PAGE GRID
+			   Col 1: Briefing Rail (22%) | Col 2: The Lead (52%) | Col 3: Most Read (26%)
+			   ========================================================================== */
+			.front-grid {
+				display: grid;
+				grid-template-columns: 260px 1fr 310px;
+				gap: 2rem;
+				align-items: start;
+				border-bottom: 3px double var(--border-strong);
+				padding-bottom: 3rem;
+				margin-bottom: 3.5rem;
+			}
+			.front-grid.no-featured {
+				grid-template-columns: 280px 1fr;
+			}
+
+			/* Column Rules (Classic Newspaper Vertical Lines) */
+			.briefing-col {
+				border-right: 1px solid var(--border-subtle);
+				padding-right: 1.75rem;
+			}
+			.lead-col {
+				padding: 0 0.5rem;
+			}
+			.rail-col {
+				border-left: 1px solid var(--border-subtle);
+				padding-left: 1.75rem;
+			}
+
+			.desk-header {
+				font-family: var(--font-sans);
+				font-size: 0.82rem;
+				font-weight: 800;
+				letter-spacing: 0.3px;
+				color: var(--text-primary);
+				border-bottom: 2px solid var(--brand-green);
+				padding-bottom: 0.4rem;
+				margin: 0 0 1.25rem 0;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+
+			/* COL 1: BRIEFING RAIL */
+			.briefing-item {
+				display: block;
+				text-decoration: none;
+				padding: 0.95rem 0;
+				border-bottom: 1px dashed var(--border-subtle);
+			}
+			.briefing-item:last-child {
+				border-bottom: none;
+			}
+			.brief-thumb-lead {
+				width: 100%;
+				height: 135px;
+				border-radius: var(--radius-sm);
+				overflow: hidden;
+				margin-bottom: 0.65rem;
+				background: #f1f5f9;
+			}
+			.brief-thumb-lead img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.25s ease;
+			}
+			.briefing-item:hover .brief-thumb-lead img {
+				transform: scale(1.03);
+			}
+			.brief-row {
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-between;
+				gap: 0.85rem;
+			}
+			.brief-row-content {
+				flex: 1;
+				min-width: 0;
+			}
+			.brief-thumb-mini {
+				width: 72px;
+				height: 72px;
+				border-radius: var(--radius-sm);
+				overflow: hidden;
+				flex-shrink: 0;
+				background: #f1f5f9;
+			}
+			.brief-thumb-mini img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.25s ease;
+			}
+			.briefing-item:hover .brief-thumb-mini img {
+				transform: scale(1.05);
+			}
+			.brief-meta {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 0.75rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				margin-bottom: 0.35rem;
+			}
+			.brief-title {
+				font-family: var(--font-display);
+				font-size: 1.02rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				line-height: 1.3;
+				margin: 0 0 0.35rem 0;
+			}
+			.brief-desc {
+				font-size: 0.82rem;
+				color: var(--text-muted);
+				line-height: 1.45;
+				margin: 0;
+			}
+			.briefing-item:hover .brief-title {
+				color: var(--brand-green);
+			}
+
+			/* Open Data Fact Box in Left Rail */
+			.open-data-box {
+				background: var(--brand-green-light);
+				border: 1px solid var(--brand-green-border);
+				border-radius: var(--radius-sm);
+				padding: 1rem;
+				margin-top: 1.5rem;
+			}
+			.open-data-box h5 {
+				font-size: 0.85rem;
+				font-weight: 800;
+				color: #15803d;
+				margin: 0 0 0.35rem 0;
+			}
+			.open-data-box p {
+				font-size: 0.78rem;
+				color: #166534;
+				margin: 0;
+				line-height: 1.4;
+			}
+
+			/* COL 2: THE MAIN LEAD DESK */
+			.lead-card {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+			}
+			.lead-category-bar {
+				display: flex;
+				align-items: center;
+				gap: 0.6rem;
+				font-size: 0.82rem;
+				font-weight: 800;
+				letter-spacing: 0.3px;
+				margin-bottom: 0.85rem;
+			}
+			.lead-badge {
+				background: #0f172a;
+				color: #ffffff;
+				font-size: 0.7rem;
+				font-weight: 800;
+				padding: 0.2rem 0.55rem;
+				border-radius: 3px;
+				letter-spacing: 0.5px;
+			}
+			.lead-cat-name {
+				color: var(--brand-green);
+				font-weight: 700;
+			}
+			.lead-media {
+				width: 100%;
+				height: 380px;
+				display: block;
+				position: relative;
+				margin-bottom: 1.25rem;
+				border-radius: var(--radius-sm);
+				overflow: hidden;
+				background: #f1f5f9;
+			}
+			.lead-media img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.3s ease;
+			}
+			.lead-card:hover .lead-media img {
+				transform: scale(1.02);
+			}
+			.lead-headline {
+				font-family: var(--font-display);
+				font-size: 2.75rem;
+				line-height: 1.1;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: -0.03em;
+				margin: 0 0 0.85rem 0;
+			}
+			.lead-card:hover .lead-headline {
+				color: var(--brand-green);
+			}
+			.lead-standfirst {
+				font-size: 1.12rem;
+				line-height: 1.55;
+				color: #334155;
+				margin-bottom: 1.25rem;
+			}
+			.media-credit {
+				font-size: 0.75rem;
+				color: var(--text-muted);
+				margin-top: 0.4rem;
+				text-align: right;
+			}
+
+			/* Sub-Leads (2 Columns below Main Lead) */
+			.sub-leads-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.5rem;
+				margin-top: 2rem;
+				padding-top: 1.75rem;
+				border-top: 1px solid var(--border-subtle);
+			}
+			.sub-lead-card {
+				text-decoration: none;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+			}
+			.sub-lead-thumb {
+				width: 100%;
+				height: 180px;
+				border-radius: var(--radius-sm);
+				overflow: hidden;
+				margin-bottom: 0.85rem;
+				background: #f1f5f9;
+			}
+			.sub-lead-thumb img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.25s ease;
+			}
+			.sub-lead-card:hover .sub-lead-thumb img {
+				transform: scale(1.03);
+			}
+			.sub-lead-cat {
+				font-size: 0.75rem;
+				font-weight: 700;
+				color: var(--brand-green);
+				margin-bottom: 0.35rem;
+				display: inline-block;
+			}
+			.sub-lead-title {
+				font-family: var(--font-display);
+				font-size: 1.22rem;
+				line-height: 1.25;
+				font-weight: 700;
+				color: var(--text-primary);
+				margin: 0 0 0.5rem 0;
+			}
+			.sub-lead-card:hover .sub-lead-title {
+				color: var(--brand-green);
+			}
+			.sub-lead-desc {
+				font-size: 0.85rem;
+				color: var(--text-muted);
+				line-height: 1.5;
+				margin: 0 0 0.75rem 0;
+			}
+			.sub-lead-meta {
+				font-size: 0.78rem;
+				color: #94a3b8;
+			}
+
+			/* COL 3: MOST READ RAIL (Numbered 01, 02, 03) */
+			.most-read-list {
+				list-style: none;
+				padding: 0;
+				margin: 0 0 2rem 0;
+			}
+			.most-read-item {
+				display: flex;
+				align-items: center;
+				gap: 0.85rem;
+				padding: 0.85rem 0;
+				border-bottom: 1px solid #f1f5f9;
+				text-decoration: none;
+			}
+			.most-read-item:last-child {
+				border-bottom: none;
+			}
+			.rank-num {
+				font-family: var(--font-display);
+				font-size: 1.85rem;
+				line-height: 1;
+				font-weight: 800;
+				color: #cbd5e1;
+				width: 28px;
+				flex-shrink: 0;
+			}
+			.most-read-item:hover .rank-num {
+				color: var(--brand-green);
+			}
+			.rank-content {
+				flex: 1;
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+			}
+			.rank-cat {
+				font-size: 0.72rem;
+				font-weight: 800;
+				color: var(--brand-green);
+				margin-bottom: 0.2rem;
+			}
+			.rank-title {
+				font-family: var(--font-display);
+				font-size: 0.95rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				line-height: 1.35;
+				margin: 0;
+			}
+			.most-read-item:hover .rank-title {
+				color: var(--brand-green);
+			}
+			.rank-thumb {
+				width: 64px;
+				height: 64px;
+				border-radius: var(--radius-sm);
+				overflow: hidden;
+				flex-shrink: 0;
+				background: #f1f5f9;
+			}
+			.rank-thumb img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.2s ease;
+			}
+			.most-read-item:hover .rank-thumb img {
+				transform: scale(1.05);
+			}
+
+			/* ==========================================================================
+			   SECTION DESKS (Horizontal Topic Bands)
+			   ========================================================================== */
+			.desk-section {
+				margin-bottom: 4rem;
+			}
+			.desk-banner {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				border-top: 2px solid var(--text-primary);
+				border-bottom: 1px solid var(--border-subtle);
+				padding: 0.65rem 0;
+				margin-bottom: 2rem;
+			}
+			.desk-banner-title {
+				font-family: var(--font-sans);
+				font-size: 1.15rem;
+				font-weight: 800;
+				color: var(--text-primary);
+				letter-spacing: 0.3px;
+				margin: 0;
+			}
+
+			.desk-trio-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2rem;
+			}
+			.trio-card {
+				text-decoration: none;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				background: #ffffff;
+				border: 1px solid var(--border-subtle);
+				padding: 1.25rem;
+				border-radius: var(--radius-sm);
+				transition: transform 0.15s, border-color 0.15s;
+			}
+			.trio-card:hover {
+				border-color: var(--brand-green);
+				transform: translateY(-2px);
+			}
+			.trio-thumb {
+				width: 100%;
+				height: 175px;
+				border-radius: var(--radius-sm);
+				overflow: hidden;
+				margin-bottom: 1rem;
+				background: #f1f5f9;
+			}
+			.trio-thumb img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.25s ease;
+			}
+			.trio-card:hover .trio-thumb img {
+				transform: scale(1.03);
+			}
+			.trio-cat {
+				font-size: 0.75rem;
+				font-weight: 800;
+				color: var(--brand-green);
+				margin-bottom: 0.4rem;
+			}
+			.trio-title {
+				font-family: var(--font-display);
+				font-size: 1.22rem;
+				font-weight: 700;
+				color: var(--text-primary);
+				line-height: 1.28;
+				margin: 0 0 0.6rem 0;
+			}
+			.trio-desc {
+				font-size: 0.85rem;
+				color: var(--text-muted);
+				line-height: 1.5;
+				margin: 0 0 1rem 0;
+				flex-grow: 1;
+			}
+			.trio-footer {
+				font-size: 0.78rem;
+				color: #94a3b8;
+				border-top: 1px solid #f1f5f9;
+				padding-top: 0.5rem;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			@media (max-width: 1024px) {
+				.front-grid {
+					grid-template-columns: 1fr 300px;
+				}
+				.front-grid.no-featured {
+					grid-template-columns: 1fr;
+				}
+				.briefing-col {
+					display: none;
+				}
+			}
+			@media (max-width: 768px) {
+				.front-grid,
+				.front-grid.no-featured {
+					grid-template-columns: 1fr;
+				}
+				.rail-col {
+					border-left: none;
+					padding-left: 0;
+					border-top: 1px solid var(--border-subtle);
+					padding-top: 2rem;
+				}
+				.sub-leads-grid,
+				.desk-trio-grid {
+					grid-template-columns: 1fr;
+				}
+				.lead-headline {
+					font-size: 2.1rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+
+		<main class="publica-container">
+			<!-- PUBLICA FRONT-PAGE GRID (Adapts to 2 or 3 columns based on featured posts) -->
+			<section class={`front-grid ${featuredPosts.length > 0 ? 'has-featured' : 'no-featured'}`}>
+				<!-- 1. LEFT COLUMN: Recent Stories Rail -->
+				<aside class="briefing-col">
+					<h3 class="desk-header">
+						<span>📌 Son Yayınlananlar</span>
+					</h3>
+
+					{briefingPosts.map((post, idx) => (
+						<a href={`/haber/${post.id}/`} class="briefing-item">
+							{idx === 0 ? (
+								<>
+									{post.data.heroImage && (
+										<div class="brief-thumb-lead">
+											<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+										</div>
+									)}
+									<div class="brief-meta">
+										<span>{post.data.category}</span>
+										{post.data.author && (
+											<>
+												<span>•</span>
+												<span style="color: #64748b; font-weight: 500;">{post.data.author}</span>
+											</>
+										)}
+									</div>
+									<h4 class="brief-title">{post.data.title}</h4>
+									<p class="brief-desc">{post.data.description}</p>
+								</>
+							) : (
+								<div class="brief-row">
+									<div class="brief-row-content">
+										<div class="brief-meta">
+											<span>{post.data.category}</span>
+										</div>
+										<h4 class="brief-title">{post.data.title}</h4>
+									</div>
+									{post.data.heroImage && (
+										<div class="brief-thumb-mini">
+											<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+										</div>
+									)}
+								</div>
+							)}
+						</a>
+					))}
+
+					<div class="open-data-box">
+						<h5>📂 Açık Veri Taahhüdü</h5>
+						<p>Sitemizdeki her haberin ham veri seti CSV formatında doğrudan indirilebilir.</p>
+					</div>
+				</aside>
+
+				<!-- 2. CENTER COLUMN: The Lead Story + Sub-Leads -->
+				<section class="lead-col">
+					{leadStory && (
+						<article class="lead-card">
+							<div class="lead-category-bar">
+								<span class="lead-badge">Manşet Dosyası</span>
+								<span class="lead-cat-name">{leadStory.data.category}</span>
+							</div>
+
+							{leadStory.data.heroImage && (
+								<a href={`/haber/${leadStory.id}/`} class="lead-media">
+									{typeof leadStory.data.heroImage === 'string' ? (
+										<img src={leadStory.data.heroImage} alt={leadStory.data.title} loading="eager" />
+									) : (
+										<Image src={leadStory.data.heroImage} alt={leadStory.data.title} />
+									)}
+								</a>
+							)}
+
+							<a href={`/haber/${leadStory.id}/`} style="text-decoration: none;">
+								<h1 class="lead-headline">{leadStory.data.title}</h1>
+							</a>
+
+							<p class="lead-standfirst">{leadStory.data.description}</p>
+
+							<div style="font-size: 0.85rem; color: #64748b; display: flex; gap: 1.5rem; align-items: center;">
+								{leadStory.data.author && (
+									<span>✍️ <strong>{leadStory.data.author}</strong></span>
+								)}
+								<a href={`/haber/${leadStory.id}/`} style="font-weight: 700; color: #1f9a77;">
+									Haberi Oku & Veri İndir →
+								</a>
+							</div>
+						</article>
+					)}
+
+					<!-- 2 Companion Sub-Leads Below Main Lead -->
+					<div class="sub-leads-grid">
+						{subLead1 && (
+							<a href={`/haber/${subLead1.id}/`} class="sub-lead-card">
+								{subLead1.data.heroImage && (
+									<div class="sub-lead-thumb">
+										{typeof subLead1.data.heroImage === 'string' ? (
+											<img src={subLead1.data.heroImage} alt={subLead1.data.title} loading="lazy" />
+										) : (
+											<Image src={subLead1.data.heroImage} alt={subLead1.data.title} />
+										)}
+									</div>
+								)}
+								<div>
+									<span class="sub-lead-cat">{subLead1.data.category}</span>
+									<h3 class="sub-lead-title">{subLead1.data.title}</h3>
+									<p class="sub-lead-desc">{subLead1.data.description}</p>
+								</div>
+								{subLead1.data.author && (
+									<span class="sub-lead-meta">✍️ {subLead1.data.author}</span>
+								)}
+							</a>
+						)}
+
+						{subLead2 && (
+							<a href={`/haber/${subLead2.id}/`} class="sub-lead-card">
+								{subLead2.data.heroImage && (
+									<div class="sub-lead-thumb">
+										{typeof subLead2.data.heroImage === 'string' ? (
+											<img src={subLead2.data.heroImage} alt={subLead2.data.title} loading="lazy" />
+										) : (
+											<Image src={subLead2.data.heroImage} alt={subLead2.data.title} />
+										)}
+									</div>
+								)}
+								<div>
+									<span class="sub-lead-cat">{subLead2.data.category}</span>
+									<h3 class="sub-lead-title">{subLead2.data.title}</h3>
+									<p class="sub-lead-desc">{subLead2.data.description}</p>
+								</div>
+								{subLead2.data.author && (
+									<span class="sub-lead-meta">✍️ {subLead2.data.author}</span>
+								)}
+							</a>
+						)}
+					</div>
+				</section>
+
+				<!-- 3. RIGHT COLUMN: Featured Stories Rail (Only shown when featured posts exist) -->
+				{featuredPosts.length > 0 && (
+					<aside class="rail-col">
+						<h3 class="desk-header">
+							<span>🔥 Öne Çıkan Dosyalar</span>
+						</h3>
+
+						<ol class="most-read-list">
+							{featuredPosts.map((post, idx) => (
+								<li>
+									<a href={`/haber/${post.id}/`} class="most-read-item">
+										<span class="rank-num">0{idx + 1}</span>
+										<div class="rank-content">
+											<span class="rank-cat">{post.data.category}</span>
+											<h4 class="rank-title">{post.data.title}</h4>
+										</div>
+										{post.data.heroImage && (
+											<div class="rank-thumb">
+												{typeof post.data.heroImage === 'string' ? (
+													<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+												) : (
+													<Image src={post.data.heroImage} alt={post.data.title} />
+												)}
+											</div>
+										)}
+									</a>
+								</li>
+							))}
+						</ol>
+					</aside>
+				)}
+			</section>
+
+			<!-- HORIZONTAL SECTION DESK 1: EKONOMİ VE KAMU BÜTÇESİ -->
+			<section class="desk-section">
+				<div class="desk-banner">
+					<h3 class="desk-banner-title">📊 Ekonomi ve Kamu Bütçesi Dosyaları</h3>
+					<a href="/haber" style="font-size: 0.85rem; font-weight: 700; color: #1f9a77; text-decoration: none;">
+						Tüm Ekonomi Haberleri ({posts.filter(p => p.data.category === 'Ekonomi').length}) →
+					</a>
+				</div>
+
+				<div class="desk-trio-grid">
+					{economyPosts.map((post) => (
+						<a href={`/haber/${post.id}/`} class="trio-card">
+							{post.data.heroImage && (
+								<div class="trio-thumb">
+									{typeof post.data.heroImage === 'string' ? (
+										<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+									) : (
+										<Image src={post.data.heroImage} alt={post.data.title} />
+									)}
+								</div>
+							)}
+							<div>
+								<span class="trio-cat">{post.data.category}</span>
+								<h4 class="trio-title">{post.data.title}</h4>
+								<p class="trio-desc">{post.data.description}</p>
+							</div>
+							<div class="trio-footer">
+								{post.data.author && (
+									<span>✍️ {post.data.author}</span>
+								)}
+							</div>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<!-- HORIZONTAL SECTION DESK 2: TOPLUM, NÜFUS VE SAĞLIK -->
+			<section class="desk-section">
+				<div class="desk-banner">
+					<h3 class="desk-banner-title">👥 Toplum, Nüfus ve Sağlık Dosyaları</h3>
+					<a href="/haber" style="font-size: 0.85rem; font-weight: 700; color: #1f9a77; text-decoration: none;">
+						Tüm Toplum Haberleri ({posts.filter(p => ['Nüfus', 'Çocuk', 'Sağlık', 'Kadın'].includes(p.data.category)).length}) →
+					</a>
+				</div>
+
+				<div class="desk-trio-grid">
+					{societyPosts.map((post) => (
+						<a href={`/haber/${post.id}/`} class="trio-card">
+							{post.data.heroImage && (
+								<div class="trio-thumb">
+									{typeof post.data.heroImage === 'string' ? (
+										<img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+									) : (
+										<Image src={post.data.heroImage} alt={post.data.title} />
+									)}
+								</div>
+							)}
+							<div>
+								<span class="trio-cat">{post.data.category}</span>
+								<h4 class="trio-title">{post.data.title}</h4>
+								<p class="trio-desc">{post.data.description}</p>
+							</div>
+							<div class="trio-footer">
+								{post.data.author && (
+									<span>✍️ {post.data.author}</span>
+								)}
+							</div>
+						</a>
+					))}
+				</div>
+			</section>
+		</main>
+
+		<Footer />
+	</body>
+</html>
