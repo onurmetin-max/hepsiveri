@@ -1,8 +1,8 @@
 ---
 title: "Dünya insan boy haritası: Santimetrelerle okunan eşitsizlik"
 description: "Dünya ve Türkiye'de ortalama boy İnsan boyu çoğu zaman “genetik şans” diye geçiştiriliyor. Oysa büyük ölçekli veriler, ortalama boy uzunluğunun; çocuklukta alınan besin, temiz..."
-pubDate: 2025-01-02T10:00:27+03:00
-updatedDate: 2025-12-30T02:25:21+03:00
+pubDate: 2025-01-02 10:00
+updatedDate: 2025-12-30 02:25
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

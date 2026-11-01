@@ -1,7 +1,7 @@
 ---
 title: "Laiklik tehlike altında: 2023 Yılı İhlalleri Raporu yayınlandı!"
 description: "Laiklik Meclisi İzleme Merkezi imzasıyla \"2023 yılı laiklik ihlalleri raporu\" kamuoyuna sunuldu. Yayınlanan raporda, 2023 yılında çok sayıda hak ihlalinin yaşandığı belirtildi..."
-pubDate: 2024-03-17T09:30:49+03:00
+pubDate: 2024-03-17 09:30
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'nin Nüfus Projeksiyonları açıklandı: 2100 yılında nüfusun 77 milyonun altına düşmesi bekleniyor"
 description: "Türkiye İstatistik Kurumu (TÜİK) tarafından açıklanan \"Nüfus Projeksiyonları, 2023-2100\" raporu, Türkiye'nin nüfus yapısında gelecekte meydana gelebilecek değişimlere ışık tut..."
-pubDate: 2024-08-12T16:28:27+03:00
+pubDate: 2024-08-12 16:28
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Yapay Zeka ve Otomasyon, İş Dünyasında Devrim Yaratıyor: İş Gücü Değişiyor"
 description: "Teknoloji dünyasının hızla ilerlemesi, iş dünyasında köklü değişimlere yol açıyor. Özellikle yapay zeka ve otomasyon teknolojileri, geleneksel iş süreçlerini dönüştürerek, ins..."
-pubDate: 2024-06-17T10:00:35+03:00
+pubDate: 2024-06-17 10:00
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

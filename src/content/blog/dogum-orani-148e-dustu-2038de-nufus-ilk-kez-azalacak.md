@@ -1,8 +1,8 @@
 ---
 title: "Doğum oranı 1,48'e düştü, 2038'de nüfus ilk kez azalacak"
 description: "Kadın başına doğum sayısı 7 çocuktan 1,48 çocuğa düştü. Türkiye cumhuriyet tarihinin en büyük demografik kriziyle karşı karşıya. TÜİK'in 2024 verilerine göre, kadın başına ort..."
-pubDate: 2025-06-02T18:40:22+03:00
-updatedDate: 2025-12-17T04:51:12+03:00
+pubDate: 2025-06-02 18:40
+updatedDate: 2025-12-17 04:51
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,8 +1,8 @@
 ---
 title: "Türkiye’de erişim engelleri: Veriler, kararlar ve örüntüler (2024–2025)"
 description: "İfade Özgürlüğü Derneği (İFÖD)’ün EngelliWeb 2024 verileri, 2006–2024 arasında toplam 1.264.506 alan adı/web sitesinin Türkiye’den erişime kapatıldığını; yalnızca 2024’te 311...."
-pubDate: 2025-10-07T10:30:45+03:00
-updatedDate: 2025-10-07T15:51:33+03:00
+pubDate: 2025-10-07 10:30
+updatedDate: 2025-10-07 15:51
 category: "Hukuk"
 author: "Onur Metin"
 status: "Yayında"

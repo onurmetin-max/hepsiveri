@@ -1,7 +1,7 @@
 ---
 title: "Google’da ilk 3’e giren ‘Eşref Rüya’ dizisi: Türkiye ekran başında yaşlanıyor"
 description: "RTÜK'ün \"Medyametre Medya Kullanım Alışkanlıkları Araştırması 2024\" verilerine göre Türkiye'de 15 yaş üstü nüfusun günlük ortalama televizyon izleme süresi 3 saat 43 dakika. 6..."
-pubDate: 2025-12-30T10:00:34+03:00
+pubDate: 2025-12-30 10:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,8 +1,8 @@
 ---
 title: "What Do EU citizens want from the European Parliament? Cost of living, security and social protection top the agenda"
 description: "Haberin Türkçesi için buraya tıklayabilirsiniz. At the top of the priority list: cost of living, security and the fight against poverty The European Parliament’s Winter and Sp..."
-pubDate: 2025-11-18T10:10:55+03:00
-updatedDate: 2025-12-07T03:11:41+03:00
+pubDate: 2025-11-18 10:10
+updatedDate: 2025-12-07 03:11
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

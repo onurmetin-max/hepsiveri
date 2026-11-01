@@ -1,7 +1,7 @@
 ---
 title: "Turist otelde, vatandaş teyzesinde: 65 milyar dolarlık turizmin yerli karnesi"
 description: "Türkiye’nin turizm geliri 2025 yılında 65,2 milyar dolarla rekor kırarken, madalyonun diğer yüzünde yerli turistin artan maliyetler karşısındaki \"hayatta kalma\" mücadelesi yer..."
-pubDate: 2026-02-06T10:00:24+03:00
+pubDate: 2026-02-06 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

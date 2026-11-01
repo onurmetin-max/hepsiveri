@@ -1,8 +1,8 @@
 ---
 title: "Madde bağlantılı ölümler 2024’te %42 arttı: Bonzai ve metamfetamin başrolde"
 description: "2017'de 941 ile zirve yapan madde bağlantılı ölüm sayıları 2022'ye kadar geriledi. 2023 ve 2024'te artış dönemi yaşandı. 2024'te toplam 427 MBÖ (madde bağlantılı ölüm) kaydedi..."
-pubDate: 2025-10-18T13:12:37+03:00
-updatedDate: 2025-10-18T13:44:57+03:00
+pubDate: 2025-10-18 13:12
+updatedDate: 2025-10-18 13:44
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

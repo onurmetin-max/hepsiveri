@@ -1,7 +1,7 @@
 ---
 title: "Süper Lig'de Yayın Gelirlerindeki Büyük Düşüş ve Diğer Yayıncılarla Uluslararası Karşılaştırmalar"
 description: "Süper Lig’in yayın gelirleri son yıllarda önemli bir düşüş trendi gösterdi. 2017-2018 sezonunda yayın hakları için ödenen bedel 500 milyon dolar seviyesindeyken, bu miktar her..."
-pubDate: 2024-11-05T14:51:18+03:00
+pubDate: 2024-11-05 14:51
 category: "Spor"
 author: "Fatih Özcan"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Asgari Ücret Açlık Sınırının Altında Kaldı: \"Çalışanların Yarısı Açlıkla Mücadele Ediyor\""
 description: "Mayıs 2025 verilerine göre dört kişilik ailenin gıda harcaması 25 bin lirayı geçerken, asgari ücret 22 bin 104 lirada kaldı Türkiye'de asgari ücretle çalışanlar, temel gıda ih..."
-pubDate: 2025-06-02T02:33:30+03:00
+pubDate: 2025-06-02 02:33
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

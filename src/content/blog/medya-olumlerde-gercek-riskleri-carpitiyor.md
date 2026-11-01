@@ -1,7 +1,7 @@
 ---
 title: "Manşetlerde terör, ölüm istatistiklerinde kalp krizi: ABD medyası ölümlerde gerçek riskleri ne kadar çarpıtıyor?"
 description: "Our World in Data’nin 2025 tarihli analizine göre, ABD’de 2023 yılında kalp hastalıkları ve kanser, incelenen 15 ölüm nedeni içinde ölümlerin %56’sını oluşturuyor; New York Ti..."
-pubDate: 2025-11-23T10:00:54+03:00
+pubDate: 2025-11-23 10:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "The Global Landscape of Animal Rights: Best and Worst Countries for Animal Protection"
 description: "Animal rights are a fundamental part of global discussions about ethics, justice, and the well-being of non-human animals. The level of protection for animals varies dramatica..."
-pubDate: 2024-11-29T03:20:23+03:00
+pubDate: 2024-11-29 03:20
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

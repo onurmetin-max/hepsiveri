@@ -1,8 +1,8 @@
 ---
 title: "Rising Rent Costs in Europe Make Ends Meet Harder"
 description: "Increasing rent costs across Europe are making it harder for people to make ends meet each month. Many young adults and middle-aged groups, particularly those with lower incom..."
-pubDate: 2024-10-31T03:56:29+03:00
-updatedDate: 2024-10-31T04:29:35+03:00
+pubDate: 2024-10-31 03:56
+updatedDate: 2024-10-31 04:29
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

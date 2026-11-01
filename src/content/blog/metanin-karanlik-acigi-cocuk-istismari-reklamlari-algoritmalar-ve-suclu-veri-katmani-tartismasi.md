@@ -1,7 +1,7 @@
 ---
 title: "Meta'nın karanlık açığı: Çocuk istismarı reklamları, algoritmalar ve \"suçlu veri katmanı\" tartışması"
 description: "BBC'nin Hindistan'da yürüttüğü araştırma, Meta'ya ait Instagram'ın, bazı kullanıcılara çocuklara yönelik cinsel istismar materyallerini pazarlayan paralı reklamlar gösterdiğin..."
-pubDate: 2026-07-08T10:00:50+03:00
+pubDate: 2026-07-08 10:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

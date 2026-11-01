@@ -1,7 +1,7 @@
 ---
 title: "Avrupa'da ve Türkiye’de Güven Seviyesi: Hangi Ülkeler Daha Fazla Güveniyor?"
 description: "Avrupa genelinde Eurostat tarafından yapılan bir araştırma, insanların birbirlerine duydukları güvenin ülkeden ülkeye ne kadar farklılık gösterdiğini ortaya koyuyor. 2023 veri..."
-pubDate: 2024-10-31T20:13:31+03:00
+pubDate: 2024-10-31 20:13
 category: "Nüfus"
 author: "Fatih Özcan"
 status: "Yayında"

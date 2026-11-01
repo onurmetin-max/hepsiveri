@@ -1,7 +1,7 @@
 ---
 title: "Google Trends: Avrupa’da ve Türkiye'de \"havai fişek\" araması verileri ne gösteriyor?"
 description: "Yılbaşı yaklaşınca havai fişek gündemi Avrupa'da hem sokakta hem ekranda yükseliyor. Ancak Google Trends verileri, \"havai fişek\" ilgisinin her ülkede aynı takvime kilitlenmedi..."
-pubDate: 2026-01-02T13:12:27+03:00
+pubDate: 2026-01-02 13:12
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

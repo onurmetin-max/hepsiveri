@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de barınma krizi derinleşiyor: Ev sahibi olmak hayal mi oldu?"
 description: "Konut fiyatlarında OECD birincisi olan Türkiye, artan enflasyon, yatırımcı talebi, inşaat maliyetleri ve yetersiz arz nedeniyle derin bir barınma krizi yaşıyor. Kriz, sadece e..."
-pubDate: 2025-07-18T10:00:12+03:00
+pubDate: 2025-07-18 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

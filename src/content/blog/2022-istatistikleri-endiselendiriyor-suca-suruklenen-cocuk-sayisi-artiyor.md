@@ -11,7 +11,7 @@ tags:
 heroImage: /uploads/trafficking-concept-child-was-victim-human-trafficking-human-rights-violations-kidnapping-scaled.webp
 readTime: 3 dk okuma
 status: Yayında
-pubDate: 2024-02-26T13:30:45+03:00
+pubDate: 2024-02-26 13:30
 category: Adliye
 author: Buğu Begüm Orhan
 ---

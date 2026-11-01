@@ -1,7 +1,7 @@
 ---
 title: "Eğitim harcamaları enflasyon karşısında eriyor"
 description: "Türkiye İstatistik Kurumu (TÜİK) tarafından yayımlanan 2022 yılı Eğitim Harcamaları İstatistikleri, ülkedeki eğitim harcamalarının enflasyon karşısında giderek eridiğini ortay..."
-pubDate: 2024-02-26T08:30:58+03:00
+pubDate: 2024-02-26 08:30
 category: "Eğitim"
 author: "Buğu Begüm Orhan"
 status: "Yayında"

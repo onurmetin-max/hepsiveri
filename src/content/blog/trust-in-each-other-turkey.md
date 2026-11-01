@@ -1,8 +1,8 @@
 ---
 title: "Global social trust survey: Turkey sits at the bottom of the rankings"
 description: "Pew Research Center’s global study dated 1 December 2025 measures how much people trust one another in 25 countries and produces an up-to-date map of social capital. In the su..."
-pubDate: 2025-12-25T09:59:18+03:00
-updatedDate: 2026-01-31T02:34:14+03:00
+pubDate: 2025-12-25 09:59
+updatedDate: 2026-01-31 02:34
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

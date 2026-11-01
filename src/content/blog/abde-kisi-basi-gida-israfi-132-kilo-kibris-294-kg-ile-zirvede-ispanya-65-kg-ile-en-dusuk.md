@@ -1,8 +1,8 @@
 ---
 title: "AB’de kişi başı gıda israfı 132 kilo: Kıbrıs 294 kg ile zirvede, İspanya 65 kg ile en düşük"
 description: "Eurostat’a göre AB’de 2022’de kişi başına 132 kg gıda israfı üretildi; bunun %54’ü hanelerden (72 kg/kişi) geliyor. Toplam israf 59,2 milyon ton . Ülke bazında en yüksek israf..."
-pubDate: 2025-10-31T10:00:04+03:00
-updatedDate: 2025-11-02T14:00:32+03:00
+pubDate: 2025-10-31 10:00
+updatedDate: 2025-11-02 14:00
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

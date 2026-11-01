@@ -1,8 +1,8 @@
 ---
 title: "Increase in Violence Against Women in Germany"
 description: "Cases of violence against women in Germany have reached alarming levels. According to the Federal Criminal Police Office (BKA) report, there was a significant increase in part..."
-pubDate: 2024-11-25T23:00:13+03:00
-updatedDate: 2024-12-02T04:48:42+03:00
+pubDate: 2024-11-25 23:00
+updatedDate: 2024-12-02 04:48
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

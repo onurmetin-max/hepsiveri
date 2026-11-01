@@ -1,7 +1,7 @@
 ---
 title: "Hatay'da Malnütrisyon Alarmı: Yetersiz beslenme çocuklarda ciddi sağlık sorunları getiriyor"
 description: "2023'ün Şubat ayında Türkiye'nin Hatay bölgesi, tarihin en yıkıcı depremlerinden birini yaşadı. Depremin ardından bölgede yaşayan insanlar arasında gıda güvencesizliği ve maln..."
-pubDate: 2024-03-02T08:30:40+03:00
+pubDate: 2024-03-02 08:30
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

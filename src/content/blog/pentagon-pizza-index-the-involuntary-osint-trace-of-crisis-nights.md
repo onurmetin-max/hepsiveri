@@ -1,8 +1,8 @@
 ---
 title: "Pentagon Pizza Index: The “Involuntary” OSINT Trace of Crisis Nights"
 description: "The modern intelligence ecosystem is saturated with satellite imagery, signals intelligence, and cyber telemetry. Yet in certain Washington crisis moments, one of the most vis..."
-pubDate: 2026-01-05T22:36:15+03:00
-updatedDate: 2026-03-02T02:12:44+03:00
+pubDate: 2026-01-05 22:36
+updatedDate: 2026-03-02 02:12
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

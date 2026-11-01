@@ -1,8 +1,8 @@
 ---
 title: "Vize randevuları nasıl karaborsaya düştü? Vize karaborsası ne gösteriyor?"
 description: "İbrahim Haskoloğlu'nun bu hafta gündeme taşıdığı konu, bir teknik aksaklığın çok ötesine işaret ediyor: Milyonlarca Türk vatandaşının Avrupa'ya erişim hakkı, organize bir diji..."
-pubDate: 2026-04-05T23:37:01+03:00
-updatedDate: 2026-07-30T20:10:14+03:00
+pubDate: 2026-04-05 23:37
+updatedDate: 2026-07-30 20:10
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

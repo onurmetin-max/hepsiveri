@@ -1,7 +1,7 @@
 ---
 title: "Üç derenin ortasına Kurulan \"Rüya Park\": Ankapark neden taşkın riskli bir bölgede yükseldi?"
 description: "Ankapark, Ankara'nın kendi kurumlarının resmi olarak \"riskli\" diye sınıflandırdığı bir zemin üzerine kuruldu. Üç derenin kesiştiği noktada yükselen park Ankara Büyükşehir Bele..."
-pubDate: 2026-10-02T10:00:50+03:00
+pubDate: 2026-10-02 10:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

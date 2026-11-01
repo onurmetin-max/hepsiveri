@@ -1,7 +1,7 @@
 ---
 title: "CHP'ye kayyum kararına toplumdan tepki: Çoğunluk mutlak butlana karşı, bilgi sınırlı, çözüm talebi güçlü"
 description: "CHP'nin 38. Olağan Kurultayı'na yönelik \"mutlak butlan\" kararı, kamuoyunda beklenmedik biçimde sert bir tepkiyle karşılandı. Ancak bu tepkinin ardında çarpıcı bir paradoks yat..."
-pubDate: 2026-06-30T10:00:51+03:00
+pubDate: 2026-06-30 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

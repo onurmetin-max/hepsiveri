@@ -1,7 +1,7 @@
 ---
 title: "MacBook Air M5 Türkiye’de bir junior developer için ne kadar ulaşılabilir?"
 description: "Apple’ın mart ayında tanıttığı MacBook Air M5, teknik özellikleriyle güçlü bir başlangıç seviyesi üretim aracı olarak konumlanıyor. Ancak veriler, asıl sorunun cihazın ne sund..."
-pubDate: 2026-03-31T10:00:52+03:00
+pubDate: 2026-03-31 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

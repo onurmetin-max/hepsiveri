@@ -1,7 +1,7 @@
 ---
 title: "Arms trade hardens around conflict lines as US expands dominance and Russia retreats"
 description: "The global arms trade is no longer just expanding - it is hardening along the fault lines of conflict, dependency, and geopolitical rivalry. According to new data released by ..."
-pubDate: 2026-04-05T10:00:20+03:00
+pubDate: 2026-04-05 10:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

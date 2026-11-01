@@ -1,7 +1,7 @@
 ---
 title: "Parlamentoda kadın: Dünya sıralıyor, Türkiye yerinde sayıyor"
 description: "Parlamentolar Arası Birlik IPU'nun 30 yıllık verisine göre dünyada ulusal parlamentolarda kadın oranı 1995'te yüzde 11,3'ten 2025 başında yüzde 27,2'ye yükseldi; ama bu artışı..."
-pubDate: 2026-06-09T10:00:37+03:00
+pubDate: 2026-06-09 10:00
 category: "Kadın"
 author: "Onur Metin"
 status: "Yayında"

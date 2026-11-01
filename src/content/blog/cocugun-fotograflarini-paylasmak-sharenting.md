@@ -1,8 +1,8 @@
 ---
 title: "Çocuğumu paylaşmaya neden ihtiyaç duyuyorum? Türkiye'de Sharenting kültürü ve ebeveynler neden paylaşıyor?"
 description: "Çocuklarımızla ilgili fotoğraf ve videoları sosyal medyada paylaşırken çoğu zaman basit bir “anı kaydı” yaptığımızı düşünüyoruz. Oysa Türkiye’den gelen veriler, bu paylaşımlar..."
-pubDate: 2025-12-06T22:00:45+03:00
-updatedDate: 2025-12-15T09:55:00+03:00
+pubDate: 2025-12-06 22:00
+updatedDate: 2025-12-15 09:55
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

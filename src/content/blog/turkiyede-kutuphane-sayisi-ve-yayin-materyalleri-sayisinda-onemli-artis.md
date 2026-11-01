@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de Kütüphane Sayısı ve Yayın Materyalleri sayısında önemli artış"
 description: "Türkiye’deki kütüphane sayısı, 2023 yılında 48 bin 733’e ulaşarak önemli bir artış gösterdi. Cumhurbaşkanlığı Millet Kütüphanesi’nin idari kayıtları esas alınarak yayımlanan i..."
-pubDate: 2024-11-04T21:59:55+03:00
+pubDate: 2024-11-04 21:59
 category: "Eğitim"
 author: "Fatih Özcan"
 status: "Yayında"

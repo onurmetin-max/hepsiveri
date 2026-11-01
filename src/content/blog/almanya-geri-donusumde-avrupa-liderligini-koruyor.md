@@ -1,7 +1,7 @@
 ---
 title: "Almanya geri dönüşümde Avrupa liderliğini koruyor, Türkiye’nin hedefi sıfır atık ama..."
 description: "Almanya, Avrupa’da atık yönetiminde uzun yıllardır referans noktasını korurken, Türkiye bölgenin en hızlı ilerleyen ülkelerinden biri olarak dikkat çekiyor. İki model, döngüse..."
-pubDate: 2026-04-12T10:00:53+03:00
+pubDate: 2026-04-12 10:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

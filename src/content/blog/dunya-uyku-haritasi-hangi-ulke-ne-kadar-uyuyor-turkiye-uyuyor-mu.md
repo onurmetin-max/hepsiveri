@@ -1,7 +1,7 @@
 ---
 title: "Dünya Uyku Haritası: Hangi ülke ne kadar uyuyor? Türkiye uyuyor mu?"
 description: "Modern hayatın stresi, uzun çalışma saatleri ve ekran bağımlılığı uyku düzenini dünya genelinde değiştirdi. Yeni bilimsel araştırmalar, ülkelerin ortalama uyku sürelerini orta..."
-pubDate: 2025-08-26T17:43:12+03:00
+pubDate: 2025-08-26 17:43
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de ölüm haritası: Kastamonu ile Hakkari arasında 5 kat fark var"
 description: "Türkiye İstatistik Kurumu'nun (TÜİK) bugün açıkladığı 2024 ölüm istatistikleri, ülkemizin demografik haritasında şaşırtıcı farklılıklar olduğunu gözler önüne serdi. Karadeniz'..."
-pubDate: 2025-06-20T10:59:21+03:00
+pubDate: 2025-06-20 10:59
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

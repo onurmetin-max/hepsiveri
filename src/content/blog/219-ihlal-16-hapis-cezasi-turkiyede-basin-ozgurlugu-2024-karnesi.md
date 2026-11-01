@@ -1,8 +1,8 @@
 ---
 title: "219 ihlal, 16 hapis cezası: Türkiye’de basın özgürlüğü 2024 karnesi"
 description: "Türkiye, basın özgürlüğü konusunda dünyada hâlâ alt sıralarda. Uluslararası sıralamalara ve raporlara bakıldığında, gazetecilerin hem ekonomik hem de hukuki baskılarla karşı k..."
-pubDate: 2024-11-30T21:25:47+03:00
-updatedDate: 2025-09-20T22:23:52+03:00
+pubDate: 2024-11-30 21:25
+updatedDate: 2025-09-20 22:23
 category: "VeriHaberciliği"
 author: "Onur Metin"
 status: "Yayında"

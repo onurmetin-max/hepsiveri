@@ -1,7 +1,7 @@
 ---
 title: "DSÖ/Avrupa: Sigara ve Madde kullanımı gençler arasında endişe verici boyutlarda"
 description: "DSÖ/Avrupa'nın yeni raporu, Avrupa, Orta Asya ve Kanada'da ergenlik çağındaki gençler arasında madde ve sigara kullanımının endişe verici boyutlarda olduğunu ortaya koyuyor. R..."
-pubDate: 2024-04-30T12:04:20+03:00
+pubDate: 2024-04-30 12:04
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

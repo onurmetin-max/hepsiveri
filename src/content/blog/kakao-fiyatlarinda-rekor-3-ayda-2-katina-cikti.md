@@ -1,8 +1,8 @@
 ---
 title: "Kakao fiyatlarında rekor: 3 ayda 2 katına çıktı"
 description: "Son zamanlarda kakao fiyatlarındaki devamlı yükseliş, çikolata maliyetlerini artırmaya devam ediyor. 2024 yılı boyunca, fiyatların ve artışın her zamankinden daha yüksek olmas..."
-pubDate: 2024-05-04T23:29:00+03:00
-updatedDate: 2024-05-13T23:06:24+03:00
+pubDate: 2024-05-04 23:29
+updatedDate: 2024-05-13 23:06
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

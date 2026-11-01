@@ -1,8 +1,8 @@
 ---
 title: "Engelli Çocuklar Eğitimde Eşitsizliklerle Mücadele Ediyor"
 description: "Türkiye’de engelli çocukların eğitime erişimi, toplumsal eşitsizliklerin bir yansıması olarak önemli bir sorun teşkil ediyor. Eğitim İzleme Raporu 2024’e göre, engelli çocukla..."
-pubDate: 2024-11-13T16:43:34+03:00
-updatedDate: 2025-12-17T05:20:05+03:00
+pubDate: 2024-11-13 16:43
+updatedDate: 2025-12-17 05:20
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

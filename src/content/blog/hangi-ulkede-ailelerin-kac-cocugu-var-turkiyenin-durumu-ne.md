@@ -1,8 +1,8 @@
 ---
 title: "Hangi ülkede ailelerin kaç çocuğu var? Türkiye'nin durumu ne?"
 description: "Türkiye'de son yıllarda doğurganlık hızı düşüş eğiliminde. TÜİK verilerine göre, doğurganlık hızı aile başına çocuk sayısında azalma olduğunu gösteriyor. Bu eğilim, Cumhurbaşk..."
-pubDate: 2024-10-25T17:32:26+03:00
-updatedDate: 2024-11-28T03:18:55+03:00
+pubDate: 2024-10-25 17:32
+updatedDate: 2024-11-28 03:18
 category: "Çocuk"
 author: "Ulaş Akyol"
 status: "Yayında"

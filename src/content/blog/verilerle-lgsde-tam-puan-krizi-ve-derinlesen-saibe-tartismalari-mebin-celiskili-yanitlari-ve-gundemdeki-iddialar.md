@@ -1,8 +1,8 @@
 ---
 title: "Verilerle LGS'de Tam Puan Krizi ve Derinleşen Şaibe Tartışmaları: MEB'in çelişkili yanıtları ve gündemdeki iddialar"
 description: "2025 Liselere Geçiş Sistemi (LGS) sınavı, bu yıl rekor sayıda öğrencinin tam puan alması ve sınav güvenliğine ilişkin ciddi şaibe iddiaları nedeniyle Türkiye gündemine oturdu...."
-pubDate: 2025-07-18T12:00:41+03:00
-updatedDate: 2025-07-18T13:41:38+03:00
+pubDate: 2025-07-18 12:00
+updatedDate: 2025-07-18 13:41
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

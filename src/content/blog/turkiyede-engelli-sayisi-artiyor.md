@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de engelli sayısı artıyor"
 description: "Türkiye İstatistik Kurumu (TÜİK) tarafından açıklanan 2022 yılı Engelli ve Yaşlı İstatistik Bülteni, ülkedeki engelli nüfusun durumunu detaylı bir şekilde ele alıyor. Bülten, ..."
-pubDate: 2024-02-25T10:30:42+03:00
+pubDate: 2024-02-25 10:30
 category: "Engel"
 author: "Buğu Begüm Orhan"
 status: "Yayında"

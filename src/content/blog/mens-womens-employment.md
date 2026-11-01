@@ -1,7 +1,7 @@
 ---
 title: "Nearly Half of Türkiye's Working-Age Adults Bear Care Responsibilities, Men's Employment Surges When They Do"
 description: "Almost one in two adults in Türkiye carries caregiving responsibilities at home, yet the burden falls unevenly — and its effect on employment plays out in starkly opposite way..."
-pubDate: 2026-05-09T10:00:05+03:00
+pubDate: 2026-05-09 10:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

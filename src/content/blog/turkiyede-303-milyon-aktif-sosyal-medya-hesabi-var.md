@@ -1,8 +1,8 @@
 ---
 title: "Türkiye’de 303 milyon aktif sosyal medya hesabı var"
 description: "Ulaştırma ve Altyapı Bakanı Abdulkadir Uraloğlu, Dijital 2024 Ekim Global İstatistik Raporu ’na göre Türkiye’nin internet kullanımının %86,5’e ulaştığını bildirdi. Nüfusun %65..."
-pubDate: 2025-03-17T18:21:01+03:00
-updatedDate: 2025-06-19T15:16:36+03:00
+pubDate: 2025-03-17 18:21
+updatedDate: 2025-06-19 15:16
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

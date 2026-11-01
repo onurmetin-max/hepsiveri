@@ -1,8 +1,8 @@
 ---
 title: "Tatil artık lüks: Avrupalıların dörtte biri, Türklerin yarısından fazlası bir haftalık tatile bile çıkamıyor"
 description: "Avrupa'da her dört kişiden biri tatil yapamıyor. Türkiye'de bu sayı iki kişiden biri. Eurostat'ın son verileri, yaz sezonunun ardındaki derin eşitsizliği rakamlarla ortaya koy..."
-pubDate: 2026-06-03T10:00:11+03:00
-updatedDate: 2026-06-04T15:54:07+03:00
+pubDate: 2026-06-03 10:00
+updatedDate: 2026-06-04 15:54
 category: "Ekonomi"
 author: "Fatih Özcan"
 status: "Yayında"

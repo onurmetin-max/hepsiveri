@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de yetişkinlerin yüzde 43’ü bakım sorumluluğu taşıyor"
 description: "Türkiye’de 18-74 yaş grubundaki yetişkinlerin neredeyse yarısı ev içinde bakım sorumluluğu üstleniyor. Ancak bu yük kadınlar ve erkekler arasında eşit dağılmıyor. Türkiye İsta..."
-pubDate: 2026-05-09T10:00:51+03:00
+pubDate: 2026-05-09 10:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

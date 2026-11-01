@@ -1,8 +1,8 @@
 ---
 title: "Anoreksiya Nervoza: Türkiye ve Dünya Verilerine Göre Kapsamlı Analiz"
 description: "Anoreksiya nervoza, son yıllarda tüm dünyada hızla artan ve özellikle genç nüfusu tehdit eden bir mental sağlık sorunu haline geldi. Son günlerde sosyal medya fenomeni Nihal C..."
-pubDate: 2025-06-21T01:12:27+03:00
-updatedDate: 2025-06-21T14:20:09+03:00
+pubDate: 2025-06-21 01:12
+updatedDate: 2025-06-21 14:20
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

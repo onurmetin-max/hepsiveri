@@ -1,7 +1,7 @@
 ---
 title: "OnlyFans ve benzeri platformlarda kolay para miti: Yakınlık ekonomisinin bedeli"
 description: "OnlyFans'in 2024 ölçeği kamu raporlamalarına göre: 7,2 milyar $ abone harcaması , 1,4 milyar $ gelir , 684 milyon $ vergi öncesi kâr ; 4,6 milyon üretici ve 377,5 milyon kulla..."
-pubDate: 2026-01-08T10:00:45+03:00
+pubDate: 2026-01-08 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

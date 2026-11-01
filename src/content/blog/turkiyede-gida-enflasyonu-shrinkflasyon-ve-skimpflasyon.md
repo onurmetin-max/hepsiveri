@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de gıda enflasyonu, shrinkflasyon ve skimpflasyon: Resmi oran ile raf gerçeği arasındaki \"büyük uçurum\" büyüyor mu?"
 description: "TÜİK'in Ocak 2026 TÜFE verileri manşette %30,65'e, gıdada %31,69'a işaret ederken; AB ve OECD ortalamaları düşük tek hanelerde. Bu fark, Mahfi Eğilmez'in ürettiği \"multiflasyo..."
-pubDate: 2026-02-25T10:00:49+03:00
+pubDate: 2026-02-25 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

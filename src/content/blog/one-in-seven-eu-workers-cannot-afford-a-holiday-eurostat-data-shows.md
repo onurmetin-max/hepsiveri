@@ -1,7 +1,7 @@
 ---
 title: "One in Seven EU workers cannot afford a holiday, Eurostat data shows"
 description: "Across the European Union, 42 million working people cannot afford a single week away from home. As tourism breaks records, the workers powering the economy are being left beh..."
-pubDate: 2026-06-03T09:59:24+03:00
+pubDate: 2026-06-03 09:59
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

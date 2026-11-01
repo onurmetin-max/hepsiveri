@@ -1,8 +1,8 @@
 ---
 title: "Nakit Endeksi: Seyahat ettiğinizde en fazla nerede nakite ihtiyaç duyarsınız?"
 description: "Cash Index verileri ile Visual Capitalist’in 2025 tarihli nakit kullanımı görselleştirmesi birlikte okunduğunda, küresel ödeme alışkanlıklarına dair oldukça net bir fotoğraf o..."
-pubDate: 2025-12-03T10:00:38+03:00
-updatedDate: 2025-12-07T03:10:57+03:00
+pubDate: 2025-12-03 10:00
+updatedDate: 2025-12-07 03:10
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Millî Eğitim Akademisi'nin 10.000 kişilik kotası: boru hattı mı, bekleme odası mı?"
 description: "Millî Eğitim Akademisi, öğretmenliğe geçiş akışını 10.000 kişilik bir hazırlık kontenjanıyla yeniden tanımlıyor. Ancak veri fotoğrafı, arz-talep dengesini düzeltmekten çok yen..."
-pubDate: 2026-02-22T10:00:35+03:00
+pubDate: 2026-02-22 10:00
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

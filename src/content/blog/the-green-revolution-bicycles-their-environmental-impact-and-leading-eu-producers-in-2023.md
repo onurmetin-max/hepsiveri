@@ -1,7 +1,7 @@
 ---
 title: "The Green Revolution: Bicycles, Their Environmental Impact, and Leading EU Producers in 2023"
 description: "The bicycle, a simple yet revolutionary mode of transportation, has played a crucial role in the transition toward a more sustainable and environmentally friendly future. With..."
-pubDate: 2024-11-22T01:42:24+03:00
+pubDate: 2024-11-22 01:42
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

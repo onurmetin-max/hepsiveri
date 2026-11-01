@@ -1,8 +1,8 @@
 ---
 title: "Big Mac Endeksi: Türk Lirası Dolar Karşısında %4,31 Pahalı!"
 description: "Mayıs 2024'te Türkiye'de Big Mac Fiyatı ABD'yi Geride Bıraktı! The Economist dergisi tarafından geliştirilen Big Mac Endeksi, farklı ülkelerdeki para birimlerinin satın alma g..."
-pubDate: 2024-05-13T10:54:42+03:00
-updatedDate: 2024-05-13T22:59:11+03:00
+pubDate: 2024-05-13 10:54
+updatedDate: 2024-05-13 22:59
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

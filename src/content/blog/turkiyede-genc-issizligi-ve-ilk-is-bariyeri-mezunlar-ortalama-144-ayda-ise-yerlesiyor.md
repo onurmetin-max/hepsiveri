@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de genç işsizliği ve “ilk iş” bariyeri: Mezunlar ortalama 14,4 ayda işe yerleşiyor"
 description: "Türkiye’de gençler ve yeni mezunlar için “ilk işe geçiş”, 2026-03-02 itibarıyla kamuya açık göstergelerin işaret ettiği üçlü bir eşikte okunuyor: 15-24 yaş işsizlik oranı %16,..."
-pubDate: 2026-03-03T10:00:52+03:00
+pubDate: 2026-03-03 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

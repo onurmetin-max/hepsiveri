@@ -1,8 +1,8 @@
 ---
 title: "Haber merkezinde \"yapay zeka\" bir oyuncak değil: Asıl hikaye yönetişim"
 description: "Bugün haber odasında \"yapay zeka kullandık mı?\" sorusu, neredeyse \"internet kullandık mı?\" kadar anlamsızlaşıyor. Kritik olan, bu kullanımın hangi kontrol noktalarından geçtiğ..."
-pubDate: 2026-02-02T10:00:41+03:00
-updatedDate: 2026-03-30T03:55:20+03:00
+pubDate: 2026-02-02 10:00
+updatedDate: 2026-03-30 03:55
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

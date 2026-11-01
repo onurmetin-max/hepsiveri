@@ -1,8 +1,8 @@
 ---
 title: "Komşunun katını satın almak: New York’un hava hakkı piyasası Türkiye’de neye dönüşebilir?"
 description: "New York'ta bir bina, komşusunun \"kullanmadığı katlarını\" satın alıp göğe doğru uzanabiliyor; bu, şehirde uzun süredir uygulanan \"air rights\" (hava hakları) sistemi sayesinde ..."
-pubDate: 2026-01-26T10:00:50+03:00
-updatedDate: 2026-01-29T04:13:37+03:00
+pubDate: 2026-01-26 10:00
+updatedDate: 2026-01-29 04:13
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

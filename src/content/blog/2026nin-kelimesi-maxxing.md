@@ -6,7 +6,7 @@ description: "Dictionary.com bu yıl yılın sözcüğü olarak bir sözcük de�
 heroImage: /uploads/maxxing-dic.jpg
 readTime: 6 dk okuma
 status: Yayında
-pubDate: 2026-10-26T21:58:23+03:00
+pubDate: 2026-10-26 21:58
 category: Veri Haberciliği
 author: Onur Metin
 ---

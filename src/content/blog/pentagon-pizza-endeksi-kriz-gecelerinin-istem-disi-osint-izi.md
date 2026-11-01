@@ -1,7 +1,7 @@
 ---
 title: "Pentagon Pizza Endeksi: Kriz gecelerinin \"istem dışı\" OSINT izi"
 description: "Modern istihbarat ekosistemi uydu görüntüsü, sinyal istihbaratı ve siber telemetriyle dolu. Buna rağmen Washington'daki bazı kriz anlarında en görünür dış iz, kurumların gece ..."
-pubDate: 2026-01-05T22:24:16+03:00
+pubDate: 2026-01-05 22:24
 category: "VeriHaberciliği"
 author: "Onur Metin"
 status: "Yayında"

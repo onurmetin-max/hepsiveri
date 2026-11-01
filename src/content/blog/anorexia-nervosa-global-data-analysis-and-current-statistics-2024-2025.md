@@ -1,7 +1,7 @@
 ---
 title: "Anorexia Nervosa: Global Data Analysis and Current Statistics 2024-2025"
 description: "Note: All data presented in this report is compiled from current research and supported with proper source citations. This data news piece is prepared by journalist Onur Metin..."
-pubDate: 2025-06-21T01:28:14+03:00
+pubDate: 2025-06-21 01:28
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

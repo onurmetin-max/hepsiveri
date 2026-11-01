@@ -1,8 +1,8 @@
 ---
 title: "Veri gazeteciliği ve Türkiye’nin PDF çöplüğünde hakikat aramak"
 description: "Geçen ay burada, Türkiye'de veri haberciliğinin geldiği noktayı konuşmuş, bardağın dolu tarafına bakmaya çalışmıştık. Bugün ise biraz da o bardağın içindeki suyu kimin, neden ..."
-pubDate: 2026-01-31T10:00:51+03:00
-updatedDate: 2026-03-30T03:56:34+03:00
+pubDate: 2026-01-31 10:00
+updatedDate: 2026-03-30 03:56
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

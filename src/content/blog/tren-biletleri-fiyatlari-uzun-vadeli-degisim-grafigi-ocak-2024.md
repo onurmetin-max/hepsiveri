@@ -1,8 +1,8 @@
 ---
 title: "Tren biletleri fiyatları uzun vadeli değişim grafiği: Ocak 2024"
 description: "Bu haber biraz kişisel. Onun için de politik. Birkaç ay önce Ankara'dan başka bir şehre taşındım. Bununla birlikte, sık sık Ankara'yı ziyaret ettiğim için, tren biletleri fiya..."
-pubDate: 2024-01-31T19:30:09+03:00
-updatedDate: 2024-02-09T05:40:04+03:00
+pubDate: 2024-01-31 19:30
+updatedDate: 2024-02-09 05:40
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,8 +1,8 @@
 ---
 title: "Ocak ayı ölüm ajansı: Soğuklar ve sıcaklar can alıyor"
 description: "Türkiye'de yılın en soğuk ayı olan Ocak, aynı zamanda en ölümcül ay olma unvanını da taşıyor. TÜİK'in 2024 verilerine göre Ocak ayında 48.698 kişi hayatını kaybetti. Bu rakam,..."
-pubDate: 2025-06-20T11:19:10+03:00
-updatedDate: 2025-07-14T02:04:02+03:00
+pubDate: 2025-06-20 11:19
+updatedDate: 2025-07-14 02:04
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

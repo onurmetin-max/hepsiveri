@@ -1,8 +1,8 @@
 ---
 title: "Türkiye’de kadın cinayetleri verileri ne gösteriyor?"
 description: "Toplumsal cinsiyete dayalı eşitsizlik kadınların yaşam hakkını elinden almaya devam ediyor. 2024’ün ilk 3 ayında 98 kadın erkekler tarafından katledildi. 8 Mart 2023 - 8 Nisan..."
-pubDate: 2024-04-17T09:00:50+03:00
-updatedDate: 2025-12-23T05:24:52+03:00
+pubDate: 2024-04-17 09:00
+updatedDate: 2025-12-23 05:24
 category: "Kadın"
 author: "Sevinç Koçak"
 status: "Yayında"

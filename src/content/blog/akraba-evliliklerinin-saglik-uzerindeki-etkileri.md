@@ -1,8 +1,8 @@
 ---
 title: "Akraba Evliliklerinin Sağlık Üzerindeki Etkileri ve Türkiye'de Durum"
 description: "Akraba evlilikleri, dünya genelinde birçok toplumda yaygın bir uygulama olup, genetik hastalıkların ve doğumsal bozuklukların artmasına neden olabilecek önemli bir risk faktör..."
-pubDate: 2024-12-01T20:11:46+03:00
-updatedDate: 2024-12-02T04:21:01+03:00
+pubDate: 2024-12-01 20:11
+updatedDate: 2024-12-02 04:21
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

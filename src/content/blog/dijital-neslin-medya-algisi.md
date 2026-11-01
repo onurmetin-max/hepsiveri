@@ -1,8 +1,8 @@
 ---
 title: "Dijital Neslin Medya Algısı"
 description: "/* Scope: sadece bu blok */ #hv-media-perception{font-size:16px; line-height:1.65;} #hv-media-perception *{box-sizing:border-box;} #hv-media-perception h2{ margin:22px 0 10px;..."
-pubDate: 2025-12-28T10:00:04+03:00
-updatedDate: 2025-12-30T03:59:40+03:00
+pubDate: 2025-12-28 10:00
+updatedDate: 2025-12-30 03:59
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

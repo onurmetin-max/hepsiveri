@@ -1,8 +1,8 @@
 ---
 title: "Küresel internet özgürlüğü 15. yılında da geriledi: Türkiye, otokratik baskı yöntemlerini yoğunlaştıran ülkeler arasında"
 description: "Freedom House'un 13 Kasım 2025'te yayınladığı 'Freedom on the Net 2025' raporunda, Türkiye 31/100 puanla 'Özgür Değil' (Not Free) statüsünde yer aldı. Rapor, Türkiye'yi Mısır,..."
-pubDate: 2025-12-05T10:00:34+03:00
-updatedDate: 2025-12-15T08:32:14+03:00
+pubDate: 2025-12-05 10:00
+updatedDate: 2025-12-15 08:32
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

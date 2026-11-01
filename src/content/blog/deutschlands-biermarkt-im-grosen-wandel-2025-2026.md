@@ -1,8 +1,8 @@
 ---
 title: "Deutschlands Biermarkt im \"großen wandel\": Eine Kultur im Datencheck (2015-2026)"
 description: "Bier ist eines der ersten drei Bilder, die einem in den Sinn kommen, wenn man an Deutschland denkt, doch es erlebt die leiseste, aber tiefste Krise seiner Geschichte. Die heut..."
-pubDate: 2026-02-02T23:43:37+03:00
-updatedDate: 2026-02-03T00:50:04+03:00
+pubDate: 2026-02-02 23:43
+updatedDate: 2026-02-03 00:50
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

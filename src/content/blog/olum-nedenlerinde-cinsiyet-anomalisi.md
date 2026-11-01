@@ -1,7 +1,7 @@
 ---
 title: "Ölüm nedenlerinde cinsiyet anomalisi"
 description: "TÜİK'in seçilmiş ölüm nedenleri verilerinde, kadın ve erkek ölüm profilleri arasında çarpıcı farklılıklar bulunuyor. Dolaşım sistemi hastalıklarından, 2024 yılında ölen erkek ..."
-pubDate: 2025-06-20T11:59:41+03:00
+pubDate: 2025-06-20 11:59
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

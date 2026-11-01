@@ -1,7 +1,7 @@
 ---
 title: "Avrupa'da Konut 2025: Fiyatlar hızlandı, arz yavaşladı, yük kentlere yığıldı"
 description: "Custom HTML bloğuna yapıştır --> Avrupa'da konut piyasası 2025'e, \"erişilebilirlik\" başlığını sosyal politika gündeminden çıkarıp makroekonomik risk alanına taşıyan bir tabloy..."
-pubDate: 2026-01-21T10:00:48+03:00
+pubDate: 2026-01-21 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

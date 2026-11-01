@@ -1,7 +1,7 @@
 ---
 title: "Akıllı telefonlar yavaşlıyor: Uzayan yenileme döngüsü, artan e-atık krizi ve teknolojinin geleceği"
 description: "Akıllı telefonlar dönemiyle vedalaşmak ve yeni bir çağa giden yol On dokuz yıl önce her yeni iPhone lansmanı teknoloji dünyasını titreten küçük bir “bayram”dı. Gece yarısı can..."
-pubDate: 2025-11-30T10:00:51+03:00
+pubDate: 2025-11-30 10:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

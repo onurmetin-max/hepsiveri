@@ -1,7 +1,7 @@
 ---
 title: "Corruption Perceptions Index 2023: Global Insights and Turkey’s Position"
 description: "The Corruption Perceptions Index (CPI), released annually by Transparency International, has become a vital tool in measuring the perceived levels of corruption in the public ..."
-pubDate: 2024-11-22T03:07:06+03:00
+pubDate: 2024-11-22 03:07
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

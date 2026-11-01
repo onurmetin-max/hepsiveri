@@ -1,7 +1,7 @@
 ---
 title: "IDMerit kimlik doğrulama veri sızıntısı: Dijital kimlik doğrulamada küresel risk, Türkiye'de 49 milyon kayıt iddiası"
 description: "Kasım 2025'te IDMerit ile ilişkilendirilen korumasız bir veritabanının kısa süreliğine internete açık kaldığı raporlandı. Olay, \"hack\"ten çok yanlış yapılandırma kaynaklı bir ..."
-pubDate: 2026-02-24T10:59:56+03:00
+pubDate: 2026-02-24 10:59
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

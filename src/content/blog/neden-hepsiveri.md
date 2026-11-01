@@ -1,8 +1,8 @@
 ---
 title: "Neden HepsiVeri?"
 description: "Bu yazı neden HepsiVeri'yi yapmaya niyetlendik üzerine. Çok okunan haber sayısının arttırabilmek amacıyla, içerik oluşturma ve dağıtma konusunda dinamik stratejiler kullanılab..."
-pubDate: 2024-01-13T22:08:57+03:00
-updatedDate: 2024-02-09T05:53:57+03:00
+pubDate: 2024-01-13 22:08
+updatedDate: 2024-02-09 05:53
 category: "VeriHaberciliği"
 author: "Onur Metin"
 status: "Yayında"

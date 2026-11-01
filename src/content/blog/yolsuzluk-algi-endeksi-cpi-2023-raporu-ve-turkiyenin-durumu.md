@@ -1,8 +1,8 @@
 ---
 title: "Yolsuzluk Algı Endeksi (CPI): 2023 Raporu ve Türkiye’nin Durumu"
 description: "Yolsuzluk Algı Endeksi (CPI), her yıl Transparency International tarafından yayımlanan ve kamu sektöründeki yolsuzluğun algılanan seviyelerini ölçen önemli bir araçtır. 2023 C..."
-pubDate: 2024-11-22T01:53:50+03:00
-updatedDate: 2024-11-22T02:43:59+03:00
+pubDate: 2024-11-22 01:53
+updatedDate: 2024-11-22 02:43
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

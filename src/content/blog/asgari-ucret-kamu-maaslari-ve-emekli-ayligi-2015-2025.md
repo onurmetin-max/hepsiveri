@@ -1,8 +1,8 @@
 ---
 title: "Asgari ücret 28.075 tl oldu. Reel ücret erimesi: Asgari ücret, kamu maaşları ve emekli aylığı - TÜFE karşısında (2015 referansı + 2022-2025 yakın seri) nasıl eridi?"
 description: "TCMB'nin yayımladığı tabloda yer alan TÜİK verilerine göre, Kasım 2025'te TÜFE (Tüketici Fiyat Endeksi) aylık %0,87 arttı. Yıllık enflasyon ise %31,07'ye geriledi. Manşetteki ..."
-pubDate: 2025-12-22T10:00:26+03:00
-updatedDate: 2025-12-23T18:50:35+03:00
+pubDate: 2025-12-22 10:00
+updatedDate: 2025-12-23 18:50
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

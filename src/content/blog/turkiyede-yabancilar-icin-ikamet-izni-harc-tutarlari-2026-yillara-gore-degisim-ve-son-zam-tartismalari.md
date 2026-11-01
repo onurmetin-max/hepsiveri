@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de yabancılar için ikamet izni harç tutarları 2026: Yıllara göre değişim ve son zam tartışmaları"
 description: "Türkiye, coğrafi konumu, ekonomik fırsatları, turistik cazibesi ve görece uygun yaşam maliyetiyle yıllardır yabancılar için popüler bir ikamet destinasyonu olmuştur. Ancak son..."
-pubDate: 2026-05-13T10:01:46+03:00
+pubDate: 2026-05-13 10:01
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Aile geliri ve ebeveyn eğitimi çocukların beslenmesini nasıl etkiliyor?"
 description: "Bu hepsiveri haberi; Türkiye İstatistik Kurumu (TÜİK) Çocuk Sağlığı ve Yoksunluğu 2024 göstergeleri ile Hacettepe Üniversitesi Nüfus Etütleri Enstitüsü’nün 2018 Türkiye Nüfus ..."
-pubDate: 2025-11-05T10:00:53+03:00
+pubDate: 2025-11-05 10:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

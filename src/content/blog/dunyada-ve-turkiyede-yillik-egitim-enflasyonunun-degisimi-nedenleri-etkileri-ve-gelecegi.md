@@ -1,7 +1,7 @@
 ---
 title: "Dünyada ve Türkiye'de Yıllık Eğitim Enflasyonunun Değişimi: Nedenleri, Etkileri ve Geleceği"
 description: "Eğitim, bireylerin ve toplumların gelişimi için en önemli unsurlardan biri olsa da, son yıllarda artan eğitim maliyetleri büyük bir tartışma konusu halinde. \"Eğitim enflasyonu..."
-pubDate: 2025-02-21T17:53:32+03:00
+pubDate: 2025-02-21 17:53
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Avrupa Birliği'nin Geri Dönüştürülebilir Atık Ticareti: Türkiye’nin Artan Rolü ve Çevresel Etkiler"
 description: "Avrupa Birliği (AB), son yıllarda sürdürülebilir bir ekonomi oluşturma ve çevreye olan etkisini azaltma yolunda geri dönüştürülebilir atık ticaretini önemli bir araç olarak ku..."
-pubDate: 2024-11-12T23:35:01+03:00
+pubDate: 2024-11-12 23:35
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

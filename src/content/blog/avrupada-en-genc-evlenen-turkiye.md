@@ -1,7 +1,7 @@
 ---
 title: "Avrupa’da en genç evlilikler Türkiye'de"
 description: "İspanya ve İsveç gibi ülkelerde insanlar, evlilik öncesi güven ve duygusal bağlarını uzun süre koruyarak bilinçli bir karar veriyor. Türkiye'de ise, erken yaşta evlenme eğilim..."
-pubDate: 2024-10-31T23:08:10+03:00
+pubDate: 2024-10-31 23:08
 category: "Nüfus"
 author: "Fatih Özcan"
 status: "Yayında"

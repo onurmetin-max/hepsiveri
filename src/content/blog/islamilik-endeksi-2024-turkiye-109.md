@@ -1,7 +1,7 @@
 ---
 title: "İslamilik Endeksi 2024: İrlanda zirvede, Türkiye 109’uncu - endeks neyi ölçüyor, medya nasıl çerçeveledi?"
 description: "İslamicity Foundation'ın 2024 İslamilik Endeksleri (I²), ülkelerin \"ibadet pratikleri\"ni değil; adalet, liyakat, şeffaflık, hukukun üstünlüğü, insan hakları ve dış ilişkiler g..."
-pubDate: 2025-11-11T16:54:02+03:00
+pubDate: 2025-11-11 16:54
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

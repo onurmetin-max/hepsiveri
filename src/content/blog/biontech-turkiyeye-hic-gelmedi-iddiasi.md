@@ -1,8 +1,8 @@
 ---
 title: "\"BioNTech Türkiye’ye hiç gelmedi\" iddiası, kayıt zinciriyle uyuşmuyor"
 description: "Sosyal medyada dolaşan \" Pfizer-BioNTech aşısı Türkiye’ye hiç gelmedi \" iddiası, çeşitli tedarik anlaşması duyuruları, sevkiyat/depoya giriş haberleri, uygulamanın başladığına..."
-pubDate: 2025-12-16T23:07:58+03:00
-updatedDate: 2025-12-17T01:00:05+03:00
+pubDate: 2025-12-16 23:07
+updatedDate: 2025-12-17 01:00
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

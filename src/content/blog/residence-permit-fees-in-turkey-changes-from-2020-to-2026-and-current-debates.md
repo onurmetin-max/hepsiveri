@@ -1,7 +1,7 @@
 ---
 title: "Residence Permit Fees in Turkey: Changes from 2020 to 2026 and Current Debates"
 description: "Turkey has long been a popular residence destination for foreigners due to its geographical location, economic opportunities, tourist appeal, and relatively affordable cost of..."
-pubDate: 2026-05-13T10:00:50+03:00
+pubDate: 2026-05-13 10:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

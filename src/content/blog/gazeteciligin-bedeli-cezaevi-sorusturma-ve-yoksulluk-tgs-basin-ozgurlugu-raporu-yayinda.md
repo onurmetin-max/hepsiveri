@@ -1,7 +1,7 @@
 ---
 title: "Gazeteciliğin Bedeli, Cezaevi, soruşturma ve yoksulluk: TGS Basın Özgürlüğü raporu yayında"
 description: "TGS’nin 2025-2026 Basın Özgürlüğü Raporu, Türkiye’de gazeteciliğin yalnızca yargısal baskı altında değil, aynı zamanda ağır ekonomik koşullar içinde sürdürüldüğünü ortaya koyu..."
-pubDate: 2026-05-03T13:44:36+03:00
+pubDate: 2026-05-03 13:44
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

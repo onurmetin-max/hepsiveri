@@ -1,8 +1,8 @@
 ---
 title: "Ankara Cumhuriyet Başsavcılığı'ndan Grok'a Soruşturma: Yapay Zekâ da artık yargının radarında"
 description: "Elon Musk'a ait sosyal medya platformu X'in (eski adıyla Twitter) yapay zekâ destekli sohbet robotu Grok, Türkiye'de ilk kez ciddi bir hukuk süreciyle karşı karşıya. Ankara Cu..."
-pubDate: 2025-07-09T16:07:34+03:00
-updatedDate: 2025-07-09T22:36:54+03:00
+pubDate: 2025-07-09 16:07
+updatedDate: 2025-07-09 22:36
 category: "Hukuk"
 author: "Onur Metin"
 status: "Yayında"

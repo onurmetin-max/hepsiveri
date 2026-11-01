@@ -1,8 +1,8 @@
 ---
 title: "Türkiye’de üniversite patlaması: Eksi netle üniversiteye giriş, profesörsüz bölümler ve diploma enflasyonu"
 description: "Türkiye’nin yükseköğretim sistemi kâğıt üzerinde hiç olmadığı kadar “büyük”. YÖK’ün 2022-2023 istatistiklerine göre 208 yükseköğretim kurumunda 6 milyon 950 bin 142 öğrenci ve..."
-pubDate: 2025-11-04T10:00:20+03:00
-updatedDate: 2025-11-25T02:16:46+03:00
+pubDate: 2025-11-04 10:00
+updatedDate: 2025-11-25 02:16
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

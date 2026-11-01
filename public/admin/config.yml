@@ -69,8 +69,8 @@ collections:
         options:
           - "Yayında"
           - "Taslak"
-      - { label: "📅 Yayın Tarihi ve Saati", name: "pubDate", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZZ", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
-      - { label: "🕒 Son Güncelleme Tarihi ve Saati", name: "updatedDate", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZZ", date_format: "YYYY-MM-DD", time_format: "HH:mm", required: false }
+      - { label: "📅 Yayın Tarihi ve Saati", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD HH:mm", date_format: "YYYY-MM-DD", time_format: "HH:mm", picker_utc: false }
+      - { label: "🕒 Son Güncelleme Tarihi ve Saati", name: "updatedDate", widget: "datetime", format: "YYYY-MM-DD HH:mm", date_format: "YYYY-MM-DD", time_format: "HH:mm", picker_utc: false, required: false }
       - label: "📂 Kategori"
         name: "category"
         widget: "select"

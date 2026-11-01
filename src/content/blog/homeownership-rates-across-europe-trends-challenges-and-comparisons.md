@@ -1,7 +1,7 @@
 ---
 title: "Homeownership Rates Across Europe: Trends, Challenges, and Comparisons"
 description: "Homeownership has long been a symbol of financial stability and success, but the path to owning a home varies dramatically across the globe. In Europe, the homeownership rate ..."
-pubDate: 2024-11-26T22:43:01+03:00
+pubDate: 2024-11-26 22:43
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

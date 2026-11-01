@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de sağlık hizmetlerinde eşitsizlik: Veriler ne anlatıyor?"
 description: "\"Aynı ülkede, farklı dünyalar\": Sağlık hizmetine erişimde il il uçurum Türkiye’nin 81 iline ait 2023 yılı sağlık verileri, hizmete erişim ve kullanımda ciddi bölgesel uçurumla..."
-pubDate: 2025-10-06T12:45:56+03:00
+pubDate: 2025-10-06 12:45
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

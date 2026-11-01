@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de eğitimde eşitsizlik derinleşiyor: NEET kadınlar ve Muş’ta yükselen eğitim dışı oranı"
 description: "2025'te Türkiye'nin eğitim sisteminde alarm zilleri çalmaya devam etti. Eğitim Reformu Girişimi'nin (ERG) 2024 yılına ait raporuna göre, zorunlu eğitim çağındaki 612.814 çocuk..."
-pubDate: 2025-09-03T10:15:32+03:00
+pubDate: 2025-09-03 10:15
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

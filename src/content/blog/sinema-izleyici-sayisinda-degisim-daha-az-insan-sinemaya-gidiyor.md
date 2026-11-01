@@ -1,7 +1,7 @@
 ---
 title: "Sinema İzleyici Sayısında Değişim: Daha az insan sinemaya gidiyor"
 description: "Sinema, yaklaşık bir asırdan fazla bir süredir insanlara görsel hikayeler sunan güçlü bir medya türü. İlk dönemlerinde bir yenilik olarak başlayan sinema, zamanla kitlesel bir..."
-pubDate: 2024-06-06T02:20:49+03:00
+pubDate: 2024-06-06 02:20
 category: "Sanat"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Dünyada insanlar birbirine ne kadar güveniyor? Araştırmada Türkiye en dipte, güven en az Türkiye'de"
 description: "Pew Research Center’ın 1 Aralık 2025 tarihli küresel çalışması, 25 ülkede insanların birbirine duyduğu güven düzeyini ölçerek güncel bir sosyal sermaye haritası çıkarıyor. Ara..."
-pubDate: 2025-12-19T10:00:51+03:00
+pubDate: 2025-12-19 10:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

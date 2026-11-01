@@ -1,8 +1,8 @@
 ---
 title: "Dijital Eşitsizlik: Engelli Bireylerin Bilgisayar Sahipliği ve İnternet Kullanımı"
 description: "2023 yılında Eurostat verilerine göre, Avrupa Birliği'nde engelli bireyler, teknolojik kaynaklara erişim konusunda ciddi zorluklar yaşıyor. Bilgisayar sahibi olamamak, bu bire..."
-pubDate: 2024-11-05T18:17:15+03:00
-updatedDate: 2024-11-28T03:10:29+03:00
+pubDate: 2024-11-05 18:17
+updatedDate: 2024-11-28 03:10
 category: "Engel"
 author: "Ulaş Akyol"
 status: "Yayında"

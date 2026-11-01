@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de bebek ölüm hızları düşüyor: Bebek ölüm oranı, hangi ilde kaç oldu?"
 description: "Son yıllarda Türkiye'de bebek ölüm hızında önemli bir düşüş kaydedildi. Sağlık Bakanlığı tarafından yayımlanan son verilere göre, 2023 yılı itibarıyla her 1.000 canlı doğum ba..."
-pubDate: 2024-06-26T10:00:01+03:00
+pubDate: 2024-06-26 10:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

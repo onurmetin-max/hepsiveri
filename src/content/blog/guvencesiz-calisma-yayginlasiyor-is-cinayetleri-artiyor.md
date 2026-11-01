@@ -1,8 +1,8 @@
 ---
 title: "Güvencesiz Çalışma Yaygınlaşıyor, İş Cinayetleri Artıyor"
 description: "2024 Yılı Sona Ermeden İş Cinayetlerinde En Az 1708 İşçi Katledildi 2024 yılı, işçi ölümlerinin hız kesmeden devam ettiği bir yıl olarak kayıtlara geçti. İşçi Sağlığı ve İş Gü..."
-pubDate: 2024-12-10T04:40:13+03:00
-updatedDate: 2024-12-16T19:41:26+03:00
+pubDate: 2024-12-10 04:40
+updatedDate: 2024-12-16 19:41
 category: "Hukuk"
 author: "Sevinç Koçak"
 status: "Yayında"

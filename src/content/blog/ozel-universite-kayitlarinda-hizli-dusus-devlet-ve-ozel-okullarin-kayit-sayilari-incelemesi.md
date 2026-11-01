@@ -1,8 +1,8 @@
 ---
 title: "Özel üniversite kayıtlarında hızlı düşüş: Devlet ve özel okulların kayıt sayıları incelemesi"
 description: "Devlette lisans doluluğu %99’a dayanırken vakıflarda düşüş hızlandı: 2021 kırılması, 2022 baraj etkisi, 2023–2025’te ücret–barınma sarmalı 2020–2025 döneminde lisans dolulukla..."
-pubDate: 2025-10-12T10:00:55+03:00
-updatedDate: 2025-10-12T22:45:26+03:00
+pubDate: 2025-10-12 10:00
+updatedDate: 2025-10-12 22:45
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"
