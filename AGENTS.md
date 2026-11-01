@@ -30,9 +30,10 @@ Consult these guides before working on related tasks:
   - Haber içi ara başlıklarda `1. `, `2. `, `3. ` gibi rakam veya sıra numaralandırması **kesinlikle kullanılmaz**. Başlıklar doğrudan metin olarak verilir.
 - **Tarih ve Saat Formatı:**
   - `pubDate` alanı Türkiye saati (`+03:00`) baz alınarak daima `YYYY-MM-DD HH:mm` formatında yazılır.
-- **Yayın Saati Kuralı (Varsayılan Sabah 10:00):**
+- **Yayın Saati ve İleri Tarihli Planlama Kuralı (Varsayılan Sabah 10:00 & Taslak):**
   - Kullanıcı özel olarak "hemen gir", "anında yayınla" veya farklı bir saat belirtmediği sürece, haberlerin yayın saati daima **sabah 10:00** (`10:00`) olarak ayarlanır.
   - Gün içinde veya akşam/gece hazırlanan haberlerin tarihi, kullanıcı aksini söylemedikçe bir sonraki sabah `10:00` (veya sabah erken hazırlanmışsa o günün `10:00`ı) olacak şekilde ayarlanır (Örn: `2026-11-02 10:00`).
+  - **İleri Tarihli Haberler İçin Taslak Kuralı:** Gelecek günlere (ör. 2-3 gün sonrasına) hazırlanan haberler, yayın gününe kadar sitede vaktinden önce görünmemesi için `status: "Taslak"` olarak kaydedilir. Yayın günü sabahı saat 10:00'da CMS üzerinden veya commit ile `status: "Yayında"` yapılarak tek tıkla canlıya alınır.
 - **Noktalama İşaretleri ve Yazım Dili:**
   - **Noktalı Virgül (`;`):** Haddinden fazla kullanılmamalıdır. Yalnızca çok nadir ve dil bilgisi açısından kesinlikle zorunlu olduğu durumlarda yer verilmelidir. Genellikle nokta veya virgülle sadeleştirilmelidir.
   - **Çizgi / Tire Kullanımı:** Uzun çizgi (`—` / em-dash) kullanılmamalıdır. Bunun yerine kısa çizgi (`-`) veya uygunsa iki nokta üst üste (`:`) tercih edilmelidir.
