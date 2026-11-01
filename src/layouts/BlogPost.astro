@@ -1083,9 +1083,9 @@ const effectiveCaption = heroImageCaption || (isNewPost ? `${title} / Fotoğraf:
 					{heroImage && (
 						<figure class="hero-wrapper">
 							{typeof heroImage === 'string' ? (
-								<img src={heroImage} alt={effectiveCaption || title} loading="lazy" />
+								<img src={heroImage} alt={effectiveCaption || title} fetchpriority="high" loading="eager" decoding="async" />
 							) : (
-								<Image src={heroImage} alt={effectiveCaption || title} />
+								<Image src={heroImage} alt={effectiveCaption || title} fetchpriority="high" loading="eager" />
 							)}
 							{effectiveCaption && (
 								<figcaption class="hero-caption-box">

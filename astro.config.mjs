@@ -7,7 +7,12 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://hepsiveri.com',
-	integrations: [mdx(), sitemap()],
+	integrations: [
+		mdx(),
+		sitemap({
+			filter: (page) => !page.includes('/admin') && !page.includes('/api/'),
+		}),
+	],
 	fonts: [
 		{
 			provider: fontProviders.local(),
