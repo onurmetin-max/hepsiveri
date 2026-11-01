@@ -127,6 +127,11 @@ const absoluteHeroImageUrl = heroImage
 	: undefined;
 const authorProfileUrl = `${siteOrigin}/yazar/${canonicalAuthorSlug}/`;
 const fullAuthorAvatarUrl = authorAvatarUrl ? `${siteOrigin}${authorAvatarUrl}` : undefined;
+
+// 1 Kasım 2026 sonrası yeni haberlerde manuel altyazı girilmemişse otomatik başlık kullanılır;
+// önceki eski arşivde ise sadece varsa manuel altyazı gösterilir, zorlama yapılmaz.
+const isNewPost = pubDate && new Date(pubDate).getTime() > new Date('2026-11-01T23:59:59+03:00').getTime();
+const effectiveCaption = heroImageCaption || (isNewPost ? `${title}` : null);
 ---
 
 <html lang="tr">
@@ -1078,14 +1083,16 @@ const fullAuthorAvatarUrl = authorAvatarUrl ? `${siteOrigin}${authorAvatarUrl}` 
 					{heroImage && (
 						<figure class="hero-wrapper">
 							{typeof heroImage === 'string' ? (
-								<img src={heroImage} alt={title} loading="lazy" />
+								<img src={heroImage} alt={effectiveCaption || title} loading="lazy" />
 							) : (
-								<Image src={heroImage} alt={title} />
+								<Image src={heroImage} alt={effectiveCaption || title} />
 							)}
-							{heroImageCaption && (
+							{effectiveCaption && (
 								<figcaption class="hero-caption-box">
-									<span>{heroImageCaption}</span>
-									<span>Fotoğraf: HepsiVeri Arşivi</span>
+									<span>{effectiveCaption}</span>
+									{!effectiveCaption.toLowerCase().includes('fotoğraf:') && !effectiveCaption.toLowerCase().includes('kaynak:') && (
+										<span>Fotoğraf: HepsiVeri Arşivi</span>
+									)}
 								</figcaption>
 							)}
 						</figure>

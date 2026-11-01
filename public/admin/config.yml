@@ -61,7 +61,7 @@ collections:
 
       # Sağ Kolon (WordPress Tarzı Kenar Çubuğu)
       - { label: "🖼️ Kapak Görseli", name: "heroImage", widget: "image", required: false }
-      - { label: "📝 Kapak Görseli Kaynağı / Alt Yazısı", name: "heroImageCaption", widget: "string", required: false }
+      - { label: "📝 Kapak Görseli Kaynağı / Alt Yazısı", name: "heroImageCaption", widget: "string", required: false, hint: "İsteğe bağlı. Özel bir açıklama yazabilirsiniz (Örn: 'Ankara Adliyesi / Fotoğraf: AA'). Boş bırakırsanız otomatik haber başlığı atanır." }
       - label: "📌 Yayın Durumu"
         name: "status"
         widget: "select"
