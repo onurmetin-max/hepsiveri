@@ -1,20 +1,25 @@
 ---
-title: "TEPAV ve Bakanlık verileri: Kadın emeğinde çifte kıskaç - %29 kayıt dışı, %10 sendikalı"
-description: "TEPAV'ın SGK verilerine dayanan İstihdam İzleme Bülteni ve Çalışma Bakanlığı istatistikleri, kadın çalışanların güvencesiz tablosunu ortaya koydu: Her üç kadından biri sosyal güvenliksiz çalışırken, sendikalaşma oranı yüzde 10,8'de kaldı."
-pubDate: 2026-11-02 10:00
-category: "Sosyal Göstergeler"
-author: "Onur Metin"
-status: "Yayında"
-readTime: "5 dk okuma"
-heroImage: "/uploads/kadin-istihdami-guvencesizlik-tepav.jpg"
-heroImageCaption: "Türkiye'de kadın çalışanlar hem yüksek kayıt dışılık hem de düşük sendikalaşma oranlarıyla karşı karşıya / Fotoğraf: HepsiVeri Arşivi"
+title: "TEPAV ve Bakanlık verileri: Kadın emeğinde çifte kıskaç - %29 kayıt
+  dışı, %10 sendikalı"
+description: "TEPAV'ın SGK verilerine dayanan İstihdam İzleme Bülteni ve Çalışma
+  Bakanlığı istatistikleri, kadın çalışanların güvencesiz tablosunu ortaya
+  koydu: Her üç kadından biri sosyal güvenliksiz çalışırken, sendikalaşma oranı
+  yüzde 10,8'de kaldı."
 tags:
-  - "Kadın İstihdamı"
-  - "TEPAV"
-  - "SGK"
-  - "Sendikalaşma"
-  - "Kayıt Dışı İstihdam"
-  - "İşgücü Piyasası"
+  - Kadın İstihdamı
+  - TEPAV
+  - SGK
+  - Sendikalaşma
+  - Kayıt Dışı İstihdam
+  - İşgücü Piyasası
+heroImage: /uploads/kadin-istihdami-guvencesizlik-tepav.jpg
+readTime: 5 dk okuma
+heroImageCaption: "Türkiye'de kadın çalışanlar hem yüksek kayıt dışılık hem de
+  düşük sendikalaşma oranlarıyla karşı karşıya / Fotoğraf: HepsiVeri Arşivi"
+status: Yayında
+pubDate: 2026-11-02 10:00
+category: Ekonomi
+author: Onur Metin
 ---
 
 Türkiye işgücü piyasasında kadın çalışanların karşı karşıya kaldığı yapısal kırılganlık, son yayımlanan resmi istatistiklerle bir kez daha somutlaştı. **Türkiye Ekonomi Politikaları Araştırma Vakfı'nın (TEPAV)** Sosyal Güvenlik Kurumu (SGK) verileriyle hazırladığı *İstihdam İzleme Bülteni* ile **Çalışma ve Sosyal Güvenlik Bakanlığı'nın** sendikalaşma verileri, kadın çalışanların hem kayıt dışılık hem de örgütsüzlük açısından "çifte kıskaç" altında olduğunu ortaya koyuyor.
