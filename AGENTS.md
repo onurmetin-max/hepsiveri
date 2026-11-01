@@ -30,4 +30,8 @@ Consult these guides before working on related tasks:
   - Haber içi ara başlıklarda `1. `, `2. `, `3. ` gibi rakam veya sıra numaralandırması **kesinlikle kullanılmaz**. Başlıklar doğrudan metin olarak verilir.
 - **Tarih ve Saat Formatı:**
   - `pubDate` alanı Türkiye saati (`+03:00`) baz alınarak daima `YYYY-MM-DD HH:mm` formatında yazılır.
+- **Noktalama İşaretleri ve Yazım Dili:**
+  - **Noktalı Virgül (`;`):** Haddinden fazla kullanılmamalıdır. Yalnızca çok nadir ve dil bilgisi açısından kesinlikle zorunlu olduğu durumlarda yer verilmelidir. Genellikle nokta veya virgülle sadeleştirilmelidir.
+  - **Çizgi / Tire Kullanımı:** Uzun çizgi (`—` / em-dash) kullanılmamalıdır. Bunun yerine kısa çizgi (`-`) veya uygunsa iki nokta üst üste (`:`) tercih edilmelidir.
+
 

@@ -1,5 +1,5 @@
 ---
-title: "TEPAV ve Bakanlık verileri: Kadın emeğinde çifte kıskaç — %29 kayıt dışı, %10 sendikalı"
+title: "TEPAV ve Bakanlık verileri: Kadın emeğinde çifte kıskaç - %29 kayıt dışı, %10 sendikalı"
 description: "TEPAV'ın SGK verilerine dayanan İstihdam İzleme Bülteni ve Çalışma Bakanlığı istatistikleri, kadın çalışanların güvencesiz tablosunu ortaya koydu: Her üç kadından biri sosyal güvenliksiz çalışırken, sendikalaşma oranı yüzde 10,8'de kaldı."
 pubDate: 2026-11-01 22:30
 category: "Sosyal Göstergeler"
@@ -19,7 +19,7 @@ tags:
 
 Türkiye işgücü piyasasında kadın çalışanların karşı karşıya kaldığı yapısal kırılganlık, son yayımlanan resmi istatistiklerle bir kez daha somutlaştı. **Türkiye Ekonomi Politikaları Araştırma Vakfı'nın (TEPAV)** Sosyal Güvenlik Kurumu (SGK) verileriyle hazırladığı *İstihdam İzleme Bülteni* ile **Çalışma ve Sosyal Güvenlik Bakanlığı'nın** sendikalaşma verileri, kadın çalışanların hem kayıt dışılık hem de örgütsüzlük açısından "çifte kıskaç" altında olduğunu ortaya koyuyor.
 
-Veriler; Türkiye'de istihdam edilen her üç kadından neredeyse birinin hiçbir sosyal güvenlik güvencesi olmadan çalıştığını, kayıtlı çalışan kadınların ise yalnızca **%10,86'sının** sendikal koruma altında olduğunu gösteriyor.
+Veriler, Türkiye'de istihdam edilen her üç kadından neredeyse birinin hiçbir sosyal güvenlik güvencesi olmadan çalıştığını, kayıtlı çalışan kadınların ise yalnızca **%10,86'sının** sendikal koruma altında olduğunu gösteriyor.
 
 ## Kayıt dışılık: Kadınlarda oran erkeklerin çok üzerinde
 
