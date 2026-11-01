@@ -18,10 +18,14 @@ const timeFormatted = date.toLocaleTimeString('tr-TR', {
 	minute: '2-digit',
 	timeZone: 'Europe/Istanbul',
 });
+
+// Saatsiz girilmiş (UTC 00:00:00) tarihlerde Türkiye saatinden kaynaklanan yapay "03:00" saatini gösterme
+const isMidnightUTC = date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds() === 0;
+const shouldShowTime = includeTime && !isMidnightUTC;
 ---
 
 <time datetime={date.toISOString()}>
-	{includeTime ? `${dateFormatted} - ${timeFormatted}` : dateFormatted}
+	{shouldShowTime ? `${dateFormatted} - ${timeFormatted}` : dateFormatted}
 </time>
 
 
