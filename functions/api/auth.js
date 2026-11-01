@@ -7,3 +7,5 @@ export async function onRequestGet(context) {
 
   return Response.redirect(githubAuthUrl, 302);
 }
+
+// Trigger deployment for env vars
