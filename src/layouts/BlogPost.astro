@@ -128,10 +128,10 @@ const absoluteHeroImageUrl = heroImage
 const authorProfileUrl = `${siteOrigin}/yazar/${canonicalAuthorSlug}/`;
 const fullAuthorAvatarUrl = authorAvatarUrl ? `${siteOrigin}${authorAvatarUrl}` : undefined;
 
-// 1 Kasım 2026 sonrası yeni haberlerde manuel altyazı girilmemişse otomatik başlık kullanılır;
+// 31 Ekim 2026 sonrası (yeni site dönemi) haberlerde manuel altyazı girilmemişse otomatik başlık kullanılır;
 // önceki eski arşivde ise sadece varsa manuel altyazı gösterilir, zorlama yapılmaz.
-const isNewPost = pubDate && new Date(pubDate).getTime() > new Date('2026-11-01T23:59:59+03:00').getTime();
-const effectiveCaption = heroImageCaption || (isNewPost ? `${title}` : null);
+const isNewPost = pubDate && new Date(pubDate).getTime() > new Date('2026-10-31T23:59:59+03:00').getTime();
+const effectiveCaption = heroImageCaption || (isNewPost ? `${title} / Fotoğraf: HepsiVeri Arşivi` : null);
 ---
 
 <html lang="tr">
