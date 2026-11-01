@@ -1,7 +1,8 @@
 ---
 title: "İktidarın Çocuk Politikası hapishanelerdeki çocuk sayısına nasıl yansıyor?"
 description: "Çocukların yaşadığı toplumun bütün sorunlarından yetişkinlerden daha fazla etkilendikleri bilinen bir gerçek. OECD’nin 2024 verilerine göre Türkiye çocuk yoksulluğunun en yüks..."
-pubDate: 2024-12-15
+pubDate: 2024-12-15T10:45:54+03:00
+updatedDate: 2025-06-02T02:37:23+03:00
 category: "Çocuk"
 author: "Sevinç Koçak"
 status: "Yayında"

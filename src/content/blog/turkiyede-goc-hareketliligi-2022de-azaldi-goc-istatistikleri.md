@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de göç hareketliliği 2022'de azaldı: Göç İstatistikleri"
 description: "TÜİK'in açıkladığı Uluslararası Göç İstatistikleri, Türkiye'nin 2022 yılındaki göç hareketliliğiyle ilgili önemli verileri sunarak ülkenin demografik dinamiklerini ele alıyor...."
-pubDate: 2024-02-26
+pubDate: 2024-02-26T17:00:05+03:00
 category: "Nüfus"
 author: "Buğu Begüm Orhan"
 status: "Yayında"

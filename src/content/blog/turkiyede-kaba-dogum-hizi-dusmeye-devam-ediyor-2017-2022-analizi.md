@@ -1,7 +1,8 @@
 ---
 title: "Türkiye'de \"Kaba Doğum Hızı\" düşmeye devam ediyor: 2017-2022 Analizi"
 description: "Türkiye İstatistik Kurumu (TÜİK) tarafından yayınlanan verilere göre, Türkiye'deki kaba doğum hızı 2017 yılından bu yana düşmeye devam ediyor. 2017 yılında binde 13,8 olan kab..."
-pubDate: 2024-02-24
+pubDate: 2024-02-24T08:30:22+03:00
+updatedDate: 2024-02-25T07:22:23+03:00
 category: "Nüfus"
 author: "Meltem Suat"
 status: "Yayında"

@@ -1,7 +1,8 @@
 ---
 title: "RTÜK ve Sansür 2023-2025: 82 milyon TL ceza, 311 bin erişim engeli"
 description: "2023–2024 döneminde RTÜK'ün para cezalarında ve yayın durdurma kararlarında belirgin bir artış görüldü. 2024 sonunda toplam para cezaları 82 milyon TL 'ye ulaştı; 2025 Eylül'd..."
-pubDate: 2025-10-25
+pubDate: 2025-10-25T10:27:23+03:00
+updatedDate: 2025-10-29T13:33:42+03:00
 category: "Hukuk"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,8 @@
 ---
 title: "Türkiye, Dünya genelinde işçi haklarının en çok ihlal edildiği 10 ülke arasında"
 description: "2025 Küresel Haklar Endeksi’ne göre, dünya genelinde işçi hakları son on yılın en kötü seviyesine geriledi. Türkiye, sendikal baskılar, toplu pazarlık engelleri ve grev yasakl..."
-pubDate: 2025-08-13
+pubDate: 2025-08-13T17:58:09+03:00
+updatedDate: 2025-12-15T11:43:16+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

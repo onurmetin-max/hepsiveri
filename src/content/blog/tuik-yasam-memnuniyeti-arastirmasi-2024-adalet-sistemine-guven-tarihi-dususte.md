@@ -1,7 +1,7 @@
 ---
 title: "TÜİK Yaşam Memnuniyeti Araştırması 2024: Adalet Sistemine Güven Tarihi Düşüşte"
 description: "Türkiye İstatistik Kurumu'nun 2024 Yaşam Memnuniyeti Araştırması, vatandaşların adalet sistemine olan güveninde endişe verici bir düşüş, güvenlik güçlerinin hizmetlerinden duy..."
-pubDate: 2025-06-19
+pubDate: 2025-06-19T14:15:36+03:00
 category: "Hukuk"
 author: "Onur Metin"
 status: "Yayında"

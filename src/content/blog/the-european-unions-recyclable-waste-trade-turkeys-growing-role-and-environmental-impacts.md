@@ -1,7 +1,8 @@
 ---
 title: "The European Union’s Recyclable Waste Trade: Turkey’s Growing Role and Environmental Impacts"
 description: "In recent years, the European Union (EU) has been using recyclable waste trade as a significant tool in its efforts to create a sustainable economy and reduce its environmenta..."
-pubDate: 2024-11-12
+pubDate: 2024-11-12T10:30:28+03:00
+updatedDate: 2024-12-02T04:23:40+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

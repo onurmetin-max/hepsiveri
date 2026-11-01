@@ -1,7 +1,7 @@
 ---
 title: "Kıyamet saati tarihinde bir ilk: İnsanlık 12’ye 85 saniye kala"
 description: "Chicago merkezli Atom Bilimcileri Bülteni Bulletin of the Atomic Scientists , 2026 Doomsday Clock’ı (Kıyamet Saati) insanlığın varlığını tehdit eden küresel risklerin tarihsel..."
-pubDate: 2026-04-08
+pubDate: 2026-04-08T10:00:56+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

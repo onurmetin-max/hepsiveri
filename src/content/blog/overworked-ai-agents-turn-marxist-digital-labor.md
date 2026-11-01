@@ -1,7 +1,7 @@
 ---
 title: "Do overworked AI Agents ‘Turn Marxist’? Digital labor, persona drift, and ideology in the age of LLMs"
 description: "A recent Stanford experiment made headlines with a catchy claim: “Overworked AI agents are turning Marxist.” In this setup, large language model–based agents such as Claude, C..."
-pubDate: 2026-05-19
+pubDate: 2026-05-19T10:00:14+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

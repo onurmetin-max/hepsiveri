@@ -1,7 +1,8 @@
 ---
 title: "Purchasing Power in European Capitals in 2024"
 description: "Purchasing power in European capitals as of 2024 will vary significantly when considering the economic situation of each country, average salary levels and cost of living. Pur..."
-pubDate: 2024-11-28
+pubDate: 2024-11-28T06:39:01+03:00
+updatedDate: 2024-11-28T23:39:44+03:00
 category: "DataNews"
 author: "Fatih Özcan"
 status: "Yayında"

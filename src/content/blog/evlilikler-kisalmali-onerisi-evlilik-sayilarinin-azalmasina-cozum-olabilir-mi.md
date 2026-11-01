@@ -1,7 +1,8 @@
 ---
 title: "Evlilikler Kısalmalı önerisi, evlilik sayılarının azalmasına çözüm olabilir mi?"
 description: "Son yıllarda Türkiye’de evlilik oranlarında belirgin bir düşüş gözleniyor. TÜİK verilerine göre, 2015 yılında 600 bine yakın çift evlenirken, 2023 yılında bu sayı 500 binin al..."
-pubDate: 2024-06-07
+pubDate: 2024-06-07T13:27:51+03:00
+updatedDate: 2024-11-28T03:16:50+03:00
 category: "Nüfus"
 author: "Ulaş Akyol"
 status: "Yayında"

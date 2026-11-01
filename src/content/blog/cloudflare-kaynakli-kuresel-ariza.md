@@ -1,7 +1,8 @@
 ---
 title: "Cloudflare kaynaklı küresel arıza: Birkaç saatlik \"tek hata noktası\", internetin ne kadar kırılgan olduğunu gösterdi"
 description: "18 Kasım 2025 Salı günü dünya, internetin ne kadar az \"dağıtık\" olduğunu bir kez daha deneyimleyerek hatırladı. İnternet altyapı şirketi Cloudflare’de yaşanan geniş kapsamlı a..."
-pubDate: 2025-11-19
+pubDate: 2025-11-19T00:39:36+03:00
+updatedDate: 2025-11-22T02:38:12+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

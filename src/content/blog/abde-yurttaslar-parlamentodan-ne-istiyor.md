@@ -1,7 +1,7 @@
 ---
 title: "AB'de yurttaşlar Parlamento’dan ne istiyor?"
 description: "Öncelik listesinde hayat pahalılığı, güvenlik ve yoksullukla mücadele var Avrupa Parlamentosu’nun 2025 Kış ve Bahar Eurobarometreleri ile Avrupa Komisyonu’nun \"EU challenges a..."
-pubDate: 2025-11-18
+pubDate: 2025-11-18T10:00:32+03:00
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

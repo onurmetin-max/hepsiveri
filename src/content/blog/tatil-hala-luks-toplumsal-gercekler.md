@@ -1,7 +1,7 @@
 ---
 title: "Tatil Hâlâ Lüks: Toplumsal gerçekler duygusal bir tabloya dönüşüyor"
 description: "Türkiye’nin tatil hakkı, ekonomik şartların gölgesinde giderek daha fazla kesim için erişilmez bir hayal haline geliyor. İşte Eurostat’ın 2024 rakamları ve Ipsos’un güncel ver..."
-pubDate: 2025-08-30
+pubDate: 2025-08-30T18:40:37+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

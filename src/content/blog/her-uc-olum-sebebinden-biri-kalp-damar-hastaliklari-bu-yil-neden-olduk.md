@@ -1,7 +1,8 @@
 ---
 title: "Her üç ölüm sebebinden biri, Kalp-Damar hastalıkları: Bu yıl neden öldük?"
 description: "Türkiye'de ölüm nedenleri siralamasında kalp-damar hastalıkları, ezici bir üstünlükle birinci sırada yer alıyor. TÜİK'in 2024 verilerine göre, toplam ölümlerin %36'sı dolaşım ..."
-pubDate: 2025-06-20
+pubDate: 2025-06-20T11:25:38+03:00
+updatedDate: 2025-07-09T22:37:21+03:00
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

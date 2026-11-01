@@ -1,7 +1,8 @@
 ---
 title: "Sayılarla Ankapark'ın maliyet tablosu Ankaralılara ne söylüyor?"
 description: "Ankapark'ta ABB'nin maliyet tablosu 131 kalemi üç başlığa ayırıyor ve her satırda sözleşme tarihi veriyor. Bu tarihlere göre ana hesabın yüzde 93,3'ü Gökçek'in başkanlığı sıra..."
-pubDate: 2026-09-24
+pubDate: 2026-09-24T21:54:05+03:00
+updatedDate: 2026-09-30T01:27:56+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

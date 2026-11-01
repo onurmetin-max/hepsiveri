@@ -1,7 +1,7 @@
 ---
 title: "Arama Motorlarının gücü azalıyor: Çevrimiçi yolculukların başlangıcında rekor düşüş"
 description: "2025'in ikinci yarısında açıklanan veriler, dijital dünyada çığır açıcı bir değişime işaret ediyor. Yıllardır internet kullanıcılarının bilgiye ulaşmadaki ana kapısı olan aram..."
-pubDate: 2025-09-07
+pubDate: 2025-09-07T10:15:46+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

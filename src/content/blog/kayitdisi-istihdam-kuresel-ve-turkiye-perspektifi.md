@@ -1,7 +1,7 @@
 ---
 title: "Kayıtdışı İstihdam: Küresel ve Türkiye Perspektifi"
 description: "Kayıtdışı istihdam, dünya çapında ekonomileri zorlayan, aynı zamanda sosyal güvencelerden mahrum milyonlarca işçiyi etkileyen kritik bir sorundur. 2024 yılı itibariyle kayıtdı..."
-pubDate: 2024-12-01
+pubDate: 2024-12-01T01:44:07+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,8 @@
 ---
 title: "Avrupa’da ve Türkiye'de Konut Sahipliği Oranları: Trendler, Zorluklar ve Karşılaştırmalar"
 description: "Konut sahipliği uzun zamandır finansal istikrar ve başarının bir simgesi olmuştur, ancak bir ev sahibi olma yolu dünya çapında dramatik şekilde değişmektedir. Avrupa’da, konut..."
-pubDate: 2024-11-26
+pubDate: 2024-11-26T22:43:26+03:00
+updatedDate: 2024-11-27T00:55:46+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

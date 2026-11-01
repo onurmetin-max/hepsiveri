@@ -1,7 +1,7 @@
 ---
 title: "Avrupa'da İngilizce Yeterlilik Haritası: Kuzey Avrupa zirvede, Türkiye en dipte"
 description: "Education First tarafından yayınlanan 2024 İngilizce Yeterlilik Endeksi, Avrupa kıtasında İngilizce dil becerilerinin coğrafi dağılımında çarpıcı farklılıklar olduğunu ortaya ..."
-pubDate: 2025-06-09
+pubDate: 2025-06-09T17:48:50+03:00
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

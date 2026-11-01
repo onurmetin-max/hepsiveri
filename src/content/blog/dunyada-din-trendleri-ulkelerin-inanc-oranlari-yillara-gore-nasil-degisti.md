@@ -1,7 +1,7 @@
 ---
 title: "Dünyada din trendleri : Ülkelerin inanç oranları yıllara göre nasıl değişti?"
 description: "Dünyada dinin bireylerin hayatındaki önemi, ülkeden ülkeye büyük farklılıklar gösteriyor. Our World in Data’nın 2022 verilerine göre, bazı ülkelerde din hayatın merkezinde yer..."
-pubDate: 2025-08-31
+pubDate: 2025-08-31T10:10:42+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

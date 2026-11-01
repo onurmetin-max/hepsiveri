@@ -1,7 +1,7 @@
 ---
 title: "Oxford Word of the Year: Kültürel, Sosyal ve Politik Değişimlerin Dili"
 description: "Oxford Word of the Year , her yıl dilin en anlamlı ve toplumsal açıdan en önemli kelimesini seçer. Bu seçilen kelimeler, yalnızca bir dilin evrimini değil, aynı zamanda dünya ..."
-pubDate: 2024-12-03
+pubDate: 2024-12-03T05:37:13+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

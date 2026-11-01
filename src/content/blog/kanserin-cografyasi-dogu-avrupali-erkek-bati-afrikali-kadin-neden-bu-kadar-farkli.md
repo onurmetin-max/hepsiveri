@@ -1,7 +1,8 @@
 ---
 title: "Kanserin coğrafyası: Doğu Avrupalı erkek, Batı Afrikalı kadın neden bu kadar farklı?"
 description: "2024 yılında Freddie Bray ve arkadaşları 185 ülkedeki 36 kanser türünü inceleyen \"Global Cancer Statistics 2022\" başlıklı araştırmayı yayınladı. Bu araştırmaya göre cinsiyet k..."
-pubDate: 2026-06-19
+pubDate: 2026-06-19T10:00:57+03:00
+updatedDate: 2026-06-19T11:20:07+03:00
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

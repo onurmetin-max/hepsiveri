@@ -1,7 +1,8 @@
 ---
 title: "Ankapark kayıtlarında, 65 bin dolarlık 80 kilogramlık \"Konuşan Gökçek\" mankeni: Parası ödendi, kendisi kayıp"
 description: "Ankara Büyükşehir Belediyesi'nin Ankapark harcamalarını kalem kalem döktüğü sayfada, listenin en tuhaf satırlarından biri \"Talking Model Game System\" adını taşıyor. Belgelere ..."
-pubDate: 2026-09-27
+pubDate: 2026-09-27T10:00:49+03:00
+updatedDate: 2026-09-30T18:50:10+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

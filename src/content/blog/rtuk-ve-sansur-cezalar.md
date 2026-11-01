@@ -1,7 +1,7 @@
 ---
 title: "RTÜK ve Sansür 2023-2025: 82 milyon TL ceza, 311 bin erişim engeli"
 description: "Radyo ve Televizyon Üst Kurulu'nun (RTÜK) son iki yılda yayıncılara kestiği idari para cezaları ve erişim engeli kararlarının detaylı dökümü."
-pubDate: 2025-10-15
+pubDate: 2025-10-15T14:30:00+03:00
 category: "Medya & Hukuk"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,8 @@
 ---
 title: "Türkiye’de intiharlar 2024’te rekor seviyede: Genç kuşakta risk yüksek"
 description: "TÜİK’in en güncel istatistiklerine göre 2024 yılında intihar sonucu hayatını kaybeden kişi sayısı 4460 ’a yükseldi. Kaba intihar hızı yüz binde 5,22 ile veri serisinin başladı..."
-pubDate: 2025-10-24
+pubDate: 2025-10-24T10:00:08+03:00
+updatedDate: 2025-11-02T12:30:55+03:00
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

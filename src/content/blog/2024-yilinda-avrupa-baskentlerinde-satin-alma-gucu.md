@@ -7,7 +7,8 @@ description: Bu makalede, Avrupa'daki başkentlerdeki satın alma gücünü 2024
   şehirleri karşılaştıracak ve bu farklılıkların arkasındaki ekonomik faktörlere
   bakacağız.
 status: Yayında
-pubDate: 2024-11-28
+pubDate: 2024-11-28T06:39:12+03:00
+updatedDate: 2024-11-28T23:40:09+03:00
 category: Ekonomi
 author: Fatih Özcan
 ---

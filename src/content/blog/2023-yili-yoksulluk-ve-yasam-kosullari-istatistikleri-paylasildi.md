@@ -4,7 +4,8 @@ description: Türkiye İstatistik Kurumu (TÜİK), 2023 yılı yoksulluk ve yaş
   koşulları istatistiklerini kamuoyuyla paylaştı. HepsiVeri sitesi, hem
   geçmişten bugüne kadar, hem de bugün açıklanan verileri derleyip okuyucularına
   sunuyor.
-pubDate: 2024-02-03
+pubDate: 2024-02-03T10:30:01+03:00
+updatedDate: 2024-02-09T05:40:03+03:00
 category: Ekonomi
 author: Onur Metin
 status: "Yayında"

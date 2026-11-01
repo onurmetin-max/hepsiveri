@@ -1,7 +1,8 @@
 ---
 title: "Alman birası dönüşüyor: Bir kültürün veriyle imtihanı (2015-2026)"
 description: "Almanya denince akla gelen ilk üç imgeden biri olan bira, tarihinin en sessiz ama en derin krizini yaşıyor. Almanya Federal İstatistik Ofisi (Destatis) tarafından bugün paylaş..."
-pubDate: 2026-02-02
+pubDate: 2026-02-02T23:35:38+03:00
+updatedDate: 2026-03-02T20:30:49+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

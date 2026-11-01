@@ -1,7 +1,7 @@
 ---
 title: "88 yıllık verilerle Türkiye'de Orman Yangınları"
 description: "Artış trendi kaygı veriyor: 2024'te 3800 Yangın Çıktı Türkiye'nin orman yangınlarıyla mücadelesi, son yıllarda kritik bir noktaya ulaştı. 2024 yılında toplamda 3800 orman yang..."
-pubDate: 2025-07-04
+pubDate: 2025-07-04T03:05:03+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

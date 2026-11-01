@@ -1,7 +1,7 @@
 ---
 title: "Balon Balığının Akdeniz’de geri dönüşü neden zor görünüyor?"
 description: "Balon balığı, Türkiye’nin deniz gündeminde uzun süredir bilinen ama etkisi her yıl daha fazla hissedilen istilacı türlerden biri. Akdeniz ve Güney Ege’de hızla yayılan bu tür,..."
-pubDate: 2026-07-28
+pubDate: 2026-07-28T10:00:59+03:00
 category: "VeriHaberciliği"
 author: "Onur Metin"
 status: "Yayında"

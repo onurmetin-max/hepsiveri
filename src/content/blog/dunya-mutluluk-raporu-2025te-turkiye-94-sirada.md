@@ -1,7 +1,7 @@
 ---
 title: "Dünya Mutluluk Raporu 2025'te Türkiye 94. sırada - Güven, sosyal destek ve “iyilik” göstergeleri ne söylüyor?"
 description: "Mutluluk puanı denilen şey, raporda ağırlıkla yaşam değerlendirmesi üzerinden gidiyor: Gallup anketinde insanlardan 0–10 arası bir \"merdiven\" düşünmeleri isteniyor (0 en kötü,..."
-pubDate: 2025-12-25
+pubDate: 2025-12-25T10:00:10+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

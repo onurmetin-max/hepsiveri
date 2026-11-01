@@ -1,7 +1,8 @@
 ---
 title: "Laiklik Meclisi İzleme Merkezi, 2024 Mart ayı Laiklik İhlalleri Raporu'nu açıkladı"
 description: "Türkiye genelinde Mart ayı boyunca laiklik ilkesine yönelik ihlallerin arttığı gözlemlendi. Laiklik Meclisi İzleme Merkezi tarafından yayımlanan Mart 2024 Laiklik İhlalleri Ra..."
-pubDate: 2024-04-08
+pubDate: 2024-04-08T16:29:50+03:00
+updatedDate: 2024-04-16T16:13:28+03:00
 category: "Hukuk"
 author: "Onur Metin"
 status: "Yayında"

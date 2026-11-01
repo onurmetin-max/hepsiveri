@@ -1,7 +1,7 @@
 ---
 title: "Avrupa'da ve Türkiye'de Genç Yetişkinlerin Yaşam Düzeni Trendleri"
 description: "OECD ve Eurostat'tan gelen son veriler, Avrupa'daki genç yetişkinlerin yaşam düzenleriyle ilgili önemli eğilimleri ortaya koyuyor. Özellikle güney ve kuzey Avrupa ülkeleri ara..."
-pubDate: 2024-10-25
+pubDate: 2024-10-25T20:10:54+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

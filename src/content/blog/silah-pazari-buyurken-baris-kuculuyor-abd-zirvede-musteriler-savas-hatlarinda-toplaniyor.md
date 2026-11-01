@@ -1,7 +1,7 @@
 ---
 title: "Silah pazarı büyürken barış küçülüyor: ABD zirvede, müşteriler savaş hatlarında toplanıyor"
 description: "Silah ihracatının yeni haritasında paylar değişiyor, bağımlılık derinleşiyor, savaş ekonomisi genişliyor. Stockholm Uluslararası Barış Araştırmaları Enstitüsü SIPRI’nin Mart 2..."
-pubDate: 2026-04-05
+pubDate: 2026-04-05T10:00:34+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

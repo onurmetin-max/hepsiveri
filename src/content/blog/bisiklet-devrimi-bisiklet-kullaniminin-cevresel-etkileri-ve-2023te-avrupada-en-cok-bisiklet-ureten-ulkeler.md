@@ -1,7 +1,8 @@
 ---
 title: "Bisiklet Devrimi: Bisiklet Kullanımının Çevresel Etkileri ve 2023'te Avrupa'da En Çok Bisiklet Üreten Ülkeler"
 description: "Bisiklet, basit bir ulaşım aracı olmasının ötesinde, daha sürdürülebilir ve çevre dostu bir gelecek için devrim niteliğinde bir çözüm sunuyor. Şehirleşmenin artması ve iklim d..."
-pubDate: 2024-11-22
+pubDate: 2024-11-22T01:43:40+03:00
+updatedDate: 2024-11-29T01:18:03+03:00
 category: "Ekonomi"
 author: "Ulaş Akyol"
 status: "Yayında"

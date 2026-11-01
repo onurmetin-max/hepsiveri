@@ -1,7 +1,8 @@
 ---
 title: "Türkiye'de Kadına Yönelik Şiddet: Güncel Veriler ve Mücadele Stratejileri"
 description: "25 Kasım, Birleşmiş Milletler tarafından \"Kadına Yönelik Şiddete Karşı Uluslararası Mücadele Günü\" olarak kabul edilmiştir. Bu gün, dünya genelinde kadınlara yönelik şiddetin ..."
-pubDate: 2024-11-25
+pubDate: 2024-11-25T12:58:12+03:00
+updatedDate: 2024-11-28T03:23:21+03:00
 category: "Kadın"
 author: "Ulaş Akyol"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’de Aile Yapısındaki Değişim: Kalabalık Evlerden Bireysel Yaşama Geçişin Ekonomik ve Sosyal Nedenleri"
 description: "Türkiye'deki aile yapısı , tarihsel süreç içinde büyük bir dönüşüm geçirmiştir. Geleneksel aile yapısı geniş ailelerden oluşurken, modern Türkiye'de bu yapı giderek değişmekte..."
-pubDate: 2024-12-10
+pubDate: 2024-12-10T00:58:31+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

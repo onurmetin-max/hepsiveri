@@ -1,7 +1,8 @@
 ---
 title: "Deprem konutlarında \"vaat\" ile \"gerçek\": Sayılar büyüyor, denetim nerede takılıyor?"
 description: "6 Şubat 2026 yıl dönümü yaklaşırken resmi kurumların \"teslim\" ve \"tamamlanma\" metrikleri, kamuoyunun \"yerleşim\" ve \"mağduriyet\" sorularıyla aynı zeminde buluşmuyor. Bu dosya, ..."
-pubDate: 2026-02-05
+pubDate: 2026-02-05T10:00:44+03:00
+updatedDate: 2026-02-05T18:06:09+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

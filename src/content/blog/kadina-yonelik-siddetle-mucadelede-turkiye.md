@@ -1,7 +1,8 @@
 ---
 title: "Kadına yönelik şiddetle mücadelede Türkiye: Mevcut tablo ve alınması gereken önleyici tedbirler"
 description: "Türkiye'de kadına yönelik şiddet, 2024 yılında rekor seviyelere ulaşmış, toplumsal vicdanı derinden sarsan ve acil eylem gerektiren yapısal bir kriz haline gelmiştir. Türkiye ..."
-pubDate: 2025-11-25
+pubDate: 2025-11-25T09:00:23+03:00
+updatedDate: 2025-12-07T03:11:26+03:00
 category: "Kadın"
 author: "Onur Metin"
 status: "Yayında"

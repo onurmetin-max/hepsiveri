@@ -1,7 +1,8 @@
 ---
 title: "Türkiye’de 15 yaş altına sosyal medya yasağı, dijital oyunlara yaş derecelendirmesi: Taslak ne getiriyor?"
 description: "Aile ve Sosyal Hizmetler Bakanlığı’nın hazırladığı ve 15 yaş altına sosyal medya erişimini yasaklamayı hedefleyen yasa taslağı, sosyal ağlar ile dijital oyun ekosistemini aynı..."
-pubDate: 2026-01-30
+pubDate: 2026-01-30T21:35:18+03:00
+updatedDate: 2026-01-31T03:20:53+03:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

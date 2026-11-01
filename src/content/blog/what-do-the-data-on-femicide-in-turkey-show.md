@@ -1,7 +1,8 @@
 ---
 title: "What do the Data on Femicide in Turkey show?"
 description: "Gender-based inequality continues to deprive women of their right to life. In the first three months of 2024, 98 women were murdered by men. Between March 8, 2023, and April 8..."
-pubDate: 2024-04-17
+pubDate: 2024-04-17T10:30:16+03:00
+updatedDate: 2024-12-02T04:39:02+03:00
 category: "DataNews"
 author: "Sevinç Koçak"
 status: "Yayında"

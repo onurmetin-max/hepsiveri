@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de Eğitimde Son Durum: Okullaşma oranları, okuryazarlık ve eğitime erişim"
 description: "Türkiye'de eğitim sistemi, son yıllarda elde ettiği önemli başarılarla dikkat çekiyor. Milli Eğitim Bakanlığı (MEB) verilerine göre, 2022-2023 eğitim öğretim yılında ilkokulda..."
-pubDate: 2024-02-25
+pubDate: 2024-02-25T13:30:53+03:00
 category: "Çocuk"
 author: "Buğu Begüm Orhan"
 status: "Yayında"

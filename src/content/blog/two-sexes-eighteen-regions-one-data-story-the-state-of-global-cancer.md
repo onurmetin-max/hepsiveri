@@ -1,7 +1,8 @@
 ---
 title: "Two Sexes, Eighteen Regions, One Data Story: The State of Global Cancer"
 description: "In 2024, Freddie Bray and colleagues published \"Global Cancer Statistics 2022,\" examining 36 cancer types across 185 countries. The data reveals one overriding truth: sex and ..."
-pubDate: 2026-06-19
+pubDate: 2026-06-19T10:00:56+03:00
+updatedDate: 2026-06-19T11:30:29+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

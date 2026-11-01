@@ -1,7 +1,7 @@
 ---
 title: "Türkiye'de pasaport almak: 2021'den 2026'ya 10,7 kat artış"
 description: "Türkiye'de 5 ila 10 yıllık pasaport bedeli 2021'den 2026'ya kadar 10,7 kat artarak 14.761 TL'ye ulaştı. Aynı 2021-2026 döneminde asgari ücret (2825 TL'den 28.075 TL'ye) 9,9 ka..."
-pubDate: 2026-01-29
+pubDate: 2026-01-29T10:00:25+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

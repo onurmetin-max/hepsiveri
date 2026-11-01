@@ -1,7 +1,8 @@
 ---
 title: "Örgütsüzlüğün bedeli: Türkiye'de sendika kapısını aşamayanlar"
 description: "Türkiye'de örgütlenmenin görünmez sınırları Türkiye'de sendikalaşma oranı son on iki yılda yükseliyor. Ama bu tablo, milyonlarca işçiyi kapsayan bir boşluğu örtüyor. Gençler, ..."
-pubDate: 2026-06-22
+pubDate: 2026-06-22T10:00:55+03:00
+updatedDate: 2026-06-22T13:04:28+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

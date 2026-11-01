@@ -1,7 +1,7 @@
 ---
 title: "9 Şubat Sigarayı Bırakma Gününde: Türkiye'de sigara kullanımında cinsiyet dağılımı oranları değişiyor"
 description: "Dünya Sağlık Örgütü'ne göre erkeklerin %30'unun, kadınların ise %12'sinin ölüm nedeni sigara. Dünya Sağlık Örgütü'nün (DSÖ) öncülüğünde her yıl 9 Şubat'ta kutlanan \"Dünya Siga..."
-pubDate: 2024-02-09
+pubDate: 2024-02-09T10:00:04+03:00
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

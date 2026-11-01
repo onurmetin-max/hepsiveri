@@ -1,7 +1,8 @@
 ---
 title: "Dünya Çapında Çay Tüketimi: Türkiye kişi başı tüketimde Avrupa'da ilk sırada"
 description: "Çay, kahvenin yanı sıra dünyanın en çok tüketilen içeceklerinden biri olmaya devam ediyor. Farklı ülkelerdeki çay tüketim alışkanlıklarını ve trendlerini incelediğimizde çayın..."
-pubDate: 2024-04-23
+pubDate: 2024-04-23T13:21:44+03:00
+updatedDate: 2024-04-30T10:01:17+03:00
 category: "VeriHaberciliği"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,8 @@
 ---
 title: "Rainbow Map Report: \"Poland is the Most Homophobic Country in the European Union\""
 description: "According to ILGA-Europe's \"Rainbow Map\" report, Turkey ranks among the lowest for LGBT+ rights. Malta leads the list, followed by Iceland and Belgium. Within the European Uni..."
-pubDate: 2024-11-02
+pubDate: 2024-11-02T20:20:10+03:00
+updatedDate: 2024-11-22T03:16:05+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

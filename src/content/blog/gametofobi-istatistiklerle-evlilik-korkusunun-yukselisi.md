@@ -1,7 +1,7 @@
 ---
 title: "Gametofobi: İstatistiklerle Evlilik Korkusunun Yükselişi"
 description: "Yunanca \"gamos\" (evlilik) ve \"phobos\" (korku) kelimelerinden türeyen gametofobi, modern çağın en dikkat çekici psikolojik sorunlarından biri haline gelmeye başlıyor. Bireyin e..."
-pubDate: 2025-06-21
+pubDate: 2025-06-21T12:00:31+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,8 @@
 ---
 title: "Türkiye - Avrupa göçü 2025: eğilimler, riskler ve iş birliği"
 description: "AB dış sınırlarında tespitler gerilese de Türkiye, Avrupa’ya yönelen hareketlerin merkezinde kalıyor; 2025’te sığınma başvuruları da düşüşte. Rakamlarla genel görünüm (Ocak–Ek..."
-pubDate: 2025-10-21
+pubDate: 2025-10-21T10:00:14+03:00
+updatedDate: 2025-10-24T04:19:59+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

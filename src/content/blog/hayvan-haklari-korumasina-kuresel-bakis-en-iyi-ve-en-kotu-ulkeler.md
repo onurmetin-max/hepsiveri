@@ -1,7 +1,8 @@
 ---
 title: "Hayvan Hakları Korumasına Küresel Bakış: En İyi ve En Kötü Ülkeler"
 description: "Hayvan hakları, etik, adalet ve hayvanların refahı üzerine yapılan küresel tartışmaların temelini oluşturur. Bu alandaki politikalar, ülkeden ülkeye büyük farklılıklar gösteri..."
-pubDate: 2024-11-29
+pubDate: 2024-11-29T00:30:30+03:00
+updatedDate: 2024-12-03T06:35:53+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

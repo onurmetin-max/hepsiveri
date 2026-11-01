@@ -1,7 +1,8 @@
 ---
 title: "Üç Güç Medyaya Karşı: Mahkemeler, polis ve RTÜK'ten eşgüdümlü baskı"
 description: "Medya Özgürlüğü İzleme 2025 Raporu yayınlandı: Türkiye'de medya özgürlüğüne yönelik ihlallerin yarısı yargıdan kaynaklanıyor. RTÜK ilk altı ayda 100 milyon TL ceza kesti. Avru..."
-pubDate: 2025-09-20
+pubDate: 2025-09-20T10:15:28+03:00
+updatedDate: 2025-09-21T02:54:56+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

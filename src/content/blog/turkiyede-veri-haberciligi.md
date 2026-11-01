@@ -1,7 +1,8 @@
 ---
 title: "Soyut öfkeden somut veriye: Türkiye’de hayatta kalma aracı olarak veri haberciliği"
 description: "Türkiye’de bugün “veri haberciliği” lüks değil, hayatta kalma aracı. Bunu HepsiVeri sitesinin en çok içerik giren gazetecisi Onur Metin olarak, teoriden değil, gündelik haber ..."
-pubDate: 2025-12-08
+pubDate: 2025-12-08T10:00:36+03:00
+updatedDate: 2025-12-18T08:11:48+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

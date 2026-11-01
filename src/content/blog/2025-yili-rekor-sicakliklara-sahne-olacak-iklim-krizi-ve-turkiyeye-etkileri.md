@@ -1,7 +1,7 @@
 ---
 title: "2025 yılı rekor sıcaklıklara sahne olacak: İklim krizi ve Türkiye'ye etkileri"
 description: "Bilim insanları, 2025 yılının hava sıcaklıkları açısından rekor seviyelere ulaşacağını ve kayıtlardaki en sıcak ilk üç yıl arasında yer alacağından emin olduklarını açıkladı ...."
-pubDate: 2025-07-15
+pubDate: 2025-07-15T10:00:43+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

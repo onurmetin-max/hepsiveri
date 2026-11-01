@@ -1,7 +1,8 @@
 ---
 title: "Eşek sayısı Dünya'da ve Türkiye'de neden azalıyor?"
 description: "Eşekler, binlerce yıldır insanlık tarihinin önemli bir parçası olarak karşımıza çıkıyor. Hem taşıma hem de tarım işlerinde kullanılan bu hayvanlar, birçok kültür ve ekonomide ..."
-pubDate: 2024-06-25
+pubDate: 2024-06-25T08:15:31+03:00
+updatedDate: 2026-02-07T00:22:23+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

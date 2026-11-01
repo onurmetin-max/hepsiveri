@@ -1,7 +1,7 @@
 ---
 title: "The MESEM System Under Scrutiny: A Case Analysis of Child Labor, Rights Violations, and Systemic Failures in Turkey's Vocational Training"
 description: "https://hepsiveri.com/2025/12/mesemde-egitim-adi-altinda-cocuk-isciligi-en-az-15-ogrenci-is-cinayetlerinde-oldu-gercek-sayi-daha-yuksek-olabilir/ For podcast, click on the PLA..."
-pubDate: 2025-12-16
+pubDate: 2025-12-16T19:43:32+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

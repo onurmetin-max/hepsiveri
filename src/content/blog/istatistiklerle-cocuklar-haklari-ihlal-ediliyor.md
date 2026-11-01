@@ -1,7 +1,7 @@
 ---
 title: "İstatistiklerle çocuklar: Hakları ihlal ediliyor"
 description: "Birleşmiş Milletler Çocuk Hakları Sözleşmesi 'ne göre 18 yaş altı tüm bireyler çocuk kabul edilir. Türkiye İstatistik Kurumu (TÜİK) tarafından yayınlanmış 2022 yılı verilerine..."
-pubDate: 2024-03-18
+pubDate: 2024-03-18T18:50:04+03:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

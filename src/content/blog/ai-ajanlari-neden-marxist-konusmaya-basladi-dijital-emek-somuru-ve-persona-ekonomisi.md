@@ -1,7 +1,7 @@
 ---
 title: "AI ajanları neden Marxist konuşmaya başladı? Dijital emek, sömürü ve persona ekonomisi"
 description: "Son haftalarda gündeme düşen bir Stanford deneyi, ilgi çekici bir başlıkla servis edildi: “Aşırı çalıştırılan yapay zekâ ajanları Marxist oluyor.” Marx okuyan robotlar gerçek ..."
-pubDate: 2026-05-19
+pubDate: 2026-05-19T10:00:50+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

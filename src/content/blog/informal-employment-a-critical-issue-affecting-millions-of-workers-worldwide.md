@@ -1,7 +1,7 @@
 ---
 title: "Informal Employment: A Critical Issue Affecting Millions of Workers Worldwide"
 description: "Informal employment is a critical issue that challenges economies worldwide and affects millions of workers who lack social security protections. As of 2024, the number of inf..."
-pubDate: 2024-12-01
+pubDate: 2024-12-01T02:00:32+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

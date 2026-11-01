@@ -1,7 +1,7 @@
 ---
 title: "Turkey - Europe migration in 2025: trends, risks, and cooperation"
 description: "Irregular detections at the EU’s borders are lower year-on-year, but Turkey remains central; EU+ asylum applications are also down in 2025. Key figures at a glance (Jan–Oct 20..."
-pubDate: 2025-10-21
+pubDate: 2025-10-21T10:00:28+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

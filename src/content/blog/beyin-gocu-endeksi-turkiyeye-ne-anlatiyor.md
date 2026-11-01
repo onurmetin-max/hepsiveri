@@ -1,7 +1,8 @@
 ---
 title: "Beyin göçü endeksi verileri Türkiye’ye dair ne anlatıyor?"
 description: "“Human Flight and Brain Drain Index” (İnsan Kaçışı ve Beyin Göçü Endeksi), bir ülkenin ekonomik ve siyasi koşulları nedeniyle nitelikli insan kaynağını kaybetme riskini ölçen ..."
-pubDate: 2025-01-03
+pubDate: 2025-01-03T10:00:10+03:00
+updatedDate: 2025-12-27T09:43:32+03:00
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

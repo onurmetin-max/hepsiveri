@@ -1,7 +1,7 @@
 ---
 title: "Netflix önerileri artık sadece zevk meselesi değil: Tartışma kullanıcı hakkına kayıyor"
 description: "Netflix’in “sana özel” önerileri uzun süredir kişiselleştirme başarısının örneği olarak anlatılıyor. Ancak hem Netflix’in kendi açıklamaları hem de akademik çalışmalar, bu sis..."
-pubDate: 2026-03-25
+pubDate: 2026-03-25T10:00:33+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

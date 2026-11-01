@@ -1,7 +1,7 @@
 ---
 title: "KYK bursu 2026’da 4000 TL: Asgari ücrete oranı 2011'de %40'tı, 2026'de %14'e düştü"
 description: "2026 için KYK burs ve öğrenim kredisi tutarları %33 artışla lisans düzeyinde 4.000 TL ’ye çıktı; yüksek lisans 8.000 TL , doktora 12.000 TL olarak duyuruldu. ( Kredi ve Yurtla..."
-pubDate: 2026-01-06
+pubDate: 2026-01-06T09:00:22+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

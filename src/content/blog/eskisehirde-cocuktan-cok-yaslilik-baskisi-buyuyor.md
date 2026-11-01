@@ -1,7 +1,8 @@
 ---
 title: "Öğrenci kenti Eskişehir'de çocuktan çok yaşlılık baskısı büyüyor"
 description: "Eskişehir “öğrenci kenti” diye biliniyor. Özellikle 18-25 yaş arasındaki birçok öğrenci şehir dışından Eskişehir'e sürekli olarak geliyor. Ancak resmi veriler, kentin demograf..."
-pubDate: 2026-03-28
+pubDate: 2026-03-28T10:00:03+03:00
+updatedDate: 2026-03-29T17:36:21+03:00
 category: "Eskişehir"
 author: "Onur Metin"
 status: "Yayında"

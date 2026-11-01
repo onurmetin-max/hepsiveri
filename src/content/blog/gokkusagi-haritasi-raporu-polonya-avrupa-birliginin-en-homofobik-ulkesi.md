@@ -1,7 +1,8 @@
 ---
 title: "Gökkuşağı Haritası Raporu: \"Polonya Avrupa Birliği'nin en homofobik ülkesi\""
 description: "ILGA-Avrupa’nın hazırladığı \"Gökkuşağı Haritası\" raporuna göre, Türkiye, LGBT+ hakları açısından Avrupa'nın en düşük sıralamalarında yer alıyor. Listenin başında Malta bulunur..."
-pubDate: 2024-11-02
+pubDate: 2024-11-02T19:05:55+03:00
+updatedDate: 2024-11-02T20:22:22+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

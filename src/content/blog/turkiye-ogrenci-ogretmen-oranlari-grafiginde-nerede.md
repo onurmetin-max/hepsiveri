@@ -1,7 +1,7 @@
 ---
 title: "Türkiye \"Öğrenci-Öğretmen Oranları\" grafiğinde nerede?"
 description: "Öğrenci-öğretmen oranı, eğitim kalitesinin önemli bir göstergesidir ve bir okuldaki her öğretmene düşen öğrenci sayısını gösterir. Düşük bir oran genellikle öğrencilere daha f..."
-pubDate: 2024-06-16
+pubDate: 2024-06-16T21:10:34+03:00
 category: "Eğitim"
 author: "Onur Metin"
 status: "Yayında"

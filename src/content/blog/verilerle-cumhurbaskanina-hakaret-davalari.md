@@ -1,7 +1,7 @@
 ---
 title: "Verilerle Cumhurbaşkanına Hakaret Davaları"
 description: "Cumhurbaşkanı'na hakaret başlığı, artık Türkiye'de yalnızca dönemsel tartışmalara eşlik eden bir alt konu değil; kendi başına sürekli gündem üreten, ölçülebilir ve izlenebilir..."
-pubDate: 2026-02-07
+pubDate: 2026-02-07T10:00:55+03:00
 category: "Hukuk"
 author: "Onur Metin"
 status: "Yayında"

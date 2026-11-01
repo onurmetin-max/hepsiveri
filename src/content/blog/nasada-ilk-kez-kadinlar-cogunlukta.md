@@ -1,7 +1,8 @@
 ---
 title: "NASA’da astronotlar arasında ilk kez kadınlar çoğunlukta"
 description: "NASA sahnesinde on kişi var; ama alkışın yönü bu kez daha belirgin. Houston’daki törende NASA yeni astronot adaylarını tanıtırken, fotoğraf karesinde ilk kez kadınlar (6 kadın..."
-pubDate: 2025-10-17
+pubDate: 2025-10-17T10:00:08+03:00
+updatedDate: 2025-10-17T21:29:27+03:00
 category: "Kadın"
 author: "Onur Metin"
 status: "Yayında"

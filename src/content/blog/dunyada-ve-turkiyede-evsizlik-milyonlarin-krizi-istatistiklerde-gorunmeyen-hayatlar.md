@@ -1,7 +1,8 @@
 ---
 title: "Dünyada ve Türkiye’de evsizlik: Milyonların krizi, istatistiklerde görünmeyen hayatlar"
 description: "Bir kış gecesi ve resmî kayıtlara sığmayan hayatlar Türkiye’de kışın en sert gecelerinde, belediyelerin barınma evlerine, valiliklerin ayarladığı otellere ya da kamu misafirha..."
-pubDate: 2025-12-10
+pubDate: 2025-12-10T10:00:29+03:00
+updatedDate: 2025-12-15T09:24:19+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

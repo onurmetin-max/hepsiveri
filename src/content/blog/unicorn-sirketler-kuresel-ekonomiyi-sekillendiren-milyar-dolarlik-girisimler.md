@@ -1,7 +1,7 @@
 ---
 title: "Unicorn şirketler: Küresel ekonomiyi şekillendiren milyar dolarlık girişimler"
 description: "Girişimcilik ve inovasyon dünyasında, yatırımcıların ve ekonomistlerin ilgisini çeken özel bir şirket türü öne çıkıyor: unicorn şirketler. Bu terim, 1 milyar doların üzerinde ..."
-pubDate: 2025-08-01
+pubDate: 2025-08-01T10:00:40+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

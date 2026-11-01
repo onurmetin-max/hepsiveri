@@ -1,7 +1,7 @@
 ---
 title: "Murat Kurum'un kreş kararı tartışma yarattı: Seçim vaatleriyle çelişiyor"
 description: "Son günlerde, Çevre, Şehircilik ve İklim Değişikliği Bakanlığı'nın belediyelere bağlı kreşlerin kapatılması yönündeki talimatı, kamuoyunda geniş yankı uyandırdı. Bu karar, öze..."
-pubDate: 2024-11-25
+pubDate: 2024-11-25T14:07:09+03:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Demansın küresel haritası: Yük nerede ağırlaşıyor, Türkiye hangi bantta?"
 description: "Demans (Alzheimer dahil), artık sadece klinik bir başlık değil. Sağlık hizmeti, uzun dönem bakım ve sosyal koruma hattını aynı anda zorlayan bir \"nüfus yaşlanması\" gündemi. Bu..."
-pubDate: 2026-02-08
+pubDate: 2026-02-08T10:00:06+03:00
 category: "Sağlık"
 author: "Onur Metin"
 status: "Yayında"

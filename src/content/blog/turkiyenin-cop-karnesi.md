@@ -1,7 +1,7 @@
 ---
 title: "Türkiye’nin Çöp Karnesi: Dünya \"atığı kaynağa\" çevirirken, Türkiye nerede?"
 description: "Çöp krizi, enerji fırsatı Dünyada çok sayıda ülke, evsel atığı artık \"çöp\" değil, hammadde ve enerji kaynağı olarak yönetiyor. İsveç, Almanya, Güney Kore, Hollanda, Japonya, S..."
-pubDate: 2025-11-21
+pubDate: 2025-11-21T10:00:47+03:00
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

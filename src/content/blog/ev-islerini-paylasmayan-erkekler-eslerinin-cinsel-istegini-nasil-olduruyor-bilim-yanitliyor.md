@@ -1,7 +1,8 @@
 ---
 title: "Ev işlerini paylaşmayan erkekler, eşlerinin cinsel isteğini nasıl öldürüyor? Bilim yanıtlıyor"
 description: "Küresel araştırmalar gösteriyor ki kadınların %59'u ev işlerinin büyük kısmını tek başına yaptığını bildiriyor, ancak bu durumda bulunan kadınlar arasında cinsel istek düşüklü..."
-pubDate: 2025-06-20
+pubDate: 2025-06-20T01:38:44+03:00
+updatedDate: 2025-06-20T02:30:48+03:00
 category: "Kadın"
 author: "Onur Metin"
 status: "Yayında"

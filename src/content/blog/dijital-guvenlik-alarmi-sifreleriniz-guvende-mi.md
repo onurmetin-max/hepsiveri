@@ -1,7 +1,7 @@
 ---
 title: "Dijital Güvenlik Alarmı: Şifreleriniz güvende mi?"
 description: "Dünya genelinde her gün 30 binden fazla hesap, zayıf şifreler veya veri sızıntıları nedeniyle ele geçiriliyor. Küresel çapta yapılan araştırmalara göre, kullanıcıların %65’i a..."
-pubDate: 2025-03-17
+pubDate: 2025-03-17T19:25:10+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

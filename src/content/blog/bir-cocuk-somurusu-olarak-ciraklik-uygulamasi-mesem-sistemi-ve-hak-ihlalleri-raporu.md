@@ -1,7 +1,7 @@
 ---
 title: "Bir çocuk sömürüsü olarak Çıraklık Uygulaması: MESEM Sistemi ve Hak İhlalleri Raporu"
 description: "Son bir yılda MESEM uygulamasıyla “çırak” adı altında insanlık dışı koşullarda işçi olarak çalıştırılan 9 çocuk iş cinayetleriyle yaşamını yitirdi. 14 yaşındaki Arda Tonbul sa..."
-pubDate: 2024-12-13
+pubDate: 2024-12-13T23:08:04+03:00
 category: "Çocuk"
 author: "Sevinç Koçak"
 status: "Yayında"

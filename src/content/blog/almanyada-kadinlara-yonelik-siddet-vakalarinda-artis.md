@@ -1,7 +1,8 @@
 ---
 title: "Almanya'da Kadınlara Yönelik Şiddet Vakalarında Artış"
 description: "Almanya'da kadınlara yönelik şiddet vakaları endişe verici boyutlara ulaştı. Federal Kriminal Polis Ofisi'nin (BKA) raporuna göre, 2023 yılında partner şiddeti ve cinayet vaka..."
-pubDate: 2024-11-25
+pubDate: 2024-11-25T22:18:30+03:00
+updatedDate: 2024-11-26T00:42:35+03:00
 category: "Kadın"
 author: "Onur Metin"
 status: "Yayında"

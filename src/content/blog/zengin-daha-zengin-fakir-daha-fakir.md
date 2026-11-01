@@ -1,7 +1,8 @@
 ---
 title: "2023'te ne kazandık? Zengin daha zengin, fakir daha fakir!"
 description: "TÜİK, gelir dağılımı istatistiklerini 2023 verilerini de hesaba katarak açıkladı. Buna göre, Türkiye'de en yüksek gelire sahip yüzde 20’lik grubun toplam gelirden aldığı pay, ..."
-pubDate: 2024-02-01
+pubDate: 2024-02-01T07:15:04+03:00
+updatedDate: 2024-02-09T05:43:23+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

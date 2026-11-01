@@ -1,7 +1,7 @@
 ---
 title: "Grip ölümleri için \"mevsimsel\" dense de maliyeti stratejik"
 description: "Grip (influenza) çoğu kişi için birkaç gün süren bir rahatsızlık gibi algılansa da, küresel ölçekte yüzbinlerce ölümle ilişkilendirilen bir risk alanı. Kritik konu \"kaç kişi ö..."
-pubDate: 2026-01-24
+pubDate: 2026-01-24T10:00:13+03:00
 category: "Genel"
 author: "Onur Metin"
 status: "Yayında"

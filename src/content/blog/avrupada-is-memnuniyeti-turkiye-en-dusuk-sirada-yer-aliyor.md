@@ -1,7 +1,7 @@
 ---
 title: "Avrupa'da İş Memnuniyeti: Türkiye en düşük sırada yer alıyor"
 description: "Avrupa Birliği'nin 2023 tarihini baz alarak yaptığı araştırma, Avrupa'da çalışanların işlerinden memnuniyet seviyelerini inceliyor. Avrupa ülkelerinde çalışanların işlerinden ..."
-pubDate: 2025-02-28
+pubDate: 2025-02-28T04:46:36+03:00
 category: "Avrupa"
 author: "Onur Metin"
 status: "Yayında"

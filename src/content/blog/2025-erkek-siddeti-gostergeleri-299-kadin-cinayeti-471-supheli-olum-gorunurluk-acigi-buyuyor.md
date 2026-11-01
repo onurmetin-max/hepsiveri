@@ -1,7 +1,7 @@
 ---
 title: "2025 erkek şiddeti göstergeleri: 299 kadın cinayeti, 471 şüpheli ölüm - görünürlük açığı büyüyor"
 description: "2025 yılı “erkek şiddeti” görünümü, basına yansıyan vakalar üzerinden derlenen çeteleye göre iki paralel gerçeklik sunuyor. Bir yanda \"cinayet\" başlığına en az 299 kadın cinay..."
-pubDate: 2026-01-23
+pubDate: 2026-01-23T10:00:42+03:00
 category: "Kadın"
 author: "Onur Metin"
 status: "Yayında"

@@ -1,7 +1,7 @@
 ---
 title: "Uçak yolcuları \"ucuz bilet\" değil, değer arıyor: McKinsey ve Türkiye araştırmaları ortak sonuçları"
 description: "2025 yılında yayınlanan McKinsey'in küresel havacılık araştırmasına göre, yolcular artık yalnızca ucuz biletin değil, güvenilirlik, hizmet kalitesi ve kişiselleştirilmiş deney..."
-pubDate: 2025-07-12
+pubDate: 2025-07-12T10:00:26+03:00
 category: "Rapor"
 author: "Onur Metin"
 status: "Yayında"

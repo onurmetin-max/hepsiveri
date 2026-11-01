@@ -1,7 +1,8 @@
 ---
 title: "AB Ülkelerinde ve Türkiye'de Engelli Bireylerin Sağlık Hizmetlerine Erişimi"
 description: "Engelli bireylerin sağlık hizmetlerine erişimi, toplumsal eşitlik ve insan hakları bağlamında önemli bir gösterge olarak kabul edilmektedir. Avrupa Birliği (AB) ülkeleri, enge..."
-pubDate: 2024-11-13
+pubDate: 2024-11-13T20:46:56+03:00
+updatedDate: 2024-11-27T15:29:41+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

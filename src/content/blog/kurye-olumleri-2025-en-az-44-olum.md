@@ -1,7 +1,7 @@
 ---
 title: "Kurye Ölümleri 2025: \"En az 44\" ölüm, veri altyapısı hâlâ yok"
 description: "Türkiye’de moto kuryelik, son yıllarda büyüyen bir lojistik kapasiteye ve hız odaklı bir hizmet vaadine yaslanıyor. Fakat sahada, bu kapasitenin görünmeyen maliyeti giderek da..."
-pubDate: 2026-02-03
+pubDate: 2026-02-03T10:00:38+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

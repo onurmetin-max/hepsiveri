@@ -1,7 +1,8 @@
 ---
 title: "Üniversite mezunu gençlerin yüzü Avrupa’ya dönük: \"Beyin göçü güncelleniyor [...]\""
 description: "Türkiye’den yükseköğretim mezunu gençlerin yurtdışına göçü, artan bir eğilim gösteriyor. İşsizlik, liyakat sorunları, ekonomik istikrarsızlık ve özgürlük arayışı, gençlerin ba..."
-pubDate: 2025-07-20
+pubDate: 2025-07-20T10:05:39+03:00
+updatedDate: 2025-07-20T15:30:49+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

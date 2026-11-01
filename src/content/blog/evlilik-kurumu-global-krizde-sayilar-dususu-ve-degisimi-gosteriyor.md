@@ -1,7 +1,7 @@
 ---
 title: "Evlilik kurumu global krizde: Sayılar düşüşü ve değişimi gösteriyor"
 description: "Evlilik kurumu, dünya genelinde ve Türkiye'de giderek daha az tercih edilen, yapısı değişen bir müessese haline geliyor. Konuyla ilgili yapılan saha araştırmaları ve istatisti..."
-pubDate: 2025-07-13
+pubDate: 2025-07-13T10:30:42+03:00
 category: "Nüfus"
 author: "Onur Metin"
 status: "Yayında"

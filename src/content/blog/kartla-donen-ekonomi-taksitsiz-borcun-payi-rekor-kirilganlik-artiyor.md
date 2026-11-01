@@ -1,7 +1,8 @@
 ---
 title: "Kartla dönen ekonomi: Taksitsiz borcun payı rekor - kırılganlık artıyor"
 description: "Bankaların bireysel kredi kartı alacakları 31 Ekim haftasında 2,59 trilyon TL ’ye çıktı; bunun %63,9’u taksitsiz borç .Borcun geri kalan %36,1'i ise taksitli borçlar. Aynı dön..."
-pubDate: 2025-11-06
+pubDate: 2025-11-06T20:02:37+03:00
+updatedDate: 2025-12-15T08:40:18+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

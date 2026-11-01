@@ -1,7 +1,8 @@
 ---
 title: "Avrupa’da kira ödemeleri artan bir yük haline geldi"
 description: "Avrupa’da her geçen gün artan kira maliyetleri, insanların ay sonunu getirmesini zorlaştırıyor. Özellikle düşük gelirli gençler ve orta yaş grubu, kira ödemelerinde ciddi zorl..."
-pubDate: 2024-10-31
+pubDate: 2024-10-31T04:06:36+03:00
+updatedDate: 2024-10-31T13:13:38+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

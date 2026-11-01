@@ -1,7 +1,7 @@
 ---
 title: "Oxford Word of the Year: A Reflection of Language and Society"
 description: "Oxford Word of the Year is more than just a linguistic trend; it reflects the social, cultural, political, and technological changes happening around the world. Each year, the..."
-pubDate: 2024-12-03
+pubDate: 2024-12-03T05:37:06+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

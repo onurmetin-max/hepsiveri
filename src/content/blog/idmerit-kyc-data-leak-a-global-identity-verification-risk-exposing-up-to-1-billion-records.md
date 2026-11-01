@@ -1,7 +1,7 @@
 ---
 title: "IDMerit KYC Data Leak: A Global Identity Verification Risk Exposing Up to 1 Billion Records"
 description: "In November 2025, an unsecured database linked to IDMerit was reportedly exposed to the open internet for a limited period. The incident is described not as a sophisticated ha..."
-pubDate: 2026-02-24
+pubDate: 2026-02-24T11:58:51+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"

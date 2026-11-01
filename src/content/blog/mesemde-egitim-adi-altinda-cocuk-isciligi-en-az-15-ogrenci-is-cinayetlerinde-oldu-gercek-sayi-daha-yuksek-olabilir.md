@@ -1,7 +1,8 @@
 ---
 title: "MESEM’de “eğitim” adı altında çocuk işçiliği: En az 15 öğrenci iş cinayetlerinde öldü, gerçek sayı daha yüksek olabilir"
 description: "Mesleki Eğitim Merkezleri (MESEM) , resmi söylemde “istihdama geçişi hızlandıran bir eğitim modeli” olarak konumlandırılıyor. Ancak sivil toplumun sahadan derlediği güncel ver..."
-pubDate: 2025-12-15
+pubDate: 2025-12-15T10:00:10+03:00
+updatedDate: 2025-12-16T19:44:57+03:00
 category: "Çocuk"
 author: "Onur Metin"
 status: "Yayında"

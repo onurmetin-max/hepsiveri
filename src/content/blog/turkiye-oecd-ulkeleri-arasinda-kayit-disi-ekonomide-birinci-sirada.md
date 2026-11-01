@@ -1,7 +1,7 @@
 ---
 title: "Türkiye OECD Ülkeleri Arasında Kayıt Dışı Ekonomide Birinci Sırada"
 description: "Türkiye'de kayıt dışı ekonomi sorunu, ülkenin en ciddi yapısal sorunlarından biri olmaya devam ediyor. 2024-2025 yıllarındaki veriler de, Türkiye'nin bu alanda OECD ülkeleri a..."
-pubDate: 2025-07-08
+pubDate: 2025-07-08T02:41:38+03:00
 category: "Ekonomi"
 author: "Onur Metin"
 status: "Yayında"

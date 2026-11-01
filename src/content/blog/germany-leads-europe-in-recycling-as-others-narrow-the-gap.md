@@ -1,7 +1,7 @@
 ---
 title: "Germany leads Europe in recycling as others narrow the gap"
 description: "Germany continues to set the standard for municipal waste management across Europe, recycling 68.7 per cent of its household and similar waste in 2023 according to Eurostat da..."
-pubDate: 2026-04-12
+pubDate: 2026-04-12T10:00:24+03:00
 category: "DataNews"
 author: "Onur Metin"
 status: "Yayında"
