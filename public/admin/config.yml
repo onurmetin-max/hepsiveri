@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: onurmetin-max/hepsiveri
   branch: main
+  base_url: https://hepsiveri.com
+  auth_endpoint: api/auth
 
 # Yerel geliştirme sırasında dosyaları doğrudan diske kaydetmek için local_backend kullanılır.
 local_backend: true
