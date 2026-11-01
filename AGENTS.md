@@ -20,3 +20,14 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## Editorial Guidelines (Yazım ve Başlık Kuralları)
+
+- **Başlık ve Alt Başlık Yazım Formatı (Sentence Case):**
+  - Haber başlıklarında ve haber içindeki alt başlıklarda (`##`, `###`), yalnızca ilk kelimenin ilk harfi ve cümle içindeki özel isimler/kısaltmalar (ör. TEPAV, SGK, TÜİK, Türkiye) büyük harfle başlar.
+  - Geri kalan tüm sözcükler cümle yapısına uygun olarak küçük harfle yazılır (ör. "TEPAV ve Bakanlık verileri: Kadın emeğinde çifte kıskaç").
+- **Numaralandırma Yasağı:**
+  - Haber içi ara başlıklarda `1. `, `2. `, `3. ` gibi rakam veya sıra numaralandırması **kesinlikle kullanılmaz**. Başlıklar doğrudan metin olarak verilir.
+- **Tarih ve Saat Formatı:**
+  - `pubDate` alanı Türkiye saati (`+03:00`) baz alınarak daima `YYYY-MM-DD HH:mm` formatında yazılır.
+
