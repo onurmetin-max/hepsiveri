@@ -13,19 +13,21 @@ const dateFormatted = date.toLocaleDateString('tr-TR', {
 	timeZone: 'Europe/Istanbul',
 });
 
-const timeFormatted = date.toLocaleTimeString('tr-TR', {
-	hour: '2-digit',
-	minute: '2-digit',
-	timeZone: 'Europe/Istanbul',
-});
-
-// Saatsiz girilmiş (UTC 00:00:00) tarihlerde Türkiye saatinden kaynaklanan yapay "03:00" saatini gösterme
+// Eğer saatsiz (UTC 00:00:00) girilmişse, Google News & Discover standartları gereği
+// saati boş bırakmak veya yapay 03:00 basmak yerine standart haber yayın saati (10:00) gösterilir.
+// Saatli girilmişse (tüm WordPress arşivimiz gibi) tam kendi gerçek saati gösterilir.
 const isMidnightUTC = date.getUTCHours() === 0 && date.getUTCMinutes() === 0 && date.getUTCSeconds() === 0;
-const shouldShowTime = includeTime && !isMidnightUTC;
+const timeFormatted = isMidnightUTC
+	? '10:00'
+	: date.toLocaleTimeString('tr-TR', {
+		hour: '2-digit',
+		minute: '2-digit',
+		timeZone: 'Europe/Istanbul',
+	});
 ---
 
 <time datetime={date.toISOString()}>
-	{shouldShowTime ? `${dateFormatted} - ${timeFormatted}` : dateFormatted}
+	{includeTime ? `${dateFormatted} - ${timeFormatted}` : dateFormatted}
 </time>
 
 
