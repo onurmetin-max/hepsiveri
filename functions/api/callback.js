@@ -7,6 +7,9 @@ export async function onRequestGet(context) {
       return new Response('No code provided', { status: 400 });
     }
 
+    const clientId = context.env.GITHUB_CLIENT_ID || "Ov23li7VR1WfBnOe07nt";
+    const clientSecret = context.env.GITHUB_CLIENT_SECRET || context.env['Ov23li7VR1WfBnOe07nt'];
+
     const response = await fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
@@ -14,8 +17,8 @@ export async function onRequestGet(context) {
         'Accept': 'application/json',
       },
       body: JSON.stringify({
-        client_id: context.env.GITHUB_CLIENT_ID,
-        client_secret: context.env.GITHUB_CLIENT_SECRET,
+        client_id: clientId,
+        client_secret: clientSecret,
         code,
       }),
     });
@@ -55,3 +58,4 @@ export async function onRequestGet(context) {
     return new Response(err.message, { status: 500 });
   }
 }
+
