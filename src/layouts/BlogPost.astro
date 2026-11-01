@@ -1047,11 +1047,11 @@ const fullAuthorAvatarUrl = authorAvatarUrl ? `${siteOrigin}${authorAvatarUrl}` 
 
 							<div class="meta-badges">
 								<span class="badge-item" title={pubDate.toISOString()}>
-									📅 <FormattedDate date={pubDate} />
+									📅 Yayınlanma: <FormattedDate date={pubDate} includeTime={true} />
 								</span>
 								{updatedDate && (
 									<span class="badge-item" title={updatedDate.toISOString()}>
-										✏️ Güncelleme: <FormattedDate date={updatedDate} />
+										✏️ Güncelleme: <FormattedDate date={updatedDate} includeTime={true} />
 									</span>
 								)}
 								<span class="badge-item">⏱️ {displayReadTime}</span>

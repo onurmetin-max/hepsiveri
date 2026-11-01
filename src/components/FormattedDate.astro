@@ -5,14 +5,23 @@ interface Props {
 }
 
 const { date, includeTime = false } = Astro.props;
+
+const dateFormatted = date.toLocaleDateString('tr-TR', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+	timeZone: 'Europe/Istanbul',
+});
+
+const timeFormatted = date.toLocaleTimeString('tr-TR', {
+	hour: '2-digit',
+	minute: '2-digit',
+	timeZone: 'Europe/Istanbul',
+});
 ---
 
 <time datetime={date.toISOString()}>
-	{date.toLocaleDateString('tr-TR', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-		...(includeTime ? { hour: '2-digit', minute: '2-digit' } : {}),
-	})}
+	{includeTime ? `${dateFormatted} - ${timeFormatted}` : dateFormatted}
 </time>
+
 
