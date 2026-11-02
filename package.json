@@ -10,7 +10,8 @@
     "cms": "decap-server",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "tweet": "node scripts/generate-tweet.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.1",
