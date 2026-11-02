@@ -146,6 +146,8 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 	let sum1 = bulletLines[0] ? bulletLines[0].slice(0, 115) : desc.slice(0, 100);
 	let sum2 = bulletLines[1] ? bulletLines[1].slice(0, 115) : (boldStats[1] ? `Öne çıkan veri boyutu: ${boldStats[1]}` : 'Resmi raporda ve araştırmada paylaşılan temel göstergeler incelendi.');
 	let sum3 = bulletLines[2] ? bulletLines[2].slice(0, 115) : 'Haberin tam metni, veri tabloları ve açık kaynaklar sitemizde.';
+	let sum4 = bulletLines[3] ? bulletLines[3].slice(0, 115) : '';
+	let sum5 = bulletLines[4] ? bulletLines[4].slice(0, 115) : '';
 
 	return {
 		slug: p.id || p.slug || '',
@@ -175,6 +177,8 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		sum1,
 		sum2,
 		sum3,
+		sum4,
+		sum5,
 		source,
 		date: p.data.pubDate ? new Date(p.data.pubDate).toLocaleDateString('tr-TR') : ''
 	};
@@ -596,14 +600,20 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 				<div class="form-row">
 					<div class="form-group">
-						<label class="form-label">Sol Etiket</label>
-						<input class="form-input" id="inp-comp-l-label" value="Erkeklerde Kayıt Dışı">
+						<div class="form-label-row">
+							<label class="form-label">Sol Etiket</label>
+							<span class="char-count" id="cnt-comp-l-label">0 / 30 kr.</span>
+						</div>
+						<textarea class="form-textarea" id="inp-comp-l-label" rows="2">Erkeklerde Kayıt Dışı</textarea>
 						<label class="form-label" style="margin-top:6px;">Sol Oran / Sayı</label>
 						<input class="form-input" id="inp-comp-l-val" value="%21,9">
 					</div>
 					<div class="form-group">
-						<label class="form-label">Sağ Etiket (Vurgulu)</label>
-						<input class="form-input" id="inp-comp-r-label" value="Kadınlarda Kayıt Dışı">
+						<div class="form-label-row">
+							<label class="form-label">Sağ Etiket (Vurgulu)</label>
+							<span class="char-count" id="cnt-comp-r-label">0 / 30 kr.</span>
+						</div>
+						<textarea class="form-textarea" id="inp-comp-r-label" rows="2">Kadınlarda Kayıt Dışı</textarea>
 						<label class="form-label" style="margin-top:6px;">Sağ Oran / Sayı</label>
 						<input class="form-input" id="inp-comp-r-val" value="%29,4">
 					</div>
@@ -657,8 +667,11 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Üst Etiket</label>
-					<input class="form-input" id="inp-stat-eyebrow" value="Tarımda Kadın Emeği">
+					<div class="form-label-row">
+						<label class="form-label">Üst Başlık / Odak</label>
+						<span class="char-count" id="cnt-stat-eyebrow">0 / 60 kr.</span>
+					</div>
+					<textarea class="form-textarea" id="inp-stat-eyebrow" rows="2">Tarımda Kadın Emeği</textarea>
 				</div>
 				<div class="form-group">
 					<label class="form-label">Büyük Rakam / Veri</label>
@@ -682,8 +695,11 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Üst Etiket / Odak Başlığı</label>
-					<input class="form-input" id="inp-concept-stat-eyebrow" value="Aramalarda ve Kullanımda Patlama">
+					<div class="form-label-row">
+						<label class="form-label">Üst Başlık / Odak Başlığı</label>
+						<span class="char-count" id="cnt-concept-stat-eyebrow">0 / 60 kr.</span>
+					</div>
+					<textarea class="form-textarea" id="inp-concept-stat-eyebrow" rows="2">Aramalarda ve Kullanımda Patlama</textarea>
 				</div>
 				<div class="form-group">
 					<label class="form-label">Vurgulu Değer / Trend Göstergesi</label>
@@ -726,6 +742,20 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 						<span class="char-count" id="cnt-sum-3">0 / 125 kr.</span>
 					</div>
 					<textarea class="form-textarea" id="inp-sum-3" rows="2">Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.</textarea>
+				</div>
+				<div class="form-group">
+					<div class="form-label-row">
+						<label class="form-label">Madde 4 (İsteğe Bağlı)</label>
+						<span class="char-count" id="cnt-sum-4">0 / 125 kr.</span>
+					</div>
+					<textarea class="form-textarea" id="inp-sum-4" rows="2" placeholder="Boş bırakılırsa kartta yer kaplamaz..."></textarea>
+				</div>
+				<div class="form-group">
+					<div class="form-label-row">
+						<label class="form-label">Madde 5 (İsteğe Bağlı)</label>
+						<span class="char-count" id="cnt-sum-5">0 / 125 kr.</span>
+					</div>
+					<textarea class="form-textarea" id="inp-sum-5" rows="2" placeholder="Boş bırakılırsa kartta yer kaplamaz..."></textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
@@ -905,15 +935,21 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			{ inp: 'inp-title', cnt: 'cnt-title', ideal: 75, hard: 100 },
 			{ inp: 'inp-desc', cnt: 'cnt-desc', ideal: 130, hard: 175 },
 			{ inp: 'inp-comp-title', cnt: 'cnt-comp-title', ideal: 35, hard: 50 },
+			{ inp: 'inp-comp-l-label', cnt: 'cnt-comp-l-label', ideal: 30, hard: 65 },
+			{ inp: 'inp-comp-r-label', cnt: 'cnt-comp-r-label', ideal: 30, hard: 65 },
 			{ inp: 'inp-comp-note', cnt: 'cnt-comp-note', ideal: 80, hard: 110 },
 			{ inp: 'inp-concept-title', cnt: 'cnt-concept-title', ideal: 35, hard: 50 },
 			{ inp: 'inp-concept-quote', cnt: 'cnt-concept-quote', ideal: 140, hard: 210 },
 			{ inp: 'inp-concept-context', cnt: 'cnt-concept-context', ideal: 90, hard: 130 },
+			{ inp: 'inp-stat-eyebrow', cnt: 'cnt-stat-eyebrow', ideal: 60, hard: 140 },
 			{ inp: 'inp-stat-desc', cnt: 'cnt-stat-desc', ideal: 120, hard: 165 },
+			{ inp: 'inp-concept-stat-eyebrow', cnt: 'cnt-concept-stat-eyebrow', ideal: 60, hard: 140 },
 			{ inp: 'inp-concept-stat-desc', cnt: 'cnt-concept-stat-desc', ideal: 120, hard: 165 },
 			{ inp: 'inp-sum-1', cnt: 'cnt-sum-1', ideal: 115, hard: 165 },
 			{ inp: 'inp-sum-2', cnt: 'cnt-sum-2', ideal: 115, hard: 165 },
 			{ inp: 'inp-sum-3', cnt: 'cnt-sum-3', ideal: 115, hard: 165 },
+			{ inp: 'inp-sum-4', cnt: 'cnt-sum-4', ideal: 115, hard: 165 },
+			{ inp: 'inp-sum-5', cnt: 'cnt-sum-5', ideal: 115, hard: 165 },
 			{ inp: 'inp-source', cnt: 'cnt-source', ideal: 55, hard: 75 }
 		];
 
@@ -984,9 +1020,11 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			document.getElementById('inp-concept-stat-desc').value = post.conceptStatDesc;
 
 			// Özet
-			document.getElementById('inp-sum-1').value = post.sum1;
-			document.getElementById('inp-sum-2').value = post.sum2;
-			document.getElementById('inp-sum-3').value = post.sum3;
+			document.getElementById('inp-sum-1').value = post.sum1 || '';
+			document.getElementById('inp-sum-2').value = post.sum2 || '';
+			document.getElementById('inp-sum-3').value = post.sum3 || '';
+			document.getElementById('inp-sum-4').value = post.sum4 || '';
+			document.getElementById('inp-sum-5').value = post.sum5 || '';
 			document.getElementById('inp-source').value = post.source;
 
 			// Otomatik Modu Uygula
@@ -1216,7 +1254,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 					}
 
 				} else {
-					// Slayt 2: Sayısal Kıyaslama
+					// Slayt 2: Sayısal Kıyaslama (Çok Satırlı Etiket Destekli)
 					const compTitle = (document.getElementById('inp-comp-title').value || '').trim();
 					ctx.fillStyle = '#0f172a';
 					ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
@@ -1227,37 +1265,57 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 						tY += 68;
 					}
 
+					const lLabel = (document.getElementById('inp-comp-l-label').value || '').trim();
+					const rLabel = (document.getElementById('inp-comp-r-label').value || '').trim();
+
+					// Sol ve Sağ etiketleri kutu genişliği (380px) içinde satırlara böl
+					ctx.font = '600 26px "Plus Jakarta Sans", sans-serif';
+					const lLines = getWrappedLines(ctx, lLabel, 380);
+					const rLines = getWrappedLines(ctx, rLabel, 380);
+					const maxLabelLines = Math.max(lLines.length, rLines.length);
+
 					const boxTop = tY + 40;
+					const boxHeight = Math.max(380, 240 + maxLabelLines * 36);
+
 					// Sol Kutu
 					ctx.fillStyle = '#ffffff';
 					ctx.strokeStyle = '#cbd5e1';
 					ctx.lineWidth = 3;
-					roundRect(ctx, 70, boxTop, 445, 380, 20, true, true);
+					roundRect(ctx, 70, boxTop, 445, boxHeight, 20, true, true);
 
 					ctx.fillStyle = '#64748b';
-					ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
+					ctx.font = '600 26px "Plus Jakarta Sans", sans-serif';
 					ctx.textAlign = 'center';
-					ctx.fillText(document.getElementById('inp-comp-l-label').value || '', 292, boxTop + 90);
+					let lY = boxTop + 55;
+					for (const line of lLines) {
+						ctx.fillText(line, 292, lY);
+						lY += 34;
+					}
 
 					ctx.fillStyle = '#0f172a';
 					const lVal = document.getElementById('inp-comp-l-val').value || '';
 					ctx.font = lVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
-					ctx.fillText(lVal, 292, boxTop + 240);
+					const valY = Math.max(boxTop + 240, lY + 65);
+					ctx.fillText(lVal, 292, valY);
 
 					// Sağ Kutu (Vurgulu)
 					ctx.fillStyle = '#f0fdf4';
 					ctx.strokeStyle = '#1f9a77';
 					ctx.lineWidth = 4;
-					roundRect(ctx, 565, boxTop, 445, 380, 20, true, true);
+					roundRect(ctx, 565, boxTop, 445, boxHeight, 20, true, true);
 
 					ctx.fillStyle = '#1f9a77';
-					ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
-					ctx.fillText(document.getElementById('inp-comp-r-label').value || '', 787, boxTop + 90);
+					ctx.font = '700 26px "Plus Jakarta Sans", sans-serif';
+					let rY = boxTop + 55;
+					for (const line of rLines) {
+						ctx.fillText(line, 787, rY);
+						rY += 34;
+					}
 
 					ctx.fillStyle = '#1f9a77';
 					const rVal = document.getElementById('inp-comp-r-val').value || '';
 					ctx.font = rVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
-					ctx.fillText(rVal, 787, boxTop + 240);
+					ctx.fillText(rVal, 787, valY);
 					ctx.textAlign = 'left';
 
 					// Fark Notu
@@ -1265,7 +1323,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 					ctx.font = '600 32px "Plus Jakarta Sans", sans-serif';
 					const noteLines = getWrappedLines(ctx, noteText, 860);
 					const noteBoxHeight = Math.max(noteLines.length * 48 + 50, 140);
-					const noteBoxTop = boxTop + 420;
+					const noteBoxTop = boxTop + boxHeight + 35;
 
 					ctx.fillStyle = '#ffffff';
 					ctx.strokeStyle = '#e2e8f0';
@@ -1281,78 +1339,87 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				}
 
 			} else if (slideNum === 3) {
-				if (currentStudioMode === 'concept') {
-					// Slayt 3: Kavram Trend & Odak
-					ctx.textAlign = 'center';
-					const eyebrow = (document.getElementById('inp-concept-stat-eyebrow').value || '').trim();
-					ctx.fillStyle = '#4c1eb2';
-					ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
-					ctx.fillText(eyebrow, 540, 310);
+				// Slayt 3: Çok Satırlı Üst Başlık (Eyebrow) ve Dikey Dengeli Odak Düzeni
+				const isConcept = (currentStudioMode === 'concept');
+				const eyebrowRaw = (isConcept 
+					? document.getElementById('inp-concept-stat-eyebrow').value 
+					: document.getElementById('inp-stat-eyebrow').value) || '';
+				const eyebrow = eyebrowRaw.trim();
 
-					const statVal = (document.getElementById('inp-concept-stat-num').value || '').trim();
-					ctx.fillStyle = '#1f9a77';
-					if (statVal.length > 8) {
-						ctx.font = '800 95px "JetBrains Mono", monospace';
-					} else {
-						ctx.font = '800 145px "JetBrains Mono", monospace';
-					}
-					ctx.fillText(statVal, 540, 490);
-					ctx.textAlign = 'left';
+				// Üst Başlık Dinamik Font ve Satırlara Bölme (5-6 satıra kadar destekli)
+				let ebFontSize = 32;
+				let ebLineHeight = 44;
+				if (eyebrow.length > 110) {
+					ebFontSize = 26;
+					ebLineHeight = 36;
+				} else if (eyebrow.length > 55) {
+					ebFontSize = 29;
+					ebLineHeight = 40;
+				}
 
-					const descText = (document.getElementById('inp-concept-stat-desc').value || '').trim();
-					ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
-					const descLines = getWrappedLines(ctx, descText, 840);
-					const dBoxHeight = Math.max(descLines.length * 52 + 70, 250);
+				ctx.font = `700 ${ebFontSize}px "Plus Jakarta Sans", sans-serif`;
+				const ebLines = getWrappedLines(ctx, eyebrow, 880);
+				const ebHeight = ebLines.length * ebLineHeight;
 
-					ctx.fillStyle = '#ffffff';
-					ctx.strokeStyle = '#e2e8f0';
-					ctx.lineWidth = 3;
-					roundRect(ctx, 70, 600, 940, dBoxHeight, 20, true, true);
+				// Büyük Rakam / Veri Ölçümü
+				const statVal = ((isConcept 
+					? document.getElementById('inp-concept-stat-num').value 
+					: document.getElementById('inp-stat-number').value) || '').trim();
 
-					ctx.fillStyle = '#0f172a';
-					let dY = 670;
-					for (const l of descLines) {
-						ctx.fillText(l, 115, dY);
-						dY += 52;
-					}
+				let numFontSize = 145;
+				if (statVal.length > 8) numFontSize = 95;
+				else if (statVal.length > 5) numFontSize = 120;
+				const numHeight = Math.round(numFontSize * 0.9);
 
-				} else {
-					// Slayt 3: Sayısal Büyük Rakam
-					ctx.textAlign = 'center';
-					ctx.fillStyle = '#1f9a77';
-					ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
-					ctx.fillText((document.getElementById('inp-stat-eyebrow').value || '').trim(), 540, 310);
+				// Açıklama Kutusu Ölçümü
+				const descText = ((isConcept 
+					? document.getElementById('inp-concept-stat-desc').value 
+					: document.getElementById('inp-stat-desc').value) || '').trim();
 
-					ctx.fillStyle = '#4c1eb2';
-					const statVal = (document.getElementById('inp-stat-number').value || '').trim();
-					if (statVal.length > 8) {
-						ctx.font = '800 100px "JetBrains Mono", monospace';
-					} else {
-						ctx.font = '800 150px "JetBrains Mono", monospace';
-					}
-					ctx.fillText(statVal, 540, 490);
-					ctx.textAlign = 'left';
+				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+				const descLines = getWrappedLines(ctx, descText, 840);
+				const dBoxHeight = Math.max(descLines.length * 52 + 70, 220);
 
-					const descText = (document.getElementById('inp-stat-desc').value || '').trim();
-					ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
-					const descLines = getWrappedLines(ctx, descText, 840);
-					const dBoxHeight = Math.max(descLines.length * 52 + 70, 250);
+				// Dikey Denge: y=180 ile y=1220 arasındaki kullanılabilir alanı (1040px) orantılı kullan
+				const gap1 = 25; // Başlık ile rakam arası
+				const gap2 = 35; // Rakam ile kutu arası
+				const totalGroupHeight = ebHeight + gap1 + numHeight + gap2 + dBoxHeight;
+				const startY = 180 + Math.max(20, (1040 - totalGroupHeight) / 2);
 
-					ctx.fillStyle = '#ffffff';
-					ctx.strokeStyle = '#e2e8f0';
-					ctx.lineWidth = 3;
-					roundRect(ctx, 70, 600, 940, dBoxHeight, 20, true, true);
+				// 1. Üst Başlık (Ortalı)
+				ctx.textAlign = 'center';
+				ctx.fillStyle = isConcept ? '#4c1eb2' : '#1f9a77';
+				ctx.font = `700 ${ebFontSize}px "Plus Jakarta Sans", sans-serif`;
+				let ebY = startY + ebFontSize;
+				for (const l of ebLines) {
+					ctx.fillText(l, 540, ebY);
+					ebY += ebLineHeight;
+				}
 
-					ctx.fillStyle = '#0f172a';
-					let dY = 670;
-					for (const l of descLines) {
-						ctx.fillText(l, 115, dY);
-						dY += 52;
-					}
+				// 2. Büyük Rakam / Veri (Ortalı)
+				const numBaseline = ebY - ebLineHeight + gap1 + numHeight;
+				ctx.fillStyle = isConcept ? '#1f9a77' : '#4c1eb2';
+				ctx.font = `800 ${numFontSize}px "JetBrains Mono", monospace`;
+				ctx.fillText(statVal, 540, numBaseline);
+				ctx.textAlign = 'left';
+
+				// 3. Alt Açıklama Kutusu
+				const dBoxTop = numBaseline + gap2;
+				ctx.fillStyle = '#ffffff';
+				ctx.strokeStyle = '#e2e8f0';
+				ctx.lineWidth = 3;
+				roundRect(ctx, 70, dBoxTop, 940, dBoxHeight, 20, true, true);
+
+				ctx.fillStyle = '#0f172a';
+				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+				let dY = dBoxTop + 65;
+				for (const l of descLines) {
+					ctx.fillText(l, 115, dY);
+					dY += 52;
 				}
 
 			} else if (slideNum === 4) {
-				// Slayt 4: Özet ve Temel Çıkarımlar (DENGELİ VE KUSURSUZ DAĞILIM)
+				// Slayt 4: Özet ve Temel Çıkarımlar (Dinamik 3, 4 veya 5 Madde Desteği)
 				ctx.fillStyle = '#0f172a';
 				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
 				ctx.fillText('Özet ve Temel Çıkarımlar', 70, 230);
@@ -1360,21 +1427,29 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				const m1 = (document.getElementById('inp-sum-1').value || '').trim();
 				const m2 = (document.getElementById('inp-sum-2').value || '').trim();
 				const m3 = (document.getElementById('inp-sum-3').value || '').trim();
-				const bullets = [m1, m2, m3].filter(Boolean);
+				const m4 = (document.getElementById('inp-sum-4') ? document.getElementById('inp-sum-4').value : '').trim();
+				const m5 = (document.getElementById('inp-sum-5') ? document.getElementById('inp-sum-5').value : '').trim();
+
+				// SADECE DOLU OLANLARI AL (Boş bırakılanlar karta kesinlikle basılmaz)
+				const bullets = [m1, m2, m3, m4, m5].filter(Boolean);
+				const count = bullets.length;
 
 				// Alt Bloklar (Tabana Sabitli)
 				const ctaTop = 1115;
 				const srcTop = 1010;
 
-				// Metin yoğunluğuna göre dinamik font ve satır aralığı
+				// Madde sayısına ve toplam uzunluğa göre akıllı font ölçekleme
 				const totalChars = bullets.reduce((sum, b) => sum + b.length, 0);
 
 				let bFontSize = 36;
 				let bLineHeight = 52;
-				if (totalChars > 360) {
+				if (count >= 5 || totalChars > 420) {
+					bFontSize = 28;
+					bLineHeight = 40;
+				} else if (count === 4 || totalChars > 300) {
 					bFontSize = 31;
 					bLineHeight = 44;
-				} else if (totalChars > 230) {
+				} else if (totalChars > 220) {
 					bFontSize = 34;
 					bLineHeight = 48;
 				} else {
@@ -1383,7 +1458,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				}
 
 				ctx.font = `500 ${bFontSize}px "Plus Jakarta Sans", sans-serif`;
-				// x=70 ikon, x=125 metin başlangıcı -> maxWidth: 880
+				// x=70 onay imi, x=125 metin başlangıcı -> maxWidth: 880
 				const wrappedBullets = bullets.map(text => getWrappedLines(ctx, text, 880));
 				const totalLines = wrappedBullets.reduce((acc, lines) => acc + lines.length, 0);
 				const totalTextHeight = totalLines * bLineHeight;
@@ -1393,12 +1468,12 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				const remainingSpace = Math.max(0, availableZone - totalTextHeight);
 
 				// Maddeler arası boşluk ve başlangıç konumu
-				const bulletCount = Math.max(bullets.length, 1);
-				const bulletGap = Math.max(26, Math.min(75, remainingSpace / (bulletCount + 0.5)));
-				const startY = 270 + Math.max(15, (remainingSpace - (bulletCount - 1) * bulletGap) / 2);
+				const bulletCount = Math.max(count, 1);
+				const bulletGap = Math.max(20, Math.min(75, remainingSpace / (bulletCount + 0.5)));
+				const startY = 265 + Math.max(10, (remainingSpace - (bulletCount - 1) * bulletGap) / 2);
 
 				let curY = startY;
-				for (let i = 0; i < bullets.length; i++) {
+				for (let i = 0; i < count; i++) {
 					const lines = wrappedBullets[i];
 
 					// Yeşil Kurumsal Onay İşareti (✓)
