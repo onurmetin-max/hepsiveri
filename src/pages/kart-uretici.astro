@@ -688,6 +688,47 @@ const encryptedBundle = {
 			border-color: #fca5a5;
 			color: #dc2626;
 		}
+
+		/* Link Kopyalama ve Bio Butonları */
+		.btn-copy-link {
+			flex: 1;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			background: #f5f3ff;
+			border: 1px solid rgba(76, 30, 178, 0.2);
+			color: var(--brand-purple);
+			padding: 8px 12px;
+			border-radius: 8px;
+			font-size: 12.5px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+		.btn-copy-link:hover {
+			background: #ede9fe;
+			border-color: var(--brand-purple);
+		}
+		.btn-view-bio-link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			background: #ffffff;
+			border: 1px solid var(--border);
+			color: var(--text-secondary);
+			padding: 8px 12px;
+			border-radius: 8px;
+			font-size: 12.5px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: all 0.2s ease;
+		}
+		.btn-view-bio-link:hover {
+			border-color: var(--brand-purple);
+			color: var(--brand-purple);
+		}
 	</style>
 </head>
 <body>
@@ -777,6 +818,24 @@ const encryptedBundle = {
 						<select class="form-select" id="post-selector">
 							<option value="">Haberler yükleniyor...</option>
 						</select>
+					</div>
+
+					<div style="display: flex; gap: 8px; margin-bottom: 16px;">
+						<button type="button" class="btn-copy-link" id="btn-copy-post-link" title="Instagram Hikayesi veya paylaşım için haber linkini kopyala">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+								<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+								<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+							</svg>
+							<span id="txt-copy-link">Haber Linkini Kopyala</span>
+						</button>
+						<a href="/link" target="_blank" class="btn-view-bio-link" title="Instagram Bio Sayfasını Aç (/link)">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+								<polyline points="15 3 21 3 21 9"></polyline>
+								<line x1="10" y1="14" x2="21" y2="3"></line>
+							</svg>
+							<span>/link Sayfası</span>
+						</a>
 					</div>
 
 				<div class="form-group">
@@ -1366,12 +1425,17 @@ const encryptedBundle = {
 		});
 
 		// Haber Seçildiğinde Otomatik Doldur
+		let selectedPostObject = null;
 		const selector = document.getElementById('post-selector');
 		selector.addEventListener('change', (e) => {
 			const idx = e.target.value;
-			if (idx === '') return;
+			if (idx === '') {
+				selectedPostObject = null;
+				return;
+			}
 			const post = postsPayload[idx];
 			if (!post) return;
+			selectedPostObject = post;
 
 			// Kapak
 			document.getElementById('inp-cat').value = post.category;
@@ -1410,6 +1474,29 @@ const encryptedBundle = {
 			setStudioMode(post.recommendedMode || 'data');
 			updateAllCounters();
 			scheduleRender();
+		});
+
+		// Haber Linkini Panoya Kopyala (Instagram Story & Paylaşım için)
+		document.getElementById('btn-copy-post-link')?.addEventListener('click', () => {
+			if (!selectedPostObject) {
+				alert('Lütfen önce yukarıdaki listeden bir haber seçin.');
+				return;
+			}
+			const url = `https://hepsiveri.com/haber/${selectedPostObject.slug}/`;
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(url).then(() => {
+					const txt = document.getElementById('txt-copy-link');
+					if (txt) {
+						const orig = txt.innerText;
+						txt.innerText = '✅ Link Kopyalandı!';
+						setTimeout(() => { txt.innerText = orig; }, 2000);
+					}
+				}).catch(() => {
+					prompt('Haber bağlantısını kopyalayın:', url);
+				});
+			} else {
+				prompt('Haber bağlantısını kopyalayın:', url);
+			}
 		});
 
 		// Metni Satırlara Bölen Yardımcı
