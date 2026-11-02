@@ -6,13 +6,13 @@ const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime());
 
 // Formun ve 4 slaytın otomatik doldurulması için akıllı veri çıkarıcı
-const postsPayload = allPosts.slice(0, 40).map(p => {
+const postsPayload = allPosts.slice(0, 45).map(p => {
 	const content = p.body || '';
 	const title = p.data.title || '';
 	const category = (p.data.category || 'Veri Haberciliği') + ' / Veri Analizi';
 	const desc = p.data.description || '';
 
-	// Madde imli satırları tespit et
+	// 1. Madde imli satırları tespit et
 	const bulletLines: string[] = [];
 	const bRegex = /^[*-]\s+(.+)$/gm;
 	let bm;
@@ -21,7 +21,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		bulletLines.push(raw);
 	}
 
-	// Yüzde ve kalın veri istatistiklerini topla
+	// 2. Yüzde ve kalın veri istatistiklerini topla
 	const boldStats: string[] = [];
 	const sRegex = /\*\*([%0-9][^*]{1,25})\*\*/g;
 	let sm;
@@ -32,7 +32,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		}
 	}
 
-	// Tablo satırlarını tespit et
+	// 3. Tablo satırlarını tespit et
 	const tableRows: string[][] = [];
 	const tableRegex = /^\|(.+)\|$/gm;
 	let tm;
@@ -43,17 +43,21 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		}
 	}
 
-	// Resmi kaynak tespiti
+	// 4. Otomatik Mod Tespiti: Gerçek bir veri ikiliği/tablosu var mı?
+	const isDataHeavy = tableRows.length >= 2 || (boldStats.length >= 2 && (category.includes('Ekonomi') || bulletLines.some(b => b.includes(':'))));
+	const recommendedMode = isDataHeavy ? 'data' : 'concept';
+
+	// 5. Resmi kaynak tespiti
 	let source = 'Kaynak: HepsiVeri Araştırma & Açık Veri';
-	const knownSources = ['TÜİK', 'SGK', 'TEPAV', 'OECD', 'Eurostat', 'TCMB', 'MEB', 'Sağlık Bakanlığı', 'İçişleri Bakanlığı', 'Adalet Bakanlığı', 'İŞKUR', 'BDDK', 'EGM', 'Çalışma Bakanlığı'];
+	const knownSources = ['TÜİK', 'SGK', 'TEPAV', 'OECD', 'Eurostat', 'TCMB', 'MEB', 'Sağlık Bakanlığı', 'İçişleri Bakanlığı', 'Adalet Bakanlığı', 'İŞKUR', 'BDDK', 'EGM', 'Dictionary.com', 'Meltwater'];
 	for (const s of knownSources) {
 		if (content.includes(s) || (p.data.tags || []).includes(s) || title.includes(s)) {
-			source = `Kaynak: ${s} Raporu & Resmi Veri Havuzu`;
+			source = `Kaynak: ${s} Analizi & Açık Kaynak Veri`;
 			break;
 		}
 	}
 
-	// Slayt 2: Kıyaslama Kutuları
+	// --- A) Sayısal Kıyaslama Modu Verileri ---
 	let compTitle = 'Öne Çıkan Karşılaştırmalar';
 	let compLLabel = 'Temel Oran';
 	let compLVal = boldStats[0] || '%50,0';
@@ -90,7 +94,6 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		compNote = desc.slice(0, 80) + (desc.length > 80 ? '...' : '');
 	}
 
-	// Slayt 3: Büyük Rakam
 	let statEyebrow = 'Öne Çıkan Ana Gösterge';
 	let statNumber = boldStats[0] || '%50';
 	let statDesc = desc || 'Açık veri analizinde kaydedilen en dikkat çekici değer.';
@@ -104,17 +107,54 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		statNumber = boldStats[0];
 	}
 
-	// Slayt 4: Özet ve Temel Çıkarımlar
+	// --- B) Kavram, Alıntı ve Analiz Modu Verileri ---
+	let conceptTitle = 'Kavramın Anlamı ve Tanımı';
+	const titleTermMatch = title.match(/["“']([^"”']+)["”']/i);
+	if (titleTermMatch) {
+		conceptTitle = `"${titleTermMatch[1]}" Ne Anlama Geliyor?`;
+	}
+
+	let conceptQuote = '';
+	const defMatch = content.match(/tanımına göre\s+([^.\n]+[.])/i) ||
+	                 content.match(/“([^”]{25,180})”/) ||
+	                 content.match(/"([^"]{25,180})"/);
+	if (defMatch) {
+		conceptQuote = defMatch[1].replace(/^["'“]|["'”]$/g, '').trim();
+		if (!conceptQuote.endsWith('.')) conceptQuote += '.';
+	} else {
+		conceptQuote = desc || title;
+	}
+
+	let conceptContext = 'İnternet şakası olarak başlayan akım, modern kültürün ve dilin merkezine yerleşti.';
+	const paragraphs = content.split(/\r?\n\r?\n/).filter(p => !p.startsWith('#') && !p.startsWith('<') && !p.startsWith('---') && p.length > 60);
+	if (paragraphs.length > 1) {
+		conceptContext = paragraphs[1].replace(/<[^>]+>/g, '').slice(0, 100) + '...';
+	}
+
+	let conceptStatNumber = '2026 Trendi';
+	let conceptStatEyebrow = 'Kullanım ve Etkileşim Artışı';
+	let conceptStatDesc = desc || 'Sosyal medyada ve aramalarda dikkat çeken kolektif eğilim kaydedildi.';
+
+	const percMatch = content.match(/yüzde\s*([\d.,]+)\s*(?:arttı|yükseldi|artış|oranında)/i) || content.match(/%\s*([\d.,]+)/);
+	if (percMatch) {
+		conceptStatNumber = `+%${percMatch[1]}`;
+		conceptStatEyebrow = 'Aramalarda ve Kullanımda Patlama';
+		conceptStatDesc = `Kelimenin kullanımı ve aramaları 2026 yılında yaklaşık yüzde ${percMatch[1]} artış gösterdi.`;
+	}
+
+	// --- C) Slayt 4 Özet Çıkarımları ---
 	let sum1 = bulletLines[0] ? bulletLines[0].slice(0, 95) : desc.slice(0, 85);
-	let sum2 = bulletLines[1] ? bulletLines[1].slice(0, 95) : (boldStats[1] ? `Öne çıkan veri boyutu: ${boldStats[1]}` : 'Resmi raporda paylaşılan kritik göstergeler incelendi.');
-	let sum3 = bulletLines[2] ? bulletLines[2].slice(0, 95) : 'Ayrıntılı veri tabloları ve açık kaynak veriler haberimizde.';
+	let sum2 = bulletLines[1] ? bulletLines[1].slice(0, 95) : (boldStats[1] ? `Öne çıkan veri boyutu: ${boldStats[1]}` : 'Resmi raporda ve araştırmada paylaşılan temel göstergeler incelendi.');
+	let sum3 = bulletLines[2] ? bulletLines[2].slice(0, 95) : 'Haberin tam metni, veri tabloları ve açık kaynaklar sitemizde.';
 
 	return {
-		slug: p.slug,
+		slug: p.id || p.slug || '',
 		isDraft: p.data.status === 'Taslak',
+		recommendedMode,
 		title,
 		category,
 		desc,
+		// Data modu alanları
 		compTitle,
 		compLLabel,
 		compLVal,
@@ -124,6 +164,14 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		statEyebrow,
 		statNumber,
 		statDesc,
+		// Concept modu alanları
+		conceptTitle,
+		conceptQuote,
+		conceptContext,
+		conceptStatEyebrow,
+		conceptStatNumber,
+		conceptStatDesc,
+		// Özet
 		sum1,
 		sum2,
 		sum3,
@@ -142,12 +190,13 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 	<title>HepsiVeri - Instagram Kart & Görsel Üreticisi</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=JetBrains+Mono:wght@500;700;800&family=Newsreader:ital,opsz,wght@1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
 	
 	<style>
 		:root {
 			--font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 			--font-mono: 'JetBrains Mono', monospace;
+			--font-serif: 'Newsreader', Georgia, serif;
 			--bg-canvas: #f4f4f5;
 			--card-bg: #fbfbfa;
 			--brand-purple: #4c1eb2;
@@ -262,6 +311,37 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			align-items: center;
 			gap: 8px;
 			letter-spacing: -0.2px;
+		}
+
+		/* Şablon Modu Seçici */
+		.mode-switcher {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 8px;
+			background: #f1f5f9;
+			padding: 4px;
+			border-radius: 8px;
+			margin-bottom: 14px;
+		}
+		.btn-mode {
+			border: none;
+			background: transparent;
+			padding: 9px 12px;
+			font-size: 12px;
+			font-weight: 700;
+			color: var(--text-muted);
+			border-radius: 6px;
+			cursor: pointer;
+			transition: all 0.2s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+		}
+		.btn-mode.active {
+			background: #ffffff;
+			color: var(--brand-purple);
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 		}
 
 		.form-group {
@@ -418,7 +498,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			font-weight: 500;
 		}
 
-		/* Slayt 2: Kıyaslama */
+		/* Slayt 2 (A Modu): Sayısal Kıyaslama */
 		.compare-title {
 			font-size: 16px;
 			font-weight: 800;
@@ -476,7 +556,64 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			font-weight: 500;
 		}
 
-		/* Slayt 3: Büyük Rakam */
+		/* Slayt 2 (B Modu): Kavram & Alıntı Kartı */
+		.concept-quote-box {
+			margin: auto 0;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		.concept-quote-title {
+			font-size: 15px;
+			font-weight: 800;
+			color: var(--brand-purple);
+			letter-spacing: -0.3px;
+		}
+
+		.quote-bubble {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-left: 4px solid var(--brand-purple);
+			border-radius: 8px;
+			padding: 16px 14px;
+			position: relative;
+			box-shadow: 0 2px 6px rgba(76, 30, 178, 0.04);
+		}
+
+		.quote-bubble-mark {
+			font-family: Georgia, serif;
+			font-size: 44px;
+			color: var(--brand-purple);
+			line-height: 1;
+			position: absolute;
+			top: -4px;
+			left: 10px;
+			opacity: 0.2;
+		}
+
+		.quote-text {
+			font-family: var(--font-serif);
+			font-size: 15px;
+			font-style: italic;
+			line-height: 1.45;
+			color: var(--text-primary);
+			position: relative;
+			z-index: 1;
+		}
+
+		.quote-context {
+			background: #f8fafc;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			padding: 10px 12px;
+			font-size: 11px;
+			color: var(--text-secondary);
+			line-height: 1.45;
+			font-weight: 500;
+		}
+
+		/* Slayt 3 (A Modu): Büyük Rakam */
 		.big-stat-wrap {
 			text-align: center;
 			margin: auto 0;
@@ -491,7 +628,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 
 		.big-stat-number {
 			font-family: var(--font-mono);
-			font-size: 54px;
+			font-size: 52px;
 			font-weight: 800;
 			color: var(--brand-purple);
 			line-height: 1;
@@ -500,6 +637,45 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		}
 
 		.big-stat-desc {
+			font-size: 12px;
+			line-height: 1.5;
+			color: var(--text-primary);
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 8px;
+			padding: 12px 14px;
+			font-weight: 500;
+			text-align: left;
+		}
+
+		/* Slayt 3 (B Modu): Kavram Trendi / Odak */
+		.concept-stat-wrap {
+			text-align: center;
+			margin: auto 0;
+		}
+
+		.concept-stat-badge {
+			display: inline-block;
+			background: rgba(76, 30, 178, 0.08);
+			color: var(--brand-purple);
+			font-size: 11px;
+			font-weight: 700;
+			padding: 4px 10px;
+			border-radius: 999px;
+			margin-bottom: 12px;
+		}
+
+		.concept-stat-val {
+			font-family: var(--font-mono);
+			font-size: 48px;
+			font-weight: 800;
+			color: var(--brand-green);
+			line-height: 1;
+			margin-bottom: 14px;
+			letter-spacing: -0.5px;
+		}
+
+		.concept-stat-desc {
 			font-size: 12px;
 			line-height: 1.5;
 			color: var(--text-primary);
@@ -605,7 +781,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		<aside class="editor-sidebar">
 			
 			<div class="sidebar-section">
-				<h2 class="section-title">📂 1. Haberi Seçin (Otomatik Doldur)</h2>
+				<h2 class="section-title">📂 1. Haberi Seçin</h2>
 				<div class="form-group">
 					<label class="form-label">Sitedeki Son Haberler</label>
 					<select class="form-select" id="post-selector">
@@ -616,6 +792,17 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 							</option>
 						))}
 					</select>
+				</div>
+				<div class="form-group" style="margin-bottom:0;">
+					<label class="form-label">Kart Şablon Modu (2 ve 3. Slayt İçin)</label>
+					<div class="mode-switcher">
+						<button type="button" class="btn-mode active" id="btn-mode-data">
+							📊 Sayısal Kıyaslama
+						</button>
+						<button type="button" class="btn-mode" id="btn-mode-concept">
+							💡 Kavram & Alıntı Analizi
+						</button>
+					</div>
 				</div>
 			</div>
 
@@ -635,8 +822,9 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				</div>
 			</div>
 
-			<div class="sidebar-section">
-				<h2 class="section-title">⚖️ 3. Slayt 2 (Kıyaslama)</h2>
+			<!-- Slayt 2 Formu: Sayısal Kıyaslama Modu -->
+			<div class="sidebar-section" id="sec-s2-data">
+				<h2 class="section-title">⚖️ 3. Slayt 2 (İkili Kıyaslama)</h2>
 				<div class="form-group">
 					<label class="form-label">Bölüm Başlığı</label>
 					<input class="form-input" id="inp-comp-title" value="Kayıt Dışılık Makası Açılıyor">
@@ -661,7 +849,25 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				</div>
 			</div>
 
-			<div class="sidebar-section">
+			<!-- Slayt 2 Formu: Kavram & Alıntı Modu -->
+			<div class="sidebar-section" id="sec-s2-concept" style="display:none;">
+				<h2 class="section-title">💡 3. Slayt 2 (Vurucu Alıntı & Tanım)</h2>
+				<div class="form-group">
+					<label class="form-label">Bölüm Başlığı</label>
+					<input class="form-input" id="inp-concept-title" value="Kavramın Anlamı ve Tanımı">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Vurgulu Alıntı / Tanım Cümlesi</label>
+					<textarea class="form-textarea" id="inp-concept-quote" rows="3">Bir işi sonuna kadar götürmek ya da hayatın bir alanını olabildiğince iyileştirmeye çalışmak.</textarea>
+				</div>
+				<div class="form-group">
+					<label class="form-label">Bağlam ve Açıklama Notu</label>
+					<textarea class="form-textarea" id="inp-concept-context" rows="2">İnternet şakası olarak başlayan akım, modern kültürün ve dilin merkezine yerleşti.</textarea>
+				</div>
+			</div>
+
+			<!-- Slayt 3 Formu: Sayısal Mod -->
+			<div class="sidebar-section" id="sec-s3-data">
 				<h2 class="section-title">💥 4. Slayt 3 (Büyük Rakam)</h2>
 				<div class="form-group">
 					<label class="form-label">Üst Etiket</label>
@@ -674,6 +880,23 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				<div class="form-group">
 					<label class="form-label">Rakamın Anlamı / Açıklaması</label>
 					<textarea class="form-textarea" id="inp-stat-desc" rows="3">Tarımda çalışan kadınların neredeyse tamamı hiçbir sosyal güvenlik kaydı olmadan güvencesiz çalışıyor.</textarea>
+				</div>
+			</div>
+
+			<!-- Slayt 3 Formu: Kavram & Trend Modu -->
+			<div class="sidebar-section" id="sec-s3-concept" style="display:none;">
+				<h2 class="section-title">📈 4. Slayt 3 (Trend ve Odak)</h2>
+				<div class="form-group">
+					<label class="form-label">Üst Etiket / Odak Başlığı</label>
+					<input class="form-input" id="inp-concept-stat-eyebrow" value="Aramalarda ve Kullanımda Patlama">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Vurgulu Değer / Trend Göstergesi</label>
+					<input class="form-input" id="inp-concept-stat-num" value="+%1.000">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Trend Açıklaması ve Analizi</label>
+					<textarea class="form-textarea" id="inp-concept-stat-desc" rows="3">Dictionary.com verilerine göre kelimenin kullanımı ve aramaları 2026 yılında yaklaşık yüzde 1.000 artış gösterdi.</textarea>
 				</div>
 			</div>
 
@@ -731,7 +954,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				<!-- Slayt 2 -->
 				<div class="slide-wrapper">
 					<div class="slide-header">
-						<span>Slayt 2 (Kıyaslama)</span>
+						<span id="label-slide-2">Slayt 2 (Kıyaslama)</span>
 						<button class="btn-save-slide" onclick="downloadSingle(2)">PNG İndir</button>
 					</div>
 					<div class="slide-card" id="card-2">
@@ -741,7 +964,9 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 							</div>
 							<div class="card-counter">02/04</div>
 						</div>
-						<div>
+
+						<!-- Slayt 2 Canlı: Sayısal Mod -->
+						<div id="view-s2-data">
 							<h3 class="compare-title" id="view-comp-title">Kayıt Dışılık Makası Açılıyor</h3>
 							<div class="compare-boxes">
 								<div class="stat-box">
@@ -755,6 +980,17 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 							</div>
 							<div class="compare-note" id="view-comp-note">Kadın çalışanlar aleyhine fark 7,5 puana ulaştı.</div>
 						</div>
+
+						<!-- Slayt 2 Canlı: Kavram Modu -->
+						<div id="view-s2-concept" style="display:none;" class="concept-quote-box">
+							<h3 class="concept-quote-title" id="view-concept-title">Kavramın Anlamı ve Tanımı</h3>
+							<div class="quote-bubble">
+								<span class="quote-bubble-mark">“</span>
+								<p class="quote-text" id="view-concept-quote">“Bir işi sonuna kadar götürmek ya da hayatın bir alanını olabildiğince iyileştirmeye çalışmak.”</p>
+							</div>
+							<div class="quote-context" id="view-concept-context">İnternet şakası olarak başlayan akım, modern kültürün ve dilin merkezine yerleşti.</div>
+						</div>
+
 						<div class="card-footer">
 							<span>Kaydırın ➔</span>
 							<span>hepsiveri.com</span>
@@ -765,7 +1001,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				<!-- Slayt 3 -->
 				<div class="slide-wrapper">
 					<div class="slide-header">
-						<span>Slayt 3 (Büyük Rakam)</span>
+						<span id="label-slide-3">Slayt 3 (Büyük Rakam)</span>
 						<button class="btn-save-slide" onclick="downloadSingle(3)">PNG İndir</button>
 					</div>
 					<div class="slide-card" id="card-3">
@@ -775,11 +1011,21 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 							</div>
 							<div class="card-counter">03/04</div>
 						</div>
-						<div class="big-stat-wrap">
+
+						<!-- Slayt 3 Canlı: Sayısal Mod -->
+						<div class="big-stat-wrap" id="view-s3-data">
 							<div class="big-stat-eyebrow" id="view-stat-eyebrow">Tarımda Kadın Emeği</div>
 							<div class="big-stat-number" id="view-stat-number">%91,9</div>
 							<div class="big-stat-desc" id="view-stat-desc">Tarımda çalışan kadınların neredeyse tamamı hiçbir sosyal güvenlik kaydı olmadan güvencesiz çalışıyor.</div>
 						</div>
+
+						<!-- Slayt 3 Canlı: Kavram Modu -->
+						<div class="concept-stat-wrap" id="view-s3-concept" style="display:none;">
+							<div class="concept-stat-badge" id="view-concept-stat-eyebrow">Aramalarda ve Kullanımda Patlama</div>
+							<div class="concept-stat-val" id="view-concept-stat-num">+%1.000</div>
+							<div class="concept-stat-desc" id="view-concept-stat-desc">Dictionary.com verilerine göre kelimenin kullanımı ve aramaları 2026 yılında yaklaşık yüzde 1.000 artış gösterdi.</div>
+						</div>
+
 						<div class="card-footer">
 							<span>Kaydırın ➔</span>
 							<span>hepsiveri.com</span>
@@ -827,23 +1073,89 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 
 	<!-- Veriler ve Script -->
 	<script is:inline define:vars={{ postsPayload }}>
-		// Resmi Logoyu Önceden Yükle (Canvas Çizimi İçin)
+		// Resmi Logoyu Önceden Yükle
 		const logoImg = new Image();
 		logoImg.src = '/logo.png';
 
-		// Form - Önizleme Canlı Bağlantısı
-		const bindInput = (inpId, viewId) => {
-			const inp = document.getElementById(inpId);
-			const view = document.getElementById(viewId);
-			if (inp && view) {
-				inp.addEventListener('input', () => { view.innerText = inp.value; });
+		let currentStudioMode = 'data'; // 'data' veya 'concept'
+
+		// Mod Değiştirici
+		window.setStudioMode = function(mode) {
+			currentStudioMode = mode;
+			const btnData = document.getElementById('btn-mode-data');
+			const btnConcept = document.getElementById('btn-mode-concept');
+			const secS2Data = document.getElementById('sec-s2-data');
+			const secS2Concept = document.getElementById('sec-s2-concept');
+			const secS3Data = document.getElementById('sec-s3-data');
+			const secS3Concept = document.getElementById('sec-s3-concept');
+
+			const viewS2Data = document.getElementById('view-s2-data');
+			const viewS2Concept = document.getElementById('view-s2-concept');
+			const viewS3Data = document.getElementById('view-s3-data');
+			const viewS3Concept = document.getElementById('view-s3-concept');
+
+			const labelS2 = document.getElementById('label-slide-2');
+			const labelS3 = document.getElementById('label-slide-3');
+
+			if (mode === 'concept') {
+				btnData.classList.remove('active');
+				btnConcept.classList.add('active');
+
+				secS2Data.style.display = 'none';
+				secS2Concept.style.display = 'block';
+				secS3Data.style.display = 'none';
+				secS3Concept.style.display = 'block';
+
+				viewS2Data.style.display = 'none';
+				viewS2Concept.style.display = 'flex';
+				viewS3Data.style.display = 'none';
+				viewS3Concept.style.display = 'block';
+
+				if (labelS2) labelS2.innerText = 'Slayt 2 (Vurucu Alıntı & Tanım)';
+				if (labelS3) labelS3.innerText = 'Slayt 3 (Trend ve Odak)';
+			} else {
+				btnConcept.classList.remove('active');
+				btnData.classList.add('active');
+
+				secS2Data.style.display = 'block';
+				secS2Concept.style.display = 'none';
+				secS3Data.style.display = 'block';
+				secS3Concept.style.display = 'none';
+
+				viewS2Data.style.display = 'block';
+				viewS2Concept.style.display = 'none';
+				viewS3Data.style.display = 'block';
+				viewS3Concept.style.display = 'none';
+
+				if (labelS2) labelS2.innerText = 'Slayt 2 (Kıyaslama)';
+				if (labelS3) labelS3.innerText = 'Slayt 3 (Büyük Rakam)';
 			}
 		};
 
-		// Tüm Alanları Canlı Bağla
+		document.getElementById('btn-mode-data').addEventListener('click', () => setStudioMode('data'));
+		document.getElementById('btn-mode-concept').addEventListener('click', () => setStudioMode('concept'));
+
+		// Form - Önizleme Canlı Bağlantısı
+		const bindInput = (inpId, viewId, isQuote = false) => {
+			const inp = document.getElementById(inpId);
+			const view = document.getElementById(viewId);
+			if (inp && view) {
+				inp.addEventListener('input', () => {
+					view.innerText = isQuote ? `“${inp.value.replace(/^[“"]|[”"]$/g, '')}”` : inp.value;
+				});
+			}
+		};
+
+		// Ortak Alanlar
 		bindInput('inp-cat', 'view-cat');
 		bindInput('inp-title', 'view-title');
 		bindInput('inp-desc', 'view-desc');
+		bindInput('inp-sum-1', 'view-sum-1');
+		bindInput('inp-sum-2', 'view-sum-2');
+		bindInput('inp-sum-3', 'view-sum-3');
+		bindInput('inp-source', 'view-source');
+
+		// Sayısal Mod Alanları
 		bindInput('inp-comp-title', 'view-comp-title');
 		bindInput('inp-comp-l-label', 'view-comp-l-label');
 		bindInput('inp-comp-l-val', 'view-comp-l-val');
@@ -853,12 +1165,16 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 		bindInput('inp-stat-eyebrow', 'view-stat-eyebrow');
 		bindInput('inp-stat-number', 'view-stat-number');
 		bindInput('inp-stat-desc', 'view-stat-desc');
-		bindInput('inp-sum-1', 'view-sum-1');
-		bindInput('inp-sum-2', 'view-sum-2');
-		bindInput('inp-sum-3', 'view-sum-3');
-		bindInput('inp-source', 'view-source');
 
-		// Haber Seçildiğinde 4 Slaytın Tamamını Otomatik Doldur
+		// Kavram Modu Alanları
+		bindInput('inp-concept-title', 'view-concept-title');
+		bindInput('inp-concept-quote', 'view-concept-quote', true);
+		bindInput('inp-concept-context', 'view-concept-context');
+		bindInput('inp-concept-stat-eyebrow', 'view-concept-stat-eyebrow');
+		bindInput('inp-concept-stat-num', 'view-concept-stat-num');
+		bindInput('inp-concept-stat-desc', 'view-concept-stat-desc');
+
+		// Haber Seçildiğinde Otomatik Doldur ve Modu Ayarla
 		const selector = document.getElementById('post-selector');
 		selector.addEventListener('change', (e) => {
 			const idx = e.target.value;
@@ -866,12 +1182,12 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			const post = postsPayload[idx];
 			if (!post) return;
 
-			// Slayt 1 (Kapak)
+			// Kapak
 			document.getElementById('inp-cat').value = post.category;
 			document.getElementById('inp-title').value = post.title;
 			document.getElementById('inp-desc').value = post.desc || '';
 
-			// Slayt 2 (Kıyaslama)
+			// Sayısal Mod Alanları
 			document.getElementById('inp-comp-title').value = post.compTitle;
 			document.getElementById('inp-comp-l-label').value = post.compLLabel;
 			document.getElementById('inp-comp-l-val').value = post.compLVal;
@@ -879,18 +1195,28 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			document.getElementById('inp-comp-r-val').value = post.compRVal;
 			document.getElementById('inp-comp-note').value = post.compNote;
 
-			// Slayt 3 (Büyük Rakam)
 			document.getElementById('inp-stat-eyebrow').value = post.statEyebrow;
 			document.getElementById('inp-stat-number').value = post.statNumber;
 			document.getElementById('inp-stat-desc').value = post.statDesc;
 
-			// Slayt 4 (Özet ve Kaynak)
+			// Kavram Modu Alanları
+			document.getElementById('inp-concept-title').value = post.conceptTitle;
+			document.getElementById('inp-concept-quote').value = post.conceptQuote;
+			document.getElementById('inp-concept-context').value = post.conceptContext;
+			document.getElementById('inp-concept-stat-eyebrow').value = post.conceptStatEyebrow;
+			document.getElementById('inp-concept-stat-num').value = post.conceptStatNumber;
+			document.getElementById('inp-concept-stat-desc').value = post.conceptStatDesc;
+
+			// Özet
 			document.getElementById('inp-sum-1').value = post.sum1;
 			document.getElementById('inp-sum-2').value = post.sum2;
 			document.getElementById('inp-sum-3').value = post.sum3;
 			document.getElementById('inp-source').value = post.source;
 
-			// Önizleme elemanlarını anında tetikle
+			// Otomatik Modu Uygula
+			setStudioMode(post.recommendedMode || 'data');
+
+			// Önizleme elemanlarını tetikle
 			const inputs = document.querySelectorAll('.form-input, .form-textarea');
 			inputs.forEach(i => i.dispatchEvent(new Event('input')));
 		});
@@ -911,7 +1237,7 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			ctx.lineWidth = 4;
 			ctx.strokeRect(40, 40, w - 80, h - 80);
 
-			// 3. Logo Çizimi (Görsel veya Vektörel)
+			// 3. Logo Çizimi
 			if (logoImg.complete && logoImg.naturalHeight > 0) {
 				const logoH = 76;
 				const logoW = Math.round(logoH * (logoImg.naturalWidth / logoImg.naturalHeight));
@@ -947,21 +1273,19 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 			ctx.fillText('hepsiveri.com', w - 90, h - 90);
 			ctx.textAlign = 'left';
 
-			// Slayta Özel İçerik Çizimi
+			// Slayt İçerik Çizimleri
 			if (slideNum === 1) {
-				// Kategori Rozeti
+				// Slayt 1: Kapak
 				const cat = document.getElementById('inp-cat').value;
 				ctx.fillStyle = '#1f9a77';
 				ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
 				ctx.fillText(cat, 90, 280);
 
-				// Ana Başlık
 				const title = document.getElementById('inp-title').value;
 				ctx.fillStyle = '#0f172a';
 				ctx.font = '800 64px "Plus Jakarta Sans", sans-serif';
 				const nextY = drawWrappedText(ctx, title, 90, 410, 900, 84);
 
-				// Spot
 				const desc = document.getElementById('inp-desc').value;
 				ctx.fillStyle = '#334155';
 				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
@@ -969,78 +1293,153 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				drawWrappedText(ctx, desc, 90, spotY, 900, 54);
 
 			} else if (slideNum === 2) {
-				const compTitle = document.getElementById('inp-comp-title').value;
-				ctx.fillStyle = '#0f172a';
-				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, compTitle, 90, 300, 900, 70);
+				if (currentStudioMode === 'concept') {
+					// Slayt 2: Kavram & Alıntı Kartı Çizimi
+					const conceptTitle = document.getElementById('inp-concept-title').value;
+					ctx.fillStyle = '#4c1eb2';
+					ctx.font = '800 48px "Plus Jakarta Sans", sans-serif';
+					drawWrappedText(ctx, conceptTitle, 90, 290, 900, 64);
 
-				// Sol Kutu
-				ctx.fillStyle = '#ffffff';
-				ctx.strokeStyle = '#cbd5e1';
-				ctx.lineWidth = 3;
-				roundRect(ctx, 90, 480, 420, 360, 20, true, true);
+					// Dekoratif Tırnak İşareti
+					ctx.font = '700 130px Georgia, serif';
+					ctx.fillStyle = 'rgba(76, 30, 178, 0.2)';
+					ctx.fillText('“', 90, 420);
 
-				ctx.fillStyle = '#64748b';
-				ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
-				ctx.textAlign = 'center';
-				ctx.fillText(document.getElementById('inp-comp-l-label').value, 300, 565);
+					// Vurgulu Alıntı Kutusu
+					ctx.fillStyle = '#ffffff';
+					ctx.strokeStyle = '#e2e8f0';
+					ctx.lineWidth = 3;
+					roundRect(ctx, 90, 430, 900, 430, 20, true, true);
 
-				ctx.fillStyle = '#0f172a';
-				const lVal = document.getElementById('inp-comp-l-val').value || '';
-				ctx.font = lVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
-				ctx.fillText(lVal, 300, 715);
+					// Sol Mor Şerit
+					ctx.fillStyle = '#4c1eb2';
+					roundRect(ctx, 90, 430, 14, 430, 6, true, false);
 
-				// Sağ Kutu (Vurgulu)
-				ctx.fillStyle = '#f0fdf4';
-				ctx.strokeStyle = '#1f9a77';
-				ctx.lineWidth = 4;
-				roundRect(ctx, 570, 480, 420, 360, 20, true, true);
+					// Alıntı Metni
+					const quoteRaw = document.getElementById('inp-concept-quote').value.replace(/^[“"]|[”"]$/g, '');
+					ctx.fillStyle = '#0f172a';
+					ctx.font = '500 italic 42px "Newsreader", Georgia, serif';
+					drawWrappedText(ctx, `“${quoteRaw}”`, 140, 530, 800, 62);
 
-				ctx.fillStyle = '#1f9a77';
-				ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
-				ctx.fillText(document.getElementById('inp-comp-r-label').value, 780, 565);
+					// Alt Bağlam Notu Kutusu
+					ctx.fillStyle = '#f8fafc';
+					ctx.strokeStyle = '#cbd5e1';
+					ctx.lineWidth = 2;
+					roundRect(ctx, 90, 900, 900, 160, 16, true, true);
 
-				ctx.fillStyle = '#1f9a77';
-				const rVal = document.getElementById('inp-comp-r-val').value || '';
-				ctx.font = rVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
-				ctx.fillText(rVal, 780, 715);
-				ctx.textAlign = 'left';
+					const contextText = document.getElementById('inp-concept-context').value;
+					ctx.fillStyle = '#334155';
+					ctx.font = '600 32px "Plus Jakarta Sans", sans-serif';
+					drawWrappedText(ctx, contextText, 130, 975, 820, 48);
 
-				// Fark Notu
-				ctx.fillStyle = '#ffffff';
-				ctx.strokeStyle = '#e2e8f0';
-				roundRect(ctx, 90, 900, 900, 160, 16, true, true);
+				} else {
+					// Slayt 2: Sayısal Kıyaslama Çizimi
+					const compTitle = document.getElementById('inp-comp-title').value;
+					ctx.fillStyle = '#0f172a';
+					ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
+					drawWrappedText(ctx, compTitle, 90, 300, 900, 70);
 
-				ctx.fillStyle = '#334155';
-				ctx.font = '600 34px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, document.getElementById('inp-comp-note').value, 130, 995, 820, 50);
+					// Sol Kutu
+					ctx.fillStyle = '#ffffff';
+					ctx.strokeStyle = '#cbd5e1';
+					ctx.lineWidth = 3;
+					roundRect(ctx, 90, 480, 420, 360, 20, true, true);
+
+					ctx.fillStyle = '#64748b';
+					ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
+					ctx.textAlign = 'center';
+					ctx.fillText(document.getElementById('inp-comp-l-label').value, 300, 565);
+
+					ctx.fillStyle = '#0f172a';
+					const lVal = document.getElementById('inp-comp-l-val').value || '';
+					ctx.font = lVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
+					ctx.fillText(lVal, 300, 715);
+
+					// Sağ Kutu (Vurgulu)
+					ctx.fillStyle = '#f0fdf4';
+					ctx.strokeStyle = '#1f9a77';
+					ctx.lineWidth = 4;
+					roundRect(ctx, 570, 480, 420, 360, 20, true, true);
+
+					ctx.fillStyle = '#1f9a77';
+					ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
+					ctx.fillText(document.getElementById('inp-comp-r-label').value, 780, 565);
+
+					ctx.fillStyle = '#1f9a77';
+					const rVal = document.getElementById('inp-comp-r-val').value || '';
+					ctx.font = rVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
+					ctx.fillText(rVal, 780, 715);
+					ctx.textAlign = 'left';
+
+					// Fark Notu
+					ctx.fillStyle = '#ffffff';
+					ctx.strokeStyle = '#e2e8f0';
+					roundRect(ctx, 90, 900, 900, 160, 16, true, true);
+
+					ctx.fillStyle = '#334155';
+					ctx.font = '600 34px "Plus Jakarta Sans", sans-serif';
+					drawWrappedText(ctx, document.getElementById('inp-comp-note').value, 130, 995, 820, 50);
+				}
 
 			} else if (slideNum === 3) {
-				ctx.textAlign = 'center';
-				ctx.fillStyle = '#1f9a77';
-				ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
-				ctx.fillText(document.getElementById('inp-stat-eyebrow').value, 540, 360);
+				if (currentStudioMode === 'concept') {
+					// Slayt 3: Kavram & Trend Çizimi
+					ctx.textAlign = 'center';
+					const eyebrow = document.getElementById('inp-concept-stat-eyebrow').value;
+					ctx.fillStyle = '#4c1eb2';
+					ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
+					ctx.fillText(eyebrow, 540, 350);
 
-				ctx.fillStyle = '#4c1eb2';
-				const statVal = document.getElementById('inp-stat-number').value || '';
-				if (statVal.length > 8) {
-					ctx.font = '800 110px "JetBrains Mono", monospace';
+					const statVal = document.getElementById('inp-concept-stat-num').value || '';
+					ctx.fillStyle = '#1f9a77';
+					if (statVal.length > 8) {
+						ctx.font = '800 100px "JetBrains Mono", monospace';
+					} else {
+						ctx.font = '800 150px "JetBrains Mono", monospace';
+					}
+					ctx.fillText(statVal, 540, 540);
+					ctx.textAlign = 'left';
+
+					// Açıklama Kutusu
+					ctx.fillStyle = '#ffffff';
+					ctx.strokeStyle = '#e2e8f0';
+					ctx.lineWidth = 3;
+					roundRect(ctx, 90, 680, 900, 360, 20, true, true);
+
+					ctx.fillStyle = '#0f172a';
+					ctx.font = '500 38px "Plus Jakarta Sans", sans-serif';
+					const descText = document.getElementById('inp-concept-stat-desc').value;
+					drawWrappedText(ctx, descText, 140, 790, 800, 60);
+
 				} else {
-					ctx.font = '800 160px "JetBrains Mono", monospace';
+					// Slayt 3: Sayısal Büyük Rakam Çizimi
+					ctx.textAlign = 'center';
+					ctx.fillStyle = '#1f9a77';
+					ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
+					ctx.fillText(document.getElementById('inp-stat-eyebrow').value, 540, 360);
+
+					ctx.fillStyle = '#4c1eb2';
+					const statVal = document.getElementById('inp-stat-number').value || '';
+					if (statVal.length > 8) {
+						ctx.font = '800 110px "JetBrains Mono", monospace';
+					} else {
+						ctx.font = '800 160px "JetBrains Mono", monospace';
+					}
+					ctx.fillText(statVal, 540, 560);
+					ctx.textAlign = 'left';
+
+					ctx.fillStyle = '#ffffff';
+					ctx.strokeStyle = '#e2e8f0';
+					ctx.lineWidth = 3;
+					roundRect(ctx, 90, 700, 900, 340, 20, true, true);
+
+					ctx.fillStyle = '#0f172a';
+					ctx.font = '500 38px "Plus Jakarta Sans", sans-serif';
+					drawWrappedText(ctx, document.getElementById('inp-stat-desc').value, 140, 800, 800, 60);
 				}
-				ctx.fillText(statVal, 540, 560);
-				ctx.textAlign = 'left';
-
-				ctx.fillStyle = '#ffffff';
-				ctx.strokeStyle = '#e2e8f0';
-				ctx.lineWidth = 3;
-				roundRect(ctx, 90, 700, 900, 340, 20, true, true);
-
-				ctx.fillStyle = '#0f172a';
-				ctx.font = '500 38px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, document.getElementById('inp-stat-desc').value, 140, 800, 800, 60);
 
 			} else if (slideNum === 4) {
+				// Slayt 4: Özet ve Çıkarımlar
 				ctx.fillStyle = '#0f172a';
 				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
 				ctx.fillText('Özet ve Temel Çıkarımlar', 90, 280);
@@ -1071,14 +1470,14 @@ const postsPayload = allPosts.slice(0, 40).map(p => {
 				ctx.fillStyle = '#ffffff';
 				ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
 				ctx.textAlign = 'center';
-				ctx.fillText('Haberin tamamı ve açık veri tabloları için link profilde', 540, 1055);
+				ctx.fillText('Haberin tamamı ve açık kaynaklar için link profilde', 540, 1055);
 				ctx.textAlign = 'left';
 			}
 
 			return canvas.toDataURL('image/png');
 		}
 
-		// Yardımcı Metin Kaydırma (Son Y Koordinatını Döner)
+		// Yardımcı Metin Kaydırma
 		function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
 			const words = (text || '').split(' ');
 			let line = '';
