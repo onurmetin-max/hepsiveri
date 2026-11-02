@@ -183,6 +183,24 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		date: p.data.pubDate ? new Date(p.data.pubDate).toLocaleDateString('tr-TR') : ''
 	};
 });
+
+// Kart Üretici Güvenlik ve Şifreleme Katmanı (AES-256-GCM)
+import crypto from 'node:crypto';
+
+const ACCESS_PASSWORD = 'hepsiveri2026';
+const salt = crypto.randomBytes(16);
+const iv = crypto.randomBytes(12);
+const key = crypto.pbkdf2Sync(ACCESS_PASSWORD, salt, 10000, 32, 'sha256');
+const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+const enc = Buffer.concat([cipher.update(JSON.stringify(postsPayload), 'utf8'), cipher.final()]);
+const tag = cipher.getAuthTag();
+const cipherWithTag = Buffer.concat([enc, tag]);
+
+const encryptedBundle = {
+	salt: salt.toString('base64'),
+	iv: iv.toString('base64'),
+	data: cipherWithTag.toString('base64')
+};
 ---
 
 <!DOCTYPE html>
@@ -487,45 +505,279 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			display: block;
 			border-radius: 8px;
 		}
+
+		/* Kilit Ekranı (Auth Modal / Screen) */
+		.auth-lockscreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background: #f4f4f5;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 9999;
+			padding: 20px;
+		}
+
+		.auth-card {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+			width: 100%;
+			max-width: 400px;
+			padding: 36px 32px;
+			text-align: center;
+			transition: transform 0.2s ease;
+		}
+
+		.auth-card.shake {
+			animation: authShake 0.4s ease-in-out;
+		}
+
+		@keyframes authShake {
+			0%, 100% { transform: translateX(0); }
+			20%, 60% { transform: translateX(-8px); }
+			40%, 80% { transform: translateX(8px); }
+		}
+
+		.auth-logo-img {
+			height: 38px;
+			width: auto;
+			margin: 0 auto 16px auto;
+			display: block;
+		}
+
+		.auth-title {
+			font-size: 20px;
+			font-weight: 800;
+			color: var(--text-primary);
+			margin-bottom: 8px;
+		}
+
+		.auth-desc {
+			font-size: 13.5px;
+			color: var(--text-muted);
+			margin-bottom: 24px;
+			line-height: 1.5;
+		}
+
+		.auth-form {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			text-align: left;
+		}
+
+		.auth-input-wrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+		}
+
+		.auth-input {
+			width: 100%;
+			padding: 12px 42px 12px 14px;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			font-size: 15px;
+			font-family: inherit;
+			outline: none;
+			transition: border-color 0.2s, box-shadow 0.2s;
+		}
+
+		.auth-input:focus {
+			border-color: var(--brand-purple);
+			box-shadow: 0 0 0 3px rgba(76, 30, 178, 0.12);
+		}
+
+		.auth-toggle-pwd {
+			position: absolute;
+			right: 12px;
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: var(--text-muted);
+			padding: 4px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.auth-toggle-pwd:hover {
+			color: var(--text-primary);
+		}
+
+		.auth-options {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-size: 13px;
+			color: var(--text-secondary);
+		}
+
+		.auth-remember-label {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.auth-remember-label input {
+			cursor: pointer;
+			accent-color: var(--brand-purple);
+		}
+
+		.auth-submit-btn {
+			background: var(--brand-purple);
+			color: #ffffff;
+			border: none;
+			border-radius: 10px;
+			padding: 12px;
+			font-size: 15px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: background 0.2s, transform 0.1s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+		}
+
+		.auth-submit-btn:hover {
+			background: #3c168f;
+		}
+
+		.auth-submit-btn:active {
+			transform: scale(0.99);
+		}
+
+		.auth-error {
+			background: #fef2f2;
+			border: 1px solid #fee2e2;
+			color: #dc2626;
+			padding: 10px 12px;
+			border-radius: 8px;
+			font-size: 13px;
+			display: none;
+			align-items: center;
+			gap: 8px;
+		}
+
+		/* Çıkış Butonu */
+		.btn-logout {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			background: transparent;
+			border: 1px solid var(--border);
+			color: var(--text-muted);
+			padding: 8px 12px;
+			border-radius: 8px;
+			font-size: 13px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.btn-logout:hover {
+			background: #fee2e2;
+			border-color: #fca5a5;
+			color: #dc2626;
+		}
 	</style>
 </head>
 <body>
 
-	<!-- Üst Çubuk -->
-	<header class="app-header">
-		<div class="app-brand">
-			<img src="/logo.png" alt="HepsiVeri" class="app-logo-img" />
-			<span class="app-badge">Sosyal Medya Stüdyosu</span>
-		</div>
-		<div class="header-actions">
-			<button class="btn-download-all" id="btn-export-all">
-				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-					<polyline points="7 10 12 15 17 10"></polyline>
-					<line x1="12" y1="15" x2="12" y2="3"></line>
-				</svg>
-				<span id="txt-export-btn">4 Slaytı İndir (1080x1350)</span>
-			</button>
-		</div>
-	</header>
-
-	<div class="studio-container">
-
-		<!-- Sol Editör Formu -->
-		<aside class="editor-sidebar">
+	<!-- Kilit Ekranı (Şifre Koruması) -->
+	<div id="auth-lockscreen" class="auth-lockscreen" style="display: flex;">
+		<div class="auth-card" id="auth-card">
+			<img src="/logo.png" alt="HepsiVeri" class="auth-logo-img" />
+			<h1 class="auth-title">HepsiVeri Stüdyo</h1>
+			<p class="auth-desc">İçerik ve sosyal medya kart üreticisine erişmek için lütfen editör şifrenizi girin.</p>
 			
-			<div class="sidebar-section">
-				<h2 class="section-title">📂 1. Haberi Seçin</h2>
-				<div class="form-group">
-					<select class="form-select" id="post-selector">
-						<option value="">Bir haber seçin...</option>
-						{postsPayload.map((p, idx) => (
-							<option value={idx}>
-								{p.isDraft ? '[Taslak] ' : ''}{p.title.length > 55 ? p.title.slice(0, 55) + '...' : p.title} ({p.date})
-							</option>
-						))}
-					</select>
+			<form class="auth-form" id="auth-form" onsubmit="event.preventDefault(); window.handleAuthSubmit();">
+				<div id="auth-error" class="auth-error">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="8" x2="12" y2="12"></line>
+						<line x1="12" y1="16" x2="12.01" y2="16"></line>
+					</svg>
+					<span>Hatalı şifre. Lütfen tekrar deneyin.</span>
 				</div>
+
+				<div class="auth-input-wrapper">
+					<input type="password" id="auth-pwd-input" class="auth-input" placeholder="Erişim şifresi..." autofocus autocomplete="current-password" />
+					<button type="button" class="auth-toggle-pwd" id="auth-toggle-pwd" title="Şifreyi Göster/Gizle">
+						<svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+							<circle cx="12" cy="12" r="3"></circle>
+						</svg>
+					</button>
+				</div>
+
+				<div class="auth-options">
+					<label class="auth-remember-label">
+						<input type="checkbox" id="auth-remember" checked />
+						<span>Beni bu cihazda hatırla</span>
+					</label>
+				</div>
+
+				<button type="submit" class="auth-submit-btn" id="auth-submit-btn">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+					</svg>
+					<span>Giriş Yap</span>
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Korumalı Çalışma Alanı -->
+	<div id="app-workspace" style="display: none;">
+
+		<!-- Üst Çubuk -->
+		<header class="app-header">
+			<div class="app-brand">
+				<img src="/logo.png" alt="HepsiVeri" class="app-logo-img" />
+				<span class="app-badge">Sosyal Medya Stüdyosu</span>
+			</div>
+			<div class="header-actions">
+				<button class="btn-logout" id="btn-logout" title="Güvenli Çıkış Yap">
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+						<polyline points="16 17 21 12 16 7"></polyline>
+						<line x1="21" y1="12" x2="9" y2="12"></line>
+					</svg>
+					<span>Çıkış Yap</span>
+				</button>
+				<button class="btn-download-all" id="btn-export-all">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					<span id="txt-export-btn">4 Slaytı İndir (1080x1350)</span>
+				</button>
+			</div>
+		</header>
+
+		<div class="studio-container">
+
+			<!-- Sol Editör Formu -->
+			<aside class="editor-sidebar">
+				
+				<div class="sidebar-section">
+					<h2 class="section-title">📂 1. Haberi Seçin</h2>
+					<div class="form-group">
+						<select class="form-select" id="post-selector">
+							<option value="">Haberler yükleniyor...</option>
+						</select>
+					</div>
 
 				<div class="form-group">
 					<label class="form-label">Karusel Slayt Sayısı</label>
@@ -820,9 +1072,136 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		</main>
 
 	</div>
+	</div> <!-- /#app-workspace -->
 
 	<!-- Veriler ve Gerçek Zamanlı Canvas Motoru -->
-	<script is:inline define:vars={{ postsPayload }}>
+	<script is:inline define:vars={{ encryptedBundle }}>
+		// Base64 to Uint8Array Yardımcısı
+		function b64ToUint8(str) {
+			const bin = atob(str);
+			const bytes = new Uint8Array(bin.length);
+			for (let i = 0; i < bin.length; i++) {
+				bytes[i] = bin.charCodeAt(i);
+			}
+			return bytes;
+		}
+
+		let postsPayload = [];
+		let isUnlocked = false;
+
+		// AES-256-GCM Şifre Çözücü
+		async function tryUnlock(pwd) {
+			if (!pwd) return false;
+			try {
+				const { subtle } = window.crypto;
+				const pwKey = await subtle.importKey('raw', new TextEncoder().encode(pwd), 'PBKDF2', false, ['deriveKey']);
+				const aesKey = await subtle.deriveKey({
+					name: 'PBKDF2',
+					salt: b64ToUint8(encryptedBundle.salt),
+					iterations: 10000,
+					hash: 'SHA-256'
+				}, pwKey, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+
+				const decrypted = await subtle.decrypt(
+					{ name: 'AES-GCM', iv: b64ToUint8(encryptedBundle.iv) },
+					aesKey,
+					b64ToUint8(encryptedBundle.data)
+				);
+
+				postsPayload = JSON.parse(new TextDecoder().decode(decrypted));
+				return true;
+			} catch (e) {
+				return false;
+			}
+		}
+
+		function renderPostSelector() {
+			const sel = document.getElementById('post-selector');
+			if (!sel) return;
+			sel.innerHTML = '<option value="">Bir haber seçin...</option>';
+			postsPayload.forEach((p, idx) => {
+				const opt = document.createElement('option');
+				opt.value = idx;
+				opt.textContent = (p.isDraft ? '[Taslak] ' : '') + (p.title.length > 55 ? p.title.slice(0, 55) + '...' : p.title) + (p.date ? ` (${p.date})` : '');
+				sel.appendChild(opt);
+			});
+		}
+
+		function showWorkspace() {
+			isUnlocked = true;
+			document.getElementById('auth-lockscreen').style.display = 'none';
+			document.getElementById('app-workspace').style.display = 'block';
+			renderPostSelector();
+			updateAllCounters();
+			scheduleRender();
+		}
+
+		window.handleAuthSubmit = async function() {
+			const input = document.getElementById('auth-pwd-input');
+			const errBox = document.getElementById('auth-error');
+			const card = document.getElementById('auth-card');
+			const submitBtn = document.getElementById('auth-submit-btn');
+			const remember = document.getElementById('auth-remember').checked;
+			const pwd = input.value.trim();
+
+			if (!pwd) return;
+
+			submitBtn.disabled = true;
+			submitBtn.style.opacity = '0.7';
+
+			const ok = await tryUnlock(pwd);
+			submitBtn.disabled = false;
+			submitBtn.style.opacity = '1';
+
+			if (ok) {
+				if (remember) {
+					localStorage.setItem('hv_studio_auth', pwd);
+				} else {
+					sessionStorage.setItem('hv_studio_auth', pwd);
+				}
+				showWorkspace();
+			} else {
+				errBox.style.display = 'flex';
+				card.classList.remove('shake');
+				void card.offsetWidth;
+				card.classList.add('shake');
+				input.select();
+				input.focus();
+			}
+		};
+
+		// Şifre Göster/Gizle
+		document.getElementById('auth-toggle-pwd')?.addEventListener('click', () => {
+			const input = document.getElementById('auth-pwd-input');
+			if (!input) return;
+			input.type = input.type === 'password' ? 'text' : 'password';
+		});
+
+		// Güvenli Çıkış Yap
+		document.getElementById('btn-logout')?.addEventListener('click', () => {
+			if (confirm('Kart üreticisinden çıkış yapmak ve paneli kilitlemek istiyor musunuz?')) {
+				localStorage.removeItem('hv_studio_auth');
+				sessionStorage.removeItem('hv_studio_auth');
+				window.location.reload();
+			}
+		});
+
+		// Otomatik Giriş Kontrolü
+		const savedPwd = localStorage.getItem('hv_studio_auth') || sessionStorage.getItem('hv_studio_auth');
+		if (savedPwd) {
+			tryUnlock(savedPwd).then(ok => {
+				if (ok) {
+					showWorkspace();
+				} else {
+					localStorage.removeItem('hv_studio_auth');
+					sessionStorage.removeItem('hv_studio_auth');
+					document.getElementById('auth-lockscreen').style.display = 'flex';
+				}
+			});
+		} else {
+			document.getElementById('auth-lockscreen').style.display = 'flex';
+		}
+
 		// Resmi Logoyu Önceden Yükle
 		const logoImg = new Image();
 		logoImg.src = '/logo.png';
@@ -1550,20 +1929,18 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 
 		// Başlangıç Yüklemeleri
 		logoImg.onload = () => {
-			scheduleRender();
+			if (isUnlocked) scheduleRender();
 		};
 
 		if (document.fonts && document.fonts.ready) {
 			document.fonts.ready.then(() => {
-				scheduleRender();
+				if (isUnlocked) scheduleRender();
 			});
 		} else {
-			setTimeout(scheduleRender, 350);
+			setTimeout(() => {
+				if (isUnlocked) scheduleRender();
+			}, 350);
 		}
-
-		// İlk çalıştırma
-		updateAllCounters();
-		scheduleRender();
 	</script>
 </body>
 </html>
