@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime());
 
-// Formun ve 4 slaytın otomatik doldurulması için akıllı veri çıkarıcı
+// Formun ve slaytların otomatik doldurulması için akıllı veri çıkarıcı
 const postsPayload = allPosts.slice(0, 45).map(p => {
 	const content = p.body || '';
 	const title = p.data.title || '';
@@ -128,7 +128,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 	let conceptContext = 'İnternet şakası olarak başlayan akım, modern kültürün ve dilin merkezine yerleşti.';
 	const paragraphs = content.split(/\r?\n\r?\n/).filter(p => !p.startsWith('#') && !p.startsWith('<') && !p.startsWith('---') && p.length > 60);
 	if (paragraphs.length > 1) {
-		conceptContext = paragraphs[1].replace(/<[^>]+>/g, '').slice(0, 100) + '...';
+		conceptContext = paragraphs[1].replace(/<[^>]+>/g, '').slice(0, 110) + '...';
 	}
 
 	let conceptStatNumber = '2026 Trendi';
@@ -221,7 +221,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		.app-header {
 			background: #ffffff;
 			border-bottom: 1px solid var(--border);
-			padding: 14px 24px;
+			padding: 12px 24px;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -237,7 +237,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 
 		.app-logo-img {
-			height: 30px;
+			height: 28px;
 			width: auto;
 			display: block;
 			object-fit: contain;
@@ -249,23 +249,24 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			border: 1px solid #bbf7d0;
 			font-size: 11px;
 			font-weight: 700;
-			padding: 4px 8px;
+			padding: 3px 8px;
 			border-radius: 6px;
 		}
 
 		.header-actions {
 			display: flex;
-			gap: 12px;
+			align-items: center;
+			gap: 14px;
 		}
 
 		.btn-download-all {
 			background: var(--brand-green);
 			color: #ffffff;
 			border: none;
-			padding: 10px 20px;
+			padding: 9px 18px;
 			border-radius: 8px;
 			font-weight: 700;
-			font-size: 14px;
+			font-size: 13px;
 			cursor: pointer;
 			display: flex;
 			align-items: center;
@@ -277,56 +278,58 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		/* Ana Düzen */
 		.studio-container {
 			max-width: 1600px;
-			margin: 24px auto;
+			margin: 20px auto;
 			padding: 0 24px;
 			display: grid;
 			grid-template-columns: 460px 1fr;
-			gap: 32px;
+			gap: 28px;
 			align-items: start;
 		}
 
-		/* Sol Form Alanı */
+		/* Sol Editör */
 		.editor-sidebar {
 			background: #ffffff;
 			border: 1px solid var(--border);
 			border-radius: 12px;
-			padding: 24px;
-			max-height: calc(100vh - 120px);
+			padding: 22px;
+			max-height: calc(100vh - 100px);
 			overflow-y: auto;
 		}
 
 		.sidebar-section {
-			margin-bottom: 24px;
-			padding-bottom: 20px;
+			margin-bottom: 22px;
+			padding-bottom: 18px;
 			border-bottom: 1px solid var(--border);
 		}
 		.sidebar-section:last-child { border-bottom: none; margin-bottom: 0; }
 
 		.section-title {
-			font-size: 14px;
+			font-size: 13px;
 			font-weight: 800;
 			color: var(--text-primary);
-			margin-bottom: 12px;
+			margin-bottom: 10px;
 			display: flex;
 			align-items: center;
+			justify-content: space-between;
 			gap: 8px;
-			letter-spacing: -0.2px;
 		}
 
-		/* Şablon Modu Seçici */
-		.mode-switcher {
+		/* Şablon Modu ve Sayfa Sayısı Seçicisi */
+		.segmented-control {
 			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 8px;
+			gap: 6px;
 			background: #f1f5f9;
 			padding: 4px;
 			border-radius: 8px;
-			margin-bottom: 14px;
+			margin-bottom: 12px;
 		}
-		.btn-mode {
+		.mode-grid-2 { grid-template-columns: 1fr 1fr; }
+		.mode-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+		.btn-seg {
 			border: none;
 			background: transparent;
-			padding: 9px 12px;
+			padding: 8px 10px;
 			font-size: 12px;
 			font-weight: 700;
 			color: var(--text-muted);
@@ -336,32 +339,32 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			gap: 6px;
+			gap: 4px;
 		}
-		.btn-mode.active {
+		.btn-seg.active {
 			background: #ffffff;
 			color: var(--brand-purple);
 			box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 		}
 
 		.form-group {
-			margin-bottom: 14px;
+			margin-bottom: 12px;
 		}
 		.form-label {
 			display: block;
-			font-size: 12px;
+			font-size: 11px;
 			font-weight: 600;
 			color: var(--text-secondary);
-			margin-bottom: 6px;
+			margin-bottom: 5px;
 		}
 
 		.form-select, .form-input, .form-textarea {
 			width: 100%;
-			padding: 10px 12px;
+			padding: 8px 10px;
 			border: 1px solid var(--border);
-			border-radius: 8px;
+			border-radius: 6px;
 			font-family: inherit;
-			font-size: 13px;
+			font-size: 12px;
 			color: var(--text-primary);
 			background: #ffffff;
 			outline: none;
@@ -369,13 +372,13 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 		.form-select:focus, .form-input:focus, .form-textarea:focus {
 			border-color: var(--brand-purple);
-			box-shadow: 0 0 0 2px rgba(76, 30, 178, 0.1);
+			box-shadow: 0 0 0 2px rgba(76, 30, 178, 0.08);
 		}
 
 		.form-row {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			gap: 12px;
+			gap: 10px;
 		}
 
 		/* Sağ Canlı Önizleme Alanı */
@@ -391,21 +394,26 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			gap: 20px;
 		}
 
-		/* Tekil Kart Slayt Önizlemesi (4:5 Aspect Ratio) */
+		/* Tekil Kart Önizlemesi (4:5 Aspect Ratio) */
 		.slide-wrapper {
 			background: #ffffff;
 			border: 1px solid var(--border);
 			border-radius: 12px;
-			padding: 12px;
-			box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+			padding: 10px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+			transition: opacity 0.2s;
+		}
+		.slide-wrapper.disabled-slide {
+			opacity: 0.35;
+			filter: grayscale(0.8);
 		}
 
 		.slide-header {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin-bottom: 10px;
-			font-size: 12px;
+			margin-bottom: 8px;
+			font-size: 11px;
 			font-weight: 700;
 			color: var(--text-muted);
 		}
@@ -413,8 +421,8 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		.btn-save-slide {
 			background: #ffffff;
 			border: 1px solid var(--border);
-			padding: 4px 10px;
-			border-radius: 6px;
+			padding: 3px 8px;
+			border-radius: 5px;
 			font-size: 11px;
 			font-weight: 600;
 			cursor: pointer;
@@ -433,13 +441,13 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			background: var(--card-bg);
 			border: 1px solid rgba(0,0,0,0.08);
 			border-radius: 8px;
-			padding: 24px;
+			padding: 20px 18px 14px 18px; /* Köşelere daha yakın padding */
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
 			position: relative;
 			overflow: hidden;
-			box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+			box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7);
 		}
 
 		/* Kart İçi Tipografi */
@@ -454,8 +462,9 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			align-items: center;
 		}
 
+		/* Logo daha küçük ve köşeye yakın */
 		.card-logo-img {
-			height: 34px;
+			height: 25px;
 			width: auto;
 			object-fit: contain;
 			display: block;
@@ -464,9 +473,9 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		.card-tag {
 			background: rgba(31, 154, 119, 0.1);
 			color: var(--brand-green);
-			font-size: 11px;
+			font-size: 10px;
 			font-weight: 700;
-			padding: 3px 8px;
+			padding: 3px 7px;
 			border-radius: 4px;
 		}
 
@@ -483,42 +492,42 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 
 		.cover-headline {
-			font-size: 20px;
+			font-size: 19px;
 			font-weight: 800;
 			line-height: 1.35;
 			color: var(--text-primary);
 			letter-spacing: -0.4px;
-			margin-bottom: 12px;
+			margin-bottom: 10px;
 		}
 
 		.cover-sub {
-			font-size: 12px;
-			line-height: 1.5;
+			font-size: 11px;
+			line-height: 1.45;
 			color: var(--text-secondary);
 			font-weight: 500;
 		}
 
 		/* Slayt 2 (A Modu): Sayısal Kıyaslama */
 		.compare-title {
-			font-size: 16px;
+			font-size: 15px;
 			font-weight: 800;
 			color: var(--text-primary);
-			margin-bottom: 16px;
+			margin-bottom: 12px;
 			text-align: center;
 		}
 
 		.compare-boxes {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			gap: 10px;
-			margin-bottom: 14px;
+			gap: 8px;
+			margin-bottom: 10px;
 		}
 
 		.stat-box {
 			background: #ffffff;
 			border: 1px solid var(--border);
 			border-radius: 8px;
-			padding: 12px 8px;
+			padding: 10px 6px;
 			text-align: center;
 		}
 
@@ -528,16 +537,16 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 
 		.stat-label {
-			font-size: 11px;
+			font-size: 10px;
 			font-weight: 600;
 			color: var(--text-muted);
-			margin-bottom: 6px;
+			margin-bottom: 4px;
 		}
 		.stat-box.highlight .stat-label { color: var(--brand-green); font-weight: 700; }
 
 		.stat-val {
 			font-family: var(--font-mono);
-			font-size: 26px;
+			font-size: 24px;
 			font-weight: 800;
 			color: var(--text-primary);
 			line-height: 1.1;
@@ -545,8 +554,8 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		.stat-box.highlight .stat-val { color: var(--brand-green); }
 
 		.compare-note {
-			font-size: 11px;
-			line-height: 1.45;
+			font-size: 10.5px;
+			line-height: 1.4;
 			color: var(--text-secondary);
 			background: #ffffff;
 			border: 1px solid var(--border);
@@ -556,19 +565,19 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			font-weight: 500;
 		}
 
-		/* Slayt 2 (B Modu): Kavram & Alıntı Kartı */
+		/* Slayt 2 (B Modu): Kavram & Alıntı Kartı (Dinamik Esnek Kutu) */
 		.concept-quote-box {
 			margin: auto 0;
 			display: flex;
 			flex-direction: column;
-			gap: 12px;
+			gap: 10px;
 		}
 
 		.concept-quote-title {
-			font-size: 15px;
+			font-size: 14px;
 			font-weight: 800;
 			color: var(--brand-purple);
-			letter-spacing: -0.3px;
+			letter-spacing: -0.2px;
 		}
 
 		.quote-bubble {
@@ -576,27 +585,16 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			border: 1px solid var(--border);
 			border-left: 4px solid var(--brand-purple);
 			border-radius: 8px;
-			padding: 16px 14px;
+			padding: 12px 10px;
 			position: relative;
-			box-shadow: 0 2px 6px rgba(76, 30, 178, 0.04);
-		}
-
-		.quote-bubble-mark {
-			font-family: Georgia, serif;
-			font-size: 44px;
-			color: var(--brand-purple);
-			line-height: 1;
-			position: absolute;
-			top: -4px;
-			left: 10px;
-			opacity: 0.2;
+			box-shadow: 0 1px 4px rgba(76, 30, 178, 0.04);
 		}
 
 		.quote-text {
 			font-family: var(--font-serif);
-			font-size: 15px;
+			font-size: 13.5px;
 			font-style: italic;
-			line-height: 1.45;
+			line-height: 1.4;
 			color: var(--text-primary);
 			position: relative;
 			z-index: 1;
@@ -606,10 +604,10 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			background: #f8fafc;
 			border: 1px solid var(--border);
 			border-radius: 6px;
-			padding: 10px 12px;
-			font-size: 11px;
+			padding: 8px 10px;
+			font-size: 10.5px;
 			color: var(--text-secondary);
-			line-height: 1.45;
+			line-height: 1.4;
 			font-weight: 500;
 		}
 
@@ -620,30 +618,30 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 
 		.big-stat-eyebrow {
-			font-size: 12px;
+			font-size: 11px;
 			font-weight: 700;
 			color: var(--brand-green);
-			margin-bottom: 8px;
+			margin-bottom: 6px;
 		}
 
 		.big-stat-number {
 			font-family: var(--font-mono);
-			font-size: 52px;
+			font-size: 46px;
 			font-weight: 800;
 			color: var(--brand-purple);
 			line-height: 1;
-			margin-bottom: 14px;
+			margin-bottom: 10px;
 			letter-spacing: -1px;
 		}
 
 		.big-stat-desc {
-			font-size: 12px;
-			line-height: 1.5;
+			font-size: 11px;
+			line-height: 1.45;
 			color: var(--text-primary);
 			background: #ffffff;
 			border: 1px solid var(--border);
 			border-radius: 8px;
-			padding: 12px 14px;
+			padding: 10px 12px;
 			font-weight: 500;
 			text-align: left;
 		}
@@ -658,53 +656,53 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			display: inline-block;
 			background: rgba(76, 30, 178, 0.08);
 			color: var(--brand-purple);
-			font-size: 11px;
+			font-size: 10.5px;
 			font-weight: 700;
-			padding: 4px 10px;
+			padding: 3px 8px;
 			border-radius: 999px;
-			margin-bottom: 12px;
+			margin-bottom: 8px;
 		}
 
 		.concept-stat-val {
 			font-family: var(--font-mono);
-			font-size: 48px;
+			font-size: 42px;
 			font-weight: 800;
 			color: var(--brand-green);
 			line-height: 1;
-			margin-bottom: 14px;
+			margin-bottom: 10px;
 			letter-spacing: -0.5px;
 		}
 
 		.concept-stat-desc {
-			font-size: 12px;
-			line-height: 1.5;
+			font-size: 11px;
+			line-height: 1.45;
 			color: var(--text-primary);
 			background: #ffffff;
 			border: 1px solid var(--border);
 			border-radius: 8px;
-			padding: 12px 14px;
+			padding: 10px 12px;
 			font-weight: 500;
 			text-align: left;
 		}
 
 		/* Slayt 4: Özet ve CTA */
 		.summary-title {
-			font-size: 16px;
+			font-size: 15px;
 			font-weight: 800;
 			color: var(--text-primary);
-			margin-bottom: 12px;
+			margin-bottom: 10px;
 		}
 
 		.summary-list {
 			list-style: none;
-			margin-bottom: 14px;
+			margin-bottom: 10px;
 		}
 
 		.summary-item {
-			font-size: 11px;
-			line-height: 1.45;
+			font-size: 10.5px;
+			line-height: 1.4;
 			color: var(--text-secondary);
-			margin-bottom: 8px;
+			margin-bottom: 6px;
 			display: flex;
 			gap: 6px;
 			align-items: flex-start;
@@ -717,13 +715,13 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 
 		.source-box {
-			font-size: 10px;
+			font-size: 9.5px;
 			color: var(--text-muted);
 			background: #ffffff;
 			border: 1px solid var(--border);
-			border-radius: 6px;
-			padding: 6px 10px;
-			margin-bottom: 12px;
+			border-radius: 5px;
+			padding: 5px 8px;
+			margin-bottom: 10px;
 			font-weight: 600;
 		}
 
@@ -731,21 +729,21 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			background: var(--brand-green);
 			color: #ffffff;
 			border-radius: 6px;
-			padding: 8px 10px;
+			padding: 7px 8px;
 			text-align: center;
-			font-size: 11px;
+			font-size: 10.5px;
 			font-weight: 700;
 		}
 
-		/* Kart Alt Bilgisi */
+		/* Kart Alt Bilgisi (Kaydırın - En Aşağıda) */
 		.card-footer {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			font-size: 10px;
+			font-size: 9.5px;
 			font-weight: 600;
 			color: var(--text-muted);
-			padding-top: 10px;
+			padding-top: 6px;
 			border-top: 1px solid rgba(0,0,0,0.06);
 		}
 
@@ -765,12 +763,12 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		</div>
 		<div class="header-actions">
 			<button class="btn-download-all" id="btn-export-all">
-				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
 					<polyline points="7 10 12 15 17 10"></polyline>
 					<line x1="12" y1="15" x2="12" y2="3"></line>
 				</svg>
-				4 Slaytı Birden İndir (1080x1350)
+				<span id="txt-export-btn">Slaytları İndir (1080x1350)</span>
 			</button>
 		</div>
 	</header>
@@ -783,7 +781,6 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			<div class="sidebar-section">
 				<h2 class="section-title">📂 1. Haberi Seçin</h2>
 				<div class="form-group">
-					<label class="form-label">Sitedeki Son Haberler</label>
 					<select class="form-select" id="post-selector">
 						<option value="">Bir haber seçin...</option>
 						{postsPayload.map((p, idx) => (
@@ -793,27 +790,46 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 						))}
 					</select>
 				</div>
+
+				<div class="form-group">
+					<label class="form-label">Karusel Slayt Sayısı</label>
+					<div class="segmented-control mode-grid-2">
+						<button type="button" class="btn-seg active" id="btn-count-4">
+							4 Slayt (Standart)
+						</button>
+						<button type="button" class="btn-seg" id="btn-count-3">
+							3 Slayt (Kısa)
+						</button>
+					</div>
+				</div>
+
 				<div class="form-group" style="margin-bottom:0;">
-					<label class="form-label">Kart Şablon Modu (2 ve 3. Slayt İçin)</label>
-					<div class="mode-switcher">
-						<button type="button" class="btn-mode active" id="btn-mode-data">
+					<label class="form-label">Kart Şablon Modu</label>
+					<div class="segmented-control mode-grid-2">
+						<button type="button" class="btn-seg active" id="btn-mode-data">
 							📊 Sayısal Kıyaslama
 						</button>
-						<button type="button" class="btn-mode" id="btn-mode-concept">
-							💡 Kavram & Alıntı Analizi
+						<button type="button" class="btn-seg" id="btn-mode-concept">
+							💡 Kavram & Alıntı
 						</button>
 					</div>
 				</div>
 			</div>
 
+			<!-- Slayt 1 (Kapak) -->
 			<div class="sidebar-section">
-				<h2 class="section-title">🎯 2. Slayt 1 (Kapak)</h2>
+				<div class="section-title">
+					<span>🎯 2. Slayt 1 (Kapak)</span>
+					<div style="width: 70px;">
+						<input class="form-input" id="inp-counter-1" value="01/04" title="Slayt Numarası (İstediğiniz formatta yazabilirsiniz)" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="form-label">Kategori Rozeti</label>
 					<input class="form-input" id="inp-cat" value="Ekonomi / Veri Analizi">
 				</div>
 				<div class="form-group">
-					<label class="form-label">Ana Başlık (Soru / Vurucu Cümle)</label>
+					<label class="form-label">Ana Başlık</label>
 					<textarea class="form-textarea" id="inp-title" rows="3">Türkiye'de çalışan her üç kadından biri neden sosyal güvencesiz?</textarea>
 				</div>
 				<div class="form-group">
@@ -822,9 +838,14 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 			</div>
 
-			<!-- Slayt 2 Formu: Sayısal Kıyaslama Modu -->
+			<!-- Slayt 2: Sayısal Mod -->
 			<div class="sidebar-section" id="sec-s2-data">
-				<h2 class="section-title">⚖️ 3. Slayt 2 (İkili Kıyaslama)</h2>
+				<div class="section-title">
+					<span>⚖️ 3. Slayt 2 (İkili Kıyaslama)</span>
+					<div style="width: 70px;">
+						<input class="form-input" id="inp-counter-2" value="02/04" title="Slayt Numarası" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="form-label">Bölüm Başlığı</label>
 					<input class="form-input" id="inp-comp-title" value="Kayıt Dışılık Makası Açılıyor">
@@ -849,9 +870,14 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 			</div>
 
-			<!-- Slayt 2 Formu: Kavram & Alıntı Modu -->
+			<!-- Slayt 2: Kavram & Alıntı Modu -->
 			<div class="sidebar-section" id="sec-s2-concept" style="display:none;">
-				<h2 class="section-title">💡 3. Slayt 2 (Vurucu Alıntı & Tanım)</h2>
+				<div class="section-title">
+					<span>💡 3. Slayt 2 (Vurucu Alıntı & Tanım)</span>
+					<div style="width: 70px;">
+						<input class="form-input" id="inp-counter-2c" value="02/04" title="Slayt Numarası" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="form-label">Bölüm Başlığı</label>
 					<input class="form-input" id="inp-concept-title" value="Kavramın Anlamı ve Tanımı">
@@ -866,9 +892,14 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 			</div>
 
-			<!-- Slayt 3 Formu: Sayısal Mod -->
+			<!-- Slayt 3: Sayısal Mod -->
 			<div class="sidebar-section" id="sec-s3-data">
-				<h2 class="section-title">💥 4. Slayt 3 (Büyük Rakam)</h2>
+				<div class="section-title">
+					<span>💥 4. Slayt 3 (Büyük Rakam)</span>
+					<div style="width: 70px;">
+						<input class="form-input" id="inp-counter-3" value="03/04" title="Slayt Numarası" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="form-label">Üst Etiket</label>
 					<input class="form-input" id="inp-stat-eyebrow" value="Tarımda Kadın Emeği">
@@ -883,9 +914,14 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 			</div>
 
-			<!-- Slayt 3 Formu: Kavram & Trend Modu -->
+			<!-- Slayt 3: Kavram & Trend Modu -->
 			<div class="sidebar-section" id="sec-s3-concept" style="display:none;">
-				<h2 class="section-title">📈 4. Slayt 3 (Trend ve Odak)</h2>
+				<div class="section-title">
+					<span>📈 4. Slayt 3 (Trend ve Odak)</span>
+					<div style="width: 70px;">
+						<input class="form-input" id="inp-counter-3c" value="03/04" title="Slayt Numarası" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="form-label">Üst Etiket / Odak Başlığı</label>
 					<input class="form-input" id="inp-concept-stat-eyebrow" value="Aramalarda ve Kullanımda Patlama">
@@ -900,8 +936,14 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 			</div>
 
+			<!-- Slayt 4: Özet & Kaynak -->
 			<div class="sidebar-section">
-				<h2 class="section-title">📌 5. Slayt 4 (Özet & Kaynak)</h2>
+				<div class="section-title">
+					<span>📌 5. Son Slayt (Özet & Kaynak)</span>
+					<div style="width: 70px;">
+						<input class="form-input" id="inp-counter-4" value="04/04" title="Slayt Numarası" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="form-label">Madde 1</label>
 					<input class="form-input" id="inp-sum-1" value="Her 3 kadından 1'i hiçbir sosyal güvenceye sahip değil.">
@@ -927,7 +969,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			<div class="preview-grid">
 
 				<!-- Slayt 1 -->
-				<div class="slide-wrapper">
+				<div class="slide-wrapper" id="wrap-slide-1">
 					<div class="slide-header">
 						<span>Slayt 1 (Kapak)</span>
 						<button class="btn-save-slide" onclick="downloadSingle(1)">PNG İndir</button>
@@ -938,7 +980,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
 							</div>
 							<div class="card-tag" id="view-cat">Ekonomi / Veri Analizi</div>
-							<div class="card-counter">01/04</div>
+							<div class="card-counter" id="view-counter-1">01/04</div>
 						</div>
 						<div class="cover-center">
 							<h3 class="cover-headline" id="view-title">Türkiye'de çalışan her üç kadından biri neden sosyal güvencesiz?</h3>
@@ -952,7 +994,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 
 				<!-- Slayt 2 -->
-				<div class="slide-wrapper">
+				<div class="slide-wrapper" id="wrap-slide-2">
 					<div class="slide-header">
 						<span id="label-slide-2">Slayt 2 (Kıyaslama)</span>
 						<button class="btn-save-slide" onclick="downloadSingle(2)">PNG İndir</button>
@@ -962,7 +1004,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 							<div class="card-logo">
 								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
 							</div>
-							<div class="card-counter">02/04</div>
+							<div class="card-counter" id="view-counter-2">02/04</div>
 						</div>
 
 						<!-- Slayt 2 Canlı: Sayısal Mod -->
@@ -985,7 +1027,6 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 						<div id="view-s2-concept" style="display:none;" class="concept-quote-box">
 							<h3 class="concept-quote-title" id="view-concept-title">Kavramın Anlamı ve Tanımı</h3>
 							<div class="quote-bubble">
-								<span class="quote-bubble-mark">“</span>
 								<p class="quote-text" id="view-concept-quote">“Bir işi sonuna kadar götürmek ya da hayatın bir alanını olabildiğince iyileştirmeye çalışmak.”</p>
 							</div>
 							<div class="quote-context" id="view-concept-context">İnternet şakası olarak başlayan akım, modern kültürün ve dilin merkezine yerleşti.</div>
@@ -999,7 +1040,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 
 				<!-- Slayt 3 -->
-				<div class="slide-wrapper">
+				<div class="slide-wrapper" id="wrap-slide-3">
 					<div class="slide-header">
 						<span id="label-slide-3">Slayt 3 (Büyük Rakam)</span>
 						<button class="btn-save-slide" onclick="downloadSingle(3)">PNG İndir</button>
@@ -1009,7 +1050,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 							<div class="card-logo">
 								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
 							</div>
-							<div class="card-counter">03/04</div>
+							<div class="card-counter" id="view-counter-3">03/04</div>
 						</div>
 
 						<!-- Slayt 3 Canlı: Sayısal Mod -->
@@ -1034,9 +1075,9 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 				</div>
 
 				<!-- Slayt 4 -->
-				<div class="slide-wrapper">
+				<div class="slide-wrapper" id="wrap-slide-4">
 					<div class="slide-header">
-						<span>Slayt 4 (Özet & CTA)</span>
+						<span>Son Slayt (Özet & CTA)</span>
 						<button class="btn-save-slide" onclick="downloadSingle(4)">PNG İndir</button>
 					</div>
 					<div class="slide-card" id="card-4">
@@ -1044,7 +1085,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 							<div class="card-logo">
 								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
 							</div>
-							<div class="card-counter">04/04</div>
+							<div class="card-counter" id="view-counter-4">04/04</div>
 						</div>
 						<div>
 							<h3 class="summary-title">Özet ve Temel Çıkarımlar</h3>
@@ -1054,7 +1095,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 								<li class="summary-item"><span class="summary-bullet">✓</span><span id="view-sum-3">Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.</span></li>
 							</ul>
 							<div class="source-box" id="view-source">Kaynak: TEPAV İstihdam İzleme Bülteni & SGK Raporu</div>
-							<div class="cta-banner">Haberin tamamı ve açık veri tabloları için link profilde • hepsiveri.com</div>
+							<div class="cta-banner">Haberin tamamı ve açık kaynaklar için link profilde • hepsiveri.com</div>
 						</div>
 						<div class="card-footer">
 							<span>Kaydet & Paylaş</span>
@@ -1078,8 +1119,57 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		logoImg.src = '/logo.png';
 
 		let currentStudioMode = 'data'; // 'data' veya 'concept'
+		let totalSlideCount = 4; // 3 veya 4
 
-		// Mod Değiştirici
+		// 3 veya 4 Slayt Seçimi
+		window.setSlideCount = function(count) {
+			totalSlideCount = count;
+			const btn4 = document.getElementById('btn-count-4');
+			const btn3 = document.getElementById('btn-count-3');
+			const wrapS3 = document.getElementById('wrap-slide-3');
+			const secS3Data = document.getElementById('sec-s3-data');
+			const secS3Concept = document.getElementById('sec-s3-concept');
+
+			if (count === 3) {
+				btn4.classList.remove('active');
+				btn3.classList.add('active');
+				if (wrapS3) wrapS3.classList.add('disabled-slide');
+				if (secS3Data) secS3Data.style.opacity = '0.4';
+				if (secS3Concept) secS3Concept.style.opacity = '0.4';
+
+				// Sayaçları otomatik güncelle (kullanıcı değiştirebilir)
+				setCounters(['01/03', '02/03', '-', '03/03']);
+				document.getElementById('txt-export-btn').innerText = '3 Slaytı İndir (1080x1350)';
+			} else {
+				btn3.classList.remove('active');
+				btn4.classList.add('active');
+				if (wrapS3) wrapS3.classList.remove('disabled-slide');
+				if (secS3Data) secS3Data.style.opacity = '1';
+				if (secS3Concept) secS3Concept.style.opacity = '1';
+
+				setCounters(['01/04', '02/04', '03/04', '04/04']);
+				document.getElementById('txt-export-btn').innerText = '4 Slaytı İndir (1080x1350)';
+			}
+		};
+
+		function setCounters(arr) {
+			document.getElementById('inp-counter-1').value = arr[0];
+			document.getElementById('inp-counter-2').value = arr[1];
+			document.getElementById('inp-counter-2c').value = arr[1];
+			document.getElementById('inp-counter-3').value = arr[2];
+			document.getElementById('inp-counter-3c').value = arr[2];
+			document.getElementById('inp-counter-4').value = arr[3];
+
+			document.getElementById('view-counter-1').innerText = arr[0];
+			document.getElementById('view-counter-2').innerText = arr[1];
+			document.getElementById('view-counter-3').innerText = arr[2];
+			document.getElementById('view-counter-4').innerText = arr[3];
+		}
+
+		document.getElementById('btn-count-4').addEventListener('click', () => setSlideCount(4));
+		document.getElementById('btn-count-3').addEventListener('click', () => setSlideCount(3));
+
+		// Mod Değiştirici (Sayısal vs Kavram)
 		window.setStudioMode = function(mode) {
 			currentStudioMode = mode;
 			const btnData = document.getElementById('btn-mode-data');
@@ -1155,6 +1245,29 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		bindInput('inp-sum-3', 'view-sum-3');
 		bindInput('inp-source', 'view-source');
 
+		// Sayaç Girişleri (Özgürce Numaralandırma)
+		bindInput('inp-counter-1', 'view-counter-1');
+		bindInput('inp-counter-2', 'view-counter-2');
+		bindInput('inp-counter-2c', 'view-counter-2');
+		bindInput('inp-counter-3', 'view-counter-3');
+		bindInput('inp-counter-3c', 'view-counter-3');
+		bindInput('inp-counter-4', 'view-counter-4');
+
+		// Sayaç 2 eşitliği
+		document.getElementById('inp-counter-2').addEventListener('input', (e) => {
+			document.getElementById('inp-counter-2c').value = e.target.value;
+		});
+		document.getElementById('inp-counter-2c').addEventListener('input', (e) => {
+			document.getElementById('inp-counter-2').value = e.target.value;
+		});
+		// Sayaç 3 eşitliği
+		document.getElementById('inp-counter-3').addEventListener('input', (e) => {
+			document.getElementById('inp-counter-3c').value = e.target.value;
+		});
+		document.getElementById('inp-counter-3c').addEventListener('input', (e) => {
+			document.getElementById('inp-counter-3').value = e.target.value;
+		});
+
 		// Sayısal Mod Alanları
 		bindInput('inp-comp-title', 'view-comp-title');
 		bindInput('inp-comp-l-label', 'view-comp-l-label');
@@ -1174,7 +1287,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		bindInput('inp-concept-stat-num', 'view-concept-stat-num');
 		bindInput('inp-concept-stat-desc', 'view-concept-stat-desc');
 
-		// Haber Seçildiğinde Otomatik Doldur ve Modu Ayarla
+		// Haber Seçildiğinde Otomatik Doldur
 		const selector = document.getElementById('post-selector');
 		selector.addEventListener('change', (e) => {
 			const idx = e.target.value;
@@ -1221,7 +1334,27 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			inputs.forEach(i => i.dispatchEvent(new Event('input')));
 		});
 
-		// 1080x1350 Piksel Yüksek Çözünürlüklü Canvas Çizici
+		// Metni Satırlara Bölen Yardımcı
+		function getWrappedLines(ctx, text, maxWidth) {
+			const words = (text || '').trim().split(/\s+/);
+			const lines = [];
+			let currentLine = '';
+
+			for (let i = 0; i < words.length; i++) {
+				const testLine = currentLine ? currentLine + ' ' + words[i] : words[i];
+				const metrics = ctx.measureText(testLine);
+				if (metrics.width > maxWidth && currentLine) {
+					lines.push(currentLine);
+					currentLine = words[i];
+				} else {
+					currentLine = testLine;
+				}
+			}
+			if (currentLine) lines.push(currentLine);
+			return lines;
+		}
+
+		// 1080x1350 Piksel Yüksek Çözünürlüklü Canvas Çizici (Genişletilmiş ve Otomatik Boyutlanan Alan)
 		function renderSlideToCanvas(slideNum) {
 			const canvas = document.getElementById('export-canvas');
 			const ctx = canvas.getContext('2d');
@@ -1232,217 +1365,293 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			ctx.fillStyle = '#fbfbfa';
 			ctx.fillRect(0, 0, w, h);
 
-			// 2. İnce Dış Çerçeve
+			// 2. İnce Dış Çerçeve (Kenarlara daha yakın: 30px)
 			ctx.strokeStyle = '#e2e8f0';
-			ctx.lineWidth = 4;
-			ctx.strokeRect(40, 40, w - 80, h - 80);
+			ctx.lineWidth = 3;
+			ctx.strokeRect(30, 30, w - 60, h - 60);
 
-			// 3. Logo Çizimi
+			// 3. Logo Çizimi (Daha küçük: h:50, sol:70, üst:65)
 			if (logoImg.complete && logoImg.naturalHeight > 0) {
-				const logoH = 76;
+				const logoH = 50;
 				const logoW = Math.round(logoH * (logoImg.naturalWidth / logoImg.naturalHeight));
-				ctx.drawImage(logoImg, 90, 95, logoW, logoH);
+				ctx.drawImage(logoImg, 70, 65, logoW, logoH);
 			} else {
-				ctx.font = '800 48px "Plus Jakarta Sans", sans-serif';
+				ctx.font = '800 36px "Plus Jakarta Sans", sans-serif';
 				ctx.fillStyle = '#4c1eb2';
-				ctx.fillText('Hepsi', 90, 145);
+				ctx.fillText('Hepsi', 70, 105);
 				const hepsiWidth = ctx.measureText('Hepsi').width;
 				ctx.fillStyle = '#1f9a77';
-				ctx.fillText('Veri', 90 + hepsiWidth, 145);
+				ctx.fillText('Veri', 70 + hepsiWidth, 105);
 			}
 
-			// Slayt Numarası (Sağ Üst)
-			ctx.font = '700 32px "JetBrains Mono", monospace';
+			// Slayt Numarası (Sağ Üst: Kullanıcının girdiği sayaç metni)
+			let counterText = `0${slideNum}/04`;
+			if (slideNum === 1) counterText = document.getElementById('inp-counter-1').value || '01/04';
+			if (slideNum === 2) counterText = document.getElementById('inp-counter-2').value || '02/04';
+			if (slideNum === 3) counterText = document.getElementById('inp-counter-3').value || '03/04';
+			if (slideNum === 4) counterText = document.getElementById('inp-counter-4').value || '04/04';
+
+			ctx.font = '700 28px "JetBrains Mono", monospace';
 			ctx.fillStyle = '#64748b';
 			ctx.textAlign = 'right';
-			ctx.fillText(`0${slideNum}/04`, w - 90, 145);
+			ctx.fillText(counterText, w - 70, 105);
 			ctx.textAlign = 'left';
 
-			// Alt Footer Çizgisi
+			// Alt Footer Çizgisi (Daha aşağı kaydırıldı: h - 100 = 1250px)
 			ctx.strokeStyle = '#e2e8f0';
 			ctx.lineWidth = 2;
 			ctx.beginPath();
-			ctx.moveTo(90, h - 140);
-			ctx.lineTo(w - 90, h - 140);
+			ctx.moveTo(70, 1250);
+			ctx.lineTo(w - 70, 1250);
 			ctx.stroke();
 
-			ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
+			ctx.font = '600 26px "Plus Jakarta Sans", sans-serif';
 			ctx.fillStyle = '#64748b';
-			ctx.fillText(slideNum === 4 ? 'Kaydet & Paylaş' : 'Kaydırın ➔', 90, h - 90);
+			ctx.fillText((slideNum === 4 || (totalSlideCount === 3 && slideNum === 2)) ? 'Kaydet & Paylaş' : 'Kaydırın ➔', 70, 1295);
 			ctx.textAlign = 'right';
-			ctx.fillText('hepsiveri.com', w - 90, h - 90);
+			ctx.fillText('hepsiveri.com', w - 70, 1295);
 			ctx.textAlign = 'left';
 
-			// Slayt İçerik Çizimleri
+			// --- Slayt İçerik Çizimleri ---
 			if (slideNum === 1) {
 				// Slayt 1: Kapak
 				const cat = document.getElementById('inp-cat').value;
 				ctx.fillStyle = '#1f9a77';
 				ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
-				ctx.fillText(cat, 90, 280);
+				ctx.fillText(cat, 70, 220);
 
 				const title = document.getElementById('inp-title').value;
 				ctx.fillStyle = '#0f172a';
-				ctx.font = '800 64px "Plus Jakarta Sans", sans-serif';
-				const nextY = drawWrappedText(ctx, title, 90, 410, 900, 84);
+				const titleFontSize = title.length > 70 ? 56 : 64;
+				const titleLineHeight = title.length > 70 ? 74 : 84;
+				ctx.font = `800 ${titleFontSize}px "Plus Jakarta Sans", sans-serif`;
+				
+				const titleLines = getWrappedLines(ctx, title, 940);
+				let titleY = 340;
+				for (const line of titleLines) {
+					ctx.fillText(line, 70, titleY);
+					titleY += titleLineHeight;
+				}
 
 				const desc = document.getElementById('inp-desc').value;
 				ctx.fillStyle = '#334155';
 				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
-				const spotY = Math.max(nextY + 40, 840);
-				drawWrappedText(ctx, desc, 90, spotY, 900, 54);
+				const descLines = getWrappedLines(ctx, desc, 940);
+				let descY = Math.max(titleY + 50, 800);
+				for (const line of descLines) {
+					ctx.fillText(line, 70, descY);
+					descY += 54;
+				}
 
 			} else if (slideNum === 2) {
 				if (currentStudioMode === 'concept') {
-					// Slayt 2: Kavram & Alıntı Kartı Çizimi
+					// Slayt 2: Kavram & Alıntı Kartı (DİNAMİK OTOMATİK BOYUTLANDIRMA)
 					const conceptTitle = document.getElementById('inp-concept-title').value;
 					ctx.fillStyle = '#4c1eb2';
 					ctx.font = '800 48px "Plus Jakarta Sans", sans-serif';
-					drawWrappedText(ctx, conceptTitle, 90, 290, 900, 64);
+					const titleLines = getWrappedLines(ctx, conceptTitle, 940);
+					let tY = 230;
+					for (const l of titleLines) {
+						ctx.fillText(l, 70, tY);
+						tY += 60;
+					}
 
-					// Dekoratif Tırnak İşareti
-					ctx.font = '700 130px Georgia, serif';
-					ctx.fillStyle = 'rgba(76, 30, 178, 0.2)';
-					ctx.fillText('“', 90, 420);
+					// Alıntı Metnini Ölç ve Dinamik Font Boyutunu Belirle
+					const quoteRaw = document.getElementById('inp-concept-quote').value.replace(/^[“"]|[”"]$/g, '');
+					const fullQuote = `“${quoteRaw}”`;
+					
+					let qFontSize = 40;
+					let qLineHeight = 58;
+					if (fullQuote.length > 200) { qFontSize = 32; qLineHeight = 46; }
+					else if (fullQuote.length > 130) { qFontSize = 36; qLineHeight = 52; }
 
-					// Vurgulu Alıntı Kutusu
+					ctx.font = `500 italic ${qFontSize}px "Newsreader", Georgia, serif`;
+					const quoteLines = getWrappedLines(ctx, fullQuote, 840);
+					
+					// Alıntı Kutusu Yüksekliği
+					const quoteBoxTop = tY + 30;
+					const quoteTextHeight = quoteLines.length * qLineHeight;
+					const quoteBoxHeight = Math.max(quoteTextHeight + 90, 300);
+
+					// 1. Alıntı Kutusu
 					ctx.fillStyle = '#ffffff';
 					ctx.strokeStyle = '#e2e8f0';
 					ctx.lineWidth = 3;
-					roundRect(ctx, 90, 430, 900, 430, 20, true, true);
+					roundRect(ctx, 70, quoteBoxTop, 940, quoteBoxHeight, 20, true, true);
 
 					// Sol Mor Şerit
 					ctx.fillStyle = '#4c1eb2';
-					roundRect(ctx, 90, 430, 14, 430, 6, true, false);
+					roundRect(ctx, 70, quoteBoxTop, 12, quoteBoxHeight, 6, true, false);
 
-					// Alıntı Metni
-					const quoteRaw = document.getElementById('inp-concept-quote').value.replace(/^[“"]|[”"]$/g, '');
+					// Alıntı Metnini Bas
 					ctx.fillStyle = '#0f172a';
-					ctx.font = '500 italic 42px "Newsreader", Georgia, serif';
-					drawWrappedText(ctx, `“${quoteRaw}”`, 140, 530, 800, 62);
+					let qY = quoteBoxTop + 65;
+					for (const line of quoteLines) {
+						ctx.fillText(line, 115, qY);
+						qY += qLineHeight;
+					}
 
-					// Alt Bağlam Notu Kutusu
+					// 2. Alt Bağlam Notu Kutusu (Alıntı Kutusunun Hemen Altında)
+					const contextText = document.getElementById('inp-concept-context').value;
+					ctx.font = '600 30px "Plus Jakarta Sans", sans-serif';
+					const contextLines = getWrappedLines(ctx, contextText, 860);
+					const contextBoxHeight = Math.max(contextLines.length * 44 + 50, 130);
+					const contextBoxTop = Math.min(quoteBoxTop + quoteBoxHeight + 35, 1220 - contextBoxHeight);
+
 					ctx.fillStyle = '#f8fafc';
 					ctx.strokeStyle = '#cbd5e1';
 					ctx.lineWidth = 2;
-					roundRect(ctx, 90, 900, 900, 160, 16, true, true);
+					roundRect(ctx, 70, contextBoxTop, 940, contextBoxHeight, 16, true, true);
 
-					const contextText = document.getElementById('inp-concept-context').value;
 					ctx.fillStyle = '#334155';
-					ctx.font = '600 32px "Plus Jakarta Sans", sans-serif';
-					drawWrappedText(ctx, contextText, 130, 975, 820, 48);
+					let cY = contextBoxTop + 50;
+					for (const line of contextLines) {
+						ctx.fillText(line, 105, cY);
+						cY += 44;
+					}
 
 				} else {
 					// Slayt 2: Sayısal Kıyaslama Çizimi
 					const compTitle = document.getElementById('inp-comp-title').value;
 					ctx.fillStyle = '#0f172a';
 					ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
-					drawWrappedText(ctx, compTitle, 90, 300, 900, 70);
+					const titleLines = getWrappedLines(ctx, compTitle, 940);
+					let tY = 230;
+					for (const l of titleLines) {
+						ctx.fillText(l, 70, tY);
+						tY += 68;
+					}
 
+					const boxTop = tY + 40;
 					// Sol Kutu
 					ctx.fillStyle = '#ffffff';
 					ctx.strokeStyle = '#cbd5e1';
 					ctx.lineWidth = 3;
-					roundRect(ctx, 90, 480, 420, 360, 20, true, true);
+					roundRect(ctx, 70, boxTop, 445, 380, 20, true, true);
 
 					ctx.fillStyle = '#64748b';
 					ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
 					ctx.textAlign = 'center';
-					ctx.fillText(document.getElementById('inp-comp-l-label').value, 300, 565);
+					ctx.fillText(document.getElementById('inp-comp-l-label').value, 292, boxTop + 90);
 
 					ctx.fillStyle = '#0f172a';
 					const lVal = document.getElementById('inp-comp-l-val').value || '';
 					ctx.font = lVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
-					ctx.fillText(lVal, 300, 715);
+					ctx.fillText(lVal, 292, boxTop + 240);
 
 					// Sağ Kutu (Vurgulu)
 					ctx.fillStyle = '#f0fdf4';
 					ctx.strokeStyle = '#1f9a77';
 					ctx.lineWidth = 4;
-					roundRect(ctx, 570, 480, 420, 360, 20, true, true);
+					roundRect(ctx, 565, boxTop, 445, 380, 20, true, true);
 
 					ctx.fillStyle = '#1f9a77';
 					ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
-					ctx.fillText(document.getElementById('inp-comp-r-label').value, 780, 565);
+					ctx.fillText(document.getElementById('inp-comp-r-label').value, 787, boxTop + 90);
 
 					ctx.fillStyle = '#1f9a77';
 					const rVal = document.getElementById('inp-comp-r-val').value || '';
 					ctx.font = rVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
-					ctx.fillText(rVal, 780, 715);
+					ctx.fillText(rVal, 787, boxTop + 240);
 					ctx.textAlign = 'left';
 
 					// Fark Notu
+					const noteText = document.getElementById('inp-comp-note').value;
+					ctx.font = '600 32px "Plus Jakarta Sans", sans-serif';
+					const noteLines = getWrappedLines(ctx, noteText, 860);
+					const noteBoxHeight = Math.max(noteLines.length * 48 + 50, 140);
+					const noteBoxTop = boxTop + 420;
+
 					ctx.fillStyle = '#ffffff';
 					ctx.strokeStyle = '#e2e8f0';
-					roundRect(ctx, 90, 900, 900, 160, 16, true, true);
+					ctx.lineWidth = 2;
+					roundRect(ctx, 70, noteBoxTop, 940, noteBoxHeight, 16, true, true);
 
 					ctx.fillStyle = '#334155';
-					ctx.font = '600 34px "Plus Jakarta Sans", sans-serif';
-					drawWrappedText(ctx, document.getElementById('inp-comp-note').value, 130, 995, 820, 50);
+					let nY = noteBoxTop + 50;
+					for (const l of noteLines) {
+						ctx.fillText(l, 105, nY);
+						nY += 48;
+					}
 				}
 
 			} else if (slideNum === 3) {
 				if (currentStudioMode === 'concept') {
-					// Slayt 3: Kavram & Trend Çizimi
+					// Slayt 3: Kavram Trend & Odak
 					ctx.textAlign = 'center';
 					const eyebrow = document.getElementById('inp-concept-stat-eyebrow').value;
 					ctx.fillStyle = '#4c1eb2';
 					ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
-					ctx.fillText(eyebrow, 540, 350);
+					ctx.fillText(eyebrow, 540, 310);
 
 					const statVal = document.getElementById('inp-concept-stat-num').value || '';
 					ctx.fillStyle = '#1f9a77';
+					if (statVal.length > 8) {
+						ctx.font = '800 95px "JetBrains Mono", monospace';
+					} else {
+						ctx.font = '800 145px "JetBrains Mono", monospace';
+					}
+					ctx.fillText(statVal, 540, 490);
+					ctx.textAlign = 'left';
+
+					// Açıklama Kutusu
+					const descText = document.getElementById('inp-concept-stat-desc').value;
+					ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+					const descLines = getWrappedLines(ctx, descText, 840);
+					const dBoxHeight = Math.max(descLines.length * 52 + 70, 260);
+
+					ctx.fillStyle = '#ffffff';
+					ctx.strokeStyle = '#e2e8f0';
+					ctx.lineWidth = 3;
+					roundRect(ctx, 70, 620, 940, dBoxHeight, 20, true, true);
+
+					ctx.fillStyle = '#0f172a';
+					let dY = 690;
+					for (const l of descLines) {
+						ctx.fillText(l, 115, dY);
+						dY += 52;
+					}
+
+				} else {
+					// Slayt 3: Sayısal Büyük Rakam
+					ctx.textAlign = 'center';
+					ctx.fillStyle = '#1f9a77';
+					ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
+					ctx.fillText(document.getElementById('inp-stat-eyebrow').value, 540, 310);
+
+					ctx.fillStyle = '#4c1eb2';
+					const statVal = document.getElementById('inp-stat-number').value || '';
 					if (statVal.length > 8) {
 						ctx.font = '800 100px "JetBrains Mono", monospace';
 					} else {
 						ctx.font = '800 150px "JetBrains Mono", monospace';
 					}
-					ctx.fillText(statVal, 540, 540);
+					ctx.fillText(statVal, 540, 490);
 					ctx.textAlign = 'left';
 
-					// Açıklama Kutusu
+					const descText = document.getElementById('inp-stat-desc').value;
+					ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+					const descLines = getWrappedLines(ctx, descText, 840);
+					const dBoxHeight = Math.max(descLines.length * 52 + 70, 260);
+
 					ctx.fillStyle = '#ffffff';
 					ctx.strokeStyle = '#e2e8f0';
 					ctx.lineWidth = 3;
-					roundRect(ctx, 90, 680, 900, 360, 20, true, true);
+					roundRect(ctx, 70, 620, 940, dBoxHeight, 20, true, true);
 
 					ctx.fillStyle = '#0f172a';
-					ctx.font = '500 38px "Plus Jakarta Sans", sans-serif';
-					const descText = document.getElementById('inp-concept-stat-desc').value;
-					drawWrappedText(ctx, descText, 140, 790, 800, 60);
-
-				} else {
-					// Slayt 3: Sayısal Büyük Rakam Çizimi
-					ctx.textAlign = 'center';
-					ctx.fillStyle = '#1f9a77';
-					ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
-					ctx.fillText(document.getElementById('inp-stat-eyebrow').value, 540, 360);
-
-					ctx.fillStyle = '#4c1eb2';
-					const statVal = document.getElementById('inp-stat-number').value || '';
-					if (statVal.length > 8) {
-						ctx.font = '800 110px "JetBrains Mono", monospace';
-					} else {
-						ctx.font = '800 160px "JetBrains Mono", monospace';
+					let dY = 690;
+					for (const l of descLines) {
+						ctx.fillText(l, 115, dY);
+						dY += 52;
 					}
-					ctx.fillText(statVal, 540, 560);
-					ctx.textAlign = 'left';
-
-					ctx.fillStyle = '#ffffff';
-					ctx.strokeStyle = '#e2e8f0';
-					ctx.lineWidth = 3;
-					roundRect(ctx, 90, 700, 900, 340, 20, true, true);
-
-					ctx.fillStyle = '#0f172a';
-					ctx.font = '500 38px "Plus Jakarta Sans", sans-serif';
-					drawWrappedText(ctx, document.getElementById('inp-stat-desc').value, 140, 800, 800, 60);
 				}
 
 			} else if (slideNum === 4) {
 				// Slayt 4: Özet ve Çıkarımlar
 				ctx.fillStyle = '#0f172a';
 				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
-				ctx.fillText('Özet ve Temel Çıkarımlar', 90, 280);
+				ctx.fillText('Özet ve Temel Çıkarımlar', 70, 230);
 
 				const m1 = '• ' + document.getElementById('inp-sum-1').value;
 				const m2 = '• ' + document.getElementById('inp-sum-2').value;
@@ -1450,50 +1659,39 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 
 				ctx.fillStyle = '#334155';
 				ctx.font = '500 32px "Plus Jakarta Sans", sans-serif';
-				let currentY = 380;
-				currentY = drawWrappedText(ctx, m1, 90, currentY, 900, 48) + 24;
-				currentY = drawWrappedText(ctx, m2, 90, currentY, 900, 48) + 24;
-				currentY = drawWrappedText(ctx, m3, 90, currentY, 900, 48);
+				
+				let curY = 320;
+				for (const item of [m1, m2, m3]) {
+					const lines = getWrappedLines(ctx, item, 940);
+					for (const line of lines) {
+						ctx.fillText(line, 70, curY);
+						curY += 46;
+					}
+					curY += 24;
+				}
 
 				// Kaynak
+				const srcY = Math.max(curY + 20, 860);
 				ctx.fillStyle = '#ffffff';
 				ctx.strokeStyle = '#cbd5e1';
 				ctx.lineWidth = 2;
-				roundRect(ctx, 90, 820, 900, 110, 12, true, true);
+				roundRect(ctx, 70, srcY, 940, 100, 12, true, true);
 				ctx.fillStyle = '#64748b';
 				ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
-				ctx.fillText(document.getElementById('inp-source').value, 120, 888);
+				ctx.fillText(document.getElementById('inp-source').value, 100, srcY + 60);
 
 				// CTA Buton
+				const ctaY = srcY + 130;
 				ctx.fillStyle = '#1f9a77';
-				roundRect(ctx, 90, 980, 900, 120, 16, true, false);
+				roundRect(ctx, 70, ctaY, 940, 115, 16, true, false);
 				ctx.fillStyle = '#ffffff';
 				ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
 				ctx.textAlign = 'center';
-				ctx.fillText('Haberin tamamı ve açık kaynaklar için link profilde', 540, 1055);
+				ctx.fillText('Haberin tamamı ve açık kaynaklar için link profilde', 540, ctaY + 70);
 				ctx.textAlign = 'left';
 			}
 
 			return canvas.toDataURL('image/png');
-		}
-
-		// Yardımcı Metin Kaydırma
-		function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
-			const words = (text || '').split(' ');
-			let line = '';
-			for (let n = 0; n < words.length; n++) {
-				const testLine = line + words[n] + ' ';
-				const metrics = ctx.measureText(testLine);
-				if (metrics.width > maxWidth && n > 0) {
-					ctx.fillText(line, x, y);
-					line = words[n] + ' ';
-					y += lineHeight;
-				} else {
-					line = testLine;
-				}
-			}
-			ctx.fillText(line, x, y);
-			return y + lineHeight;
 		}
 
 		// Yuvarlatılmış Kutu Çizimi
@@ -1522,11 +1720,20 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 			a.click();
 		};
 
-		// 4 Slaytı Birden İndir
+		// Tüm Slaytları İndir (3 veya 4)
 		document.getElementById('btn-export-all').addEventListener('click', async () => {
-			for (let i = 1; i <= 4; i++) {
-				downloadSingle(i);
-				await new Promise(r => setTimeout(r, 400));
+			if (totalSlideCount === 3) {
+				// Slayt 1, Slayt 2 ve Son Slayt (Slayt 4)
+				downloadSingle(1);
+				await new Promise(r => setTimeout(r, 350));
+				downloadSingle(2);
+				await new Promise(r => setTimeout(r, 350));
+				downloadSingle(4);
+			} else {
+				for (let i = 1; i <= 4; i++) {
+					downloadSingle(i);
+					await new Promise(r => setTimeout(r, 350));
+				}
 			}
 		});
 	</script>
