@@ -1,32 +1,133 @@
 ---
 import { getCollection } from 'astro:content';
 
-// Sitedeki son haberleri çek (Taslaklar hariç)
-const allPosts = await getCollection('blog', ({ data }) => data.status !== 'Taslak');
+// Sitedeki tüm haberleri çek (Taslaklar dahil, en yeniden eskiye)
+const allPosts = await getCollection('blog');
 allPosts.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime());
 
-// Formun otomatik doldurması için gerekli veriler
-const postsPayload = allPosts.slice(0, 25).map(p => {
-	// Madde imli verileri tespit et
-	const bulletMatches = [];
-	const regex = /^[*-]\s+\*\*([^*]+)\*\*[:\s]*(.*)$/gm;
-	let match;
-	while ((match = regex.exec(p.body)) !== null) {
-		const label = match[1].replace(/:+$/, '').trim();
-		const val = match[2].replace(/\[(.*?)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').trim();
-		if (val && (val.includes('%') || val.includes('TL') || /\d+/.test(val))) {
-			bulletMatches.push({ label, val });
-		}
-		if (bulletMatches.length >= 4) break;
+// Formun ve 4 slaytın otomatik doldurulması için akıllı veri çıkarıcı
+const postsPayload = allPosts.slice(0, 40).map(p => {
+	const content = p.body || '';
+	const title = p.data.title || '';
+	const category = (p.data.category || 'Veri Haberciliği') + ' / Veri Analizi';
+	const desc = p.data.description || '';
+
+	// Madde imli satırları tespit et
+	const bulletLines: string[] = [];
+	const bRegex = /^[*-]\s+(.+)$/gm;
+	let bm;
+	while ((bm = bRegex.exec(content)) !== null) {
+		const raw = bm[1].replace(/\[(.*?)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').trim();
+		bulletLines.push(raw);
 	}
+
+	// Yüzde ve kalın veri istatistiklerini topla
+	const boldStats: string[] = [];
+	const sRegex = /\*\*([%0-9][^*]{1,25})\*\*/g;
+	let sm;
+	while ((sm = sRegex.exec(content)) !== null) {
+		const clean = sm[1].trim();
+		if (clean.includes('%') || clean.includes('TL') || clean.includes('milyar') || clean.includes('milyon') || clean.includes('bin') || /\d+/.test(clean)) {
+			if (!boldStats.includes(clean)) boldStats.push(clean);
+		}
+	}
+
+	// Tablo satırlarını tespit et
+	const tableRows: string[][] = [];
+	const tableRegex = /^\|(.+)\|$/gm;
+	let tm;
+	while ((tm = tableRegex.exec(content)) !== null) {
+		const cells = tm[1].split('|').map(c => c.trim().replace(/\*\*/g, ''));
+		if (cells.length >= 2 && !cells[0].includes('---') && !cells[0].toLowerCase().includes('sektör') && !cells[0].toLowerCase().includes('alan') && !cells[0].toLowerCase().includes('yıl')) {
+			tableRows.push(cells);
+		}
+	}
+
+	// Resmi kaynak tespiti
+	let source = 'Kaynak: HepsiVeri Araştırma & Açık Veri';
+	const knownSources = ['TÜİK', 'SGK', 'TEPAV', 'OECD', 'Eurostat', 'TCMB', 'MEB', 'Sağlık Bakanlığı', 'İçişleri Bakanlığı', 'Adalet Bakanlığı', 'İŞKUR', 'BDDK', 'EGM', 'Çalışma Bakanlığı'];
+	for (const s of knownSources) {
+		if (content.includes(s) || (p.data.tags || []).includes(s) || title.includes(s)) {
+			source = `Kaynak: ${s} Raporu & Resmi Veri Havuzu`;
+			break;
+		}
+	}
+
+	// Slayt 2: Kıyaslama Kutuları
+	let compTitle = 'Öne Çıkan Karşılaştırmalar';
+	let compLLabel = 'Temel Oran';
+	let compLVal = boldStats[0] || '%50,0';
+	let compRLabel = 'Öne Çıkan Pay';
+	let compRVal = boldStats[1] || '%65,0';
+	let compNote = 'Veriler resmi kamu kayıtları ve istatistiki raporlara dayanmaktadır.';
+
+	if (tableRows.length >= 2) {
+		compTitle = 'Sektörel Dağılım ve Karşılaştırma';
+		compLLabel = tableRows[0][0].slice(0, 24);
+		compLVal = tableRows[0][1] || boldStats[0] || '%50';
+		compRLabel = tableRows[1][0].slice(0, 24);
+		compRVal = tableRows[1][1] || boldStats[1] || '%30';
+		compNote = `${compLLabel} ile ${compRLabel} arasındaki gösterge farkı dikkat çekiyor.`;
+	} else if (bulletLines.length >= 2) {
+		const b0 = bulletLines[0];
+		const b1 = bulletLines[1];
+		if (b0.includes(':')) {
+			const parts = b0.split(':');
+			compLLabel = parts[0].slice(0, 24);
+			compLVal = parts[1].trim();
+		} else {
+			compLLabel = 'Birinci Gösterge';
+			compLVal = boldStats[0] || '%25';
+		}
+		if (b1.includes(':')) {
+			const parts = b1.split(':');
+			compRLabel = parts[0].slice(0, 24);
+			compRVal = parts[1].trim();
+		} else {
+			compRLabel = 'İkinci Gösterge';
+			compRVal = boldStats[1] || '%75';
+		}
+		compNote = desc.slice(0, 80) + (desc.length > 80 ? '...' : '');
+	}
+
+	// Slayt 3: Büyük Rakam
+	let statEyebrow = 'Öne Çıkan Ana Gösterge';
+	let statNumber = boldStats[0] || '%50';
+	let statDesc = desc || 'Açık veri analizinde kaydedilen en dikkat çekici değer.';
+
+	const titleNumberMatch = title.match(/%\s*[\d,.]+|[\d,.]+\s*(?:milyar|trilyon|milyon|bin)?\s*TL/i);
+	if (titleNumberMatch) {
+		statNumber = titleNumberMatch[0].trim();
+		statEyebrow = 'Raporda Öne Çıkan Değer';
+		statDesc = title;
+	} else if (boldStats.length > 0) {
+		statNumber = boldStats[0];
+	}
+
+	// Slayt 4: Özet ve Temel Çıkarımlar
+	let sum1 = bulletLines[0] ? bulletLines[0].slice(0, 95) : desc.slice(0, 85);
+	let sum2 = bulletLines[1] ? bulletLines[1].slice(0, 95) : (boldStats[1] ? `Öne çıkan veri boyutu: ${boldStats[1]}` : 'Resmi raporda paylaşılan kritik göstergeler incelendi.');
+	let sum3 = bulletLines[2] ? bulletLines[2].slice(0, 95) : 'Ayrıntılı veri tabloları ve açık kaynak veriler haberimizde.';
 
 	return {
 		slug: p.slug,
-		title: p.data.title,
-		category: p.data.category || 'Veri Haberciliği',
-		description: p.data.description || '',
-		tags: p.data.tags || [],
-		bullets: bulletMatches,
+		isDraft: p.data.status === 'Taslak',
+		title,
+		category,
+		desc,
+		compTitle,
+		compLLabel,
+		compLVal,
+		compRLabel,
+		compRVal,
+		compNote,
+		statEyebrow,
+		statNumber,
+		statDesc,
+		sum1,
+		sum2,
+		sum3,
+		source,
 		date: p.data.pubDate ? new Date(p.data.pubDate).toLocaleDateString('tr-TR') : ''
 	};
 });
@@ -41,7 +142,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 	<title>HepsiVeri - Instagram Kart & Görsel Üreticisi</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 	
 	<style>
 		:root {
@@ -71,7 +172,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 		.app-header {
 			background: #ffffff;
 			border-bottom: 1px solid var(--border);
-			padding: 16px 24px;
+			padding: 14px 24px;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -86,13 +187,12 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			gap: 12px;
 		}
 
-		.app-logo-text {
-			font-size: 20px;
-			font-weight: 800;
-			letter-spacing: -0.5px;
+		.app-logo-img {
+			height: 30px;
+			width: auto;
+			display: block;
+			object-fit: contain;
 		}
-		.app-logo-text .p1 { color: var(--brand-purple); }
-		.app-logo-text .p2 { color: var(--brand-green); }
 
 		.app-badge {
 			background: #f0fdf4;
@@ -102,7 +202,6 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			font-weight: 700;
 			padding: 4px 8px;
 			border-radius: 6px;
-			text-transform: uppercase;
 		}
 
 		.header-actions {
@@ -126,7 +225,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 		}
 		.btn-download-all:hover { background: #15803d; }
 
-		/* Ana Düzen: Sol Panel (Form) - Sağ Panel (Önizleme) */
+		/* Ana Düzen */
 		.studio-container {
 			max-width: 1600px;
 			margin: 24px auto;
@@ -162,8 +261,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			display: flex;
 			align-items: center;
 			gap: 8px;
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
+			letter-spacing: -0.2px;
 		}
 
 		.form-group {
@@ -272,12 +370,16 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 		}
 
 		.card-logo {
-			font-size: 16px;
-			font-weight: 800;
-			letter-spacing: -0.5px;
+			display: flex;
+			align-items: center;
 		}
-		.card-logo .p1 { color: var(--brand-purple); }
-		.card-logo .p2 { color: var(--brand-green); }
+
+		.card-logo-img {
+			height: 34px;
+			width: auto;
+			object-fit: contain;
+			display: block;
+		}
 
 		.card-tag {
 			background: rgba(31, 154, 119, 0.1);
@@ -286,7 +388,6 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			font-weight: 700;
 			padding: 3px 8px;
 			border-radius: 4px;
-			text-transform: uppercase;
 		}
 
 		.card-counter {
@@ -300,152 +401,182 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 		.cover-center {
 			margin: auto 0;
 		}
+
 		.cover-headline {
 			font-size: 20px;
 			font-weight: 800;
+			line-height: 1.35;
 			color: var(--text-primary);
-			line-height: 1.3;
+			letter-spacing: -0.4px;
 			margin-bottom: 12px;
 		}
+
 		.cover-sub {
-			font-size: 13px;
-			color: var(--text-secondary);
+			font-size: 12px;
 			line-height: 1.5;
+			color: var(--text-secondary);
+			font-weight: 500;
 		}
 
-		.card-footer {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			font-size: 11px;
-			font-weight: 600;
-			color: var(--text-muted);
-			border-top: 1px solid rgba(0,0,0,0.06);
-			padding-top: 10px;
-		}
-
-		/* Slayt 2: Karşılaştırma */
+		/* Slayt 2: Kıyaslama */
 		.compare-title {
-			font-size: 15px;
+			font-size: 16px;
 			font-weight: 800;
 			color: var(--text-primary);
-			margin-bottom: 12px;
+			margin-bottom: 16px;
+			text-align: center;
 		}
+
 		.compare-boxes {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			gap: 10px;
-			margin-bottom: 12px;
+			margin-bottom: 14px;
 		}
+
 		.stat-box {
 			background: #ffffff;
 			border: 1px solid var(--border);
 			border-radius: 8px;
-			padding: 12px;
+			padding: 12px 8px;
 			text-align: center;
 		}
+
 		.stat-box.highlight {
-			border-color: var(--brand-green);
 			background: #f0fdf4;
+			border-color: var(--brand-green);
 		}
+
 		.stat-label {
 			font-size: 11px;
 			font-weight: 600;
 			color: var(--text-muted);
-			margin-bottom: 4px;
+			margin-bottom: 6px;
 		}
+		.stat-box.highlight .stat-label { color: var(--brand-green); font-weight: 700; }
+
 		.stat-val {
+			font-family: var(--font-mono);
 			font-size: 26px;
 			font-weight: 800;
 			color: var(--text-primary);
-			font-family: var(--font-mono);
+			line-height: 1.1;
 		}
-		.stat-box.highlight .stat-val {
-			color: var(--brand-green);
-		}
+		.stat-box.highlight .stat-val { color: var(--brand-green); }
+
 		.compare-note {
-			font-size: 12px;
+			font-size: 11px;
+			line-height: 1.45;
 			color: var(--text-secondary);
 			background: #ffffff;
-			padding: 8px 10px;
-			border-radius: 6px;
 			border: 1px solid var(--border);
+			border-radius: 6px;
+			padding: 8px 10px;
+			text-align: center;
+			font-weight: 500;
 		}
 
-		/* Slayt 3: Dev Rakam */
+		/* Slayt 3: Büyük Rakam */
 		.big-stat-wrap {
 			text-align: center;
 			margin: auto 0;
 		}
+
 		.big-stat-eyebrow {
 			font-size: 12px;
-			font-weight: 800;
-			color: var(--brand-purple);
-			text-transform: uppercase;
+			font-weight: 700;
+			color: var(--brand-green);
 			margin-bottom: 8px;
 		}
+
 		.big-stat-number {
+			font-family: var(--font-mono);
 			font-size: 54px;
 			font-weight: 800;
 			color: var(--brand-purple);
-			font-family: var(--font-mono);
 			line-height: 1;
-			margin-bottom: 12px;
+			margin-bottom: 14px;
+			letter-spacing: -1px;
 		}
+
 		.big-stat-desc {
 			font-size: 12px;
-			color: var(--text-secondary);
 			line-height: 1.5;
+			color: var(--text-primary);
 			background: #ffffff;
-			padding: 10px;
-			border-radius: 6px;
 			border: 1px solid var(--border);
+			border-radius: 8px;
+			padding: 12px 14px;
+			font-weight: 500;
+			text-align: left;
 		}
 
-		/* Slayt 4: Özet & CTA */
+		/* Slayt 4: Özet ve CTA */
 		.summary-title {
-			font-size: 15px;
+			font-size: 16px;
 			font-weight: 800;
 			color: var(--text-primary);
-			margin-bottom: 10px;
-		}
-		.summary-list {
-			list-style: none;
 			margin-bottom: 12px;
 		}
+
+		.summary-list {
+			list-style: none;
+			margin-bottom: 14px;
+		}
+
 		.summary-item {
-			font-size: 12px;
+			font-size: 11px;
+			line-height: 1.45;
 			color: var(--text-secondary);
-			padding: 6px 0;
-			border-bottom: 1px dashed var(--border);
+			margin-bottom: 8px;
 			display: flex;
 			gap: 6px;
+			align-items: flex-start;
 		}
-		.summary-item:last-child { border-bottom: none; }
-		.summary-bullet { color: var(--brand-green); font-weight: 800; }
+
+		.summary-bullet {
+			color: var(--brand-green);
+			font-weight: 800;
+			flex-shrink: 0;
+		}
 
 		.source-box {
-			background: #ffffff;
-			border: 1px solid var(--border);
-			padding: 8px 10px;
-			border-radius: 6px;
 			font-size: 10px;
 			color: var(--text-muted);
-			margin-bottom: 10px;
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			padding: 6px 10px;
+			margin-bottom: 12px;
+			font-weight: 600;
 		}
 
 		.cta-banner {
 			background: var(--brand-green);
 			color: #ffffff;
-			padding: 8px 10px;
 			border-radius: 6px;
+			padding: 8px 10px;
+			text-align: center;
 			font-size: 11px;
 			font-weight: 700;
-			text-align: center;
 		}
 
-		/* Gizli Yüksek Çözünürlüklü Export Canvas'ı */
-		#export-canvas { display: none; }
+		/* Kart Alt Bilgisi */
+		.card-footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 10px;
+			font-weight: 600;
+			color: var(--text-muted);
+			padding-top: 10px;
+			border-top: 1px solid rgba(0,0,0,0.06);
+		}
+
+		/* Gizli Export Canvası */
+		#export-canvas {
+			display: none;
+		}
 	</style>
 </head>
 <body>
@@ -453,30 +584,36 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 	<!-- Üst Çubuk -->
 	<header class="app-header">
 		<div class="app-brand">
-			<span class="app-logo-text"><span class="p1">Hepsi</span><span class="p2">Veri</span></span>
-			<span class="app-badge">Instagram Görsel Stüdyosu</span>
+			<img src="/logo.png" alt="HepsiVeri" class="app-logo-img" />
+			<span class="app-badge">Sosyal Medya Stüdyosu</span>
 		</div>
 		<div class="header-actions">
 			<button class="btn-download-all" id="btn-export-all">
-				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-				<span>4 Slaytı Birden İndir (1080x1350 PNG)</span>
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+					<polyline points="7 10 12 15 17 10"></polyline>
+					<line x1="12" y1="15" x2="12" y2="3"></line>
+				</svg>
+				4 Slaytı Birden İndir (1080x1350)
 			</button>
 		</div>
 	</header>
 
 	<div class="studio-container">
-		
-		<!-- Sol Form Paneli -->
-		<aside class="editor-sidebar">
 
+		<!-- Sol Editör Formu -->
+		<aside class="editor-sidebar">
+			
 			<div class="sidebar-section">
-				<h2 class="section-title">📂 1. Haberi Otomatik Seç</h2>
+				<h2 class="section-title">📂 1. Haberi Seçin (Otomatik Doldur)</h2>
 				<div class="form-group">
-					<label class="form-label" for="post-selector">Haber Listesi</label>
+					<label class="form-label">Sitedeki Son Haberler</label>
 					<select class="form-select" id="post-selector">
-						<option value="">-- Haber Seçin (Veriler Otomatik Dolar) --</option>
+						<option value="">Bir haber seçin...</option>
 						{postsPayload.map((p, idx) => (
-							<option value={idx}>{p.title}</option>
+							<option value={idx}>
+								{p.isDraft ? '[Taslak] ' : ''}{p.title.length > 55 ? p.title.slice(0, 55) + '...' : p.title} ({p.date})
+							</option>
 						))}
 					</select>
 				</div>
@@ -486,7 +623,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				<h2 class="section-title">🎯 2. Slayt 1 (Kapak)</h2>
 				<div class="form-group">
 					<label class="form-label">Kategori Rozeti</label>
-					<input class="form-input" id="inp-cat" value="EKONOMİ / VERİ ANALİZİ">
+					<input class="form-input" id="inp-cat" value="Ekonomi / Veri Analizi">
 				</div>
 				<div class="form-group">
 					<label class="form-label">Ana Başlık (Soru / Vurucu Cümle)</label>
@@ -508,18 +645,18 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 					<div class="form-group">
 						<label class="form-label">Sol Etiket</label>
 						<input class="form-input" id="inp-comp-l-label" value="Erkeklerde Kayıt Dışı">
-						<label class="form-label" style="margin-top:6px;">Sol Oran</label>
+						<label class="form-label" style="margin-top:6px;">Sol Oran / Sayı</label>
 						<input class="form-input" id="inp-comp-l-val" value="%21,9">
 					</div>
 					<div class="form-group">
 						<label class="form-label">Sağ Etiket (Vurgulu)</label>
 						<input class="form-input" id="inp-comp-r-label" value="Kadınlarda Kayıt Dışı">
-						<label class="form-label" style="margin-top:6px;">Sağ Oran</label>
+						<label class="form-label" style="margin-top:6px;">Sağ Oran / Sayı</label>
 						<input class="form-input" id="inp-comp-r-val" value="%29,4">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Fark Özeti</label>
+					<label class="form-label">Fark Özeti / Not</label>
 					<input class="form-input" id="inp-comp-note" value="Kadın çalışanlar aleyhine fark 7,5 puana ulaştı.">
 				</div>
 			</div>
@@ -528,10 +665,10 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				<h2 class="section-title">💥 4. Slayt 3 (Büyük Rakam)</h2>
 				<div class="form-group">
 					<label class="form-label">Üst Etiket</label>
-					<input class="form-input" id="inp-stat-eyebrow" value="TARIMDA KADIN EMEĞİ">
+					<input class="form-input" id="inp-stat-eyebrow" value="Tarımda Kadın Emeği">
 				</div>
 				<div class="form-group">
-					<label class="form-label">Büyük Rakam</label>
+					<label class="form-label">Büyük Rakam / Veri</label>
 					<input class="form-input" id="inp-stat-number" value="%91,9">
 				</div>
 				<div class="form-group">
@@ -556,7 +693,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				</div>
 				<div class="form-group">
 					<label class="form-label">Resmi Kaynak</label>
-					<input class="form-input" id="inp-source" value="TEPAV İstihdam İzleme Bülteni & SGK Temmuz 2026">
+					<input class="form-input" id="inp-source" value="Kaynak: TEPAV İstihdam İzleme Bülteni & SGK Raporu">
 				</div>
 			</div>
 
@@ -574,8 +711,10 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 					</div>
 					<div class="slide-card" id="card-1">
 						<div class="card-topbar">
-							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
-							<div class="card-tag" id="view-cat">EKONOMİ / VERİ ANALİZİ</div>
+							<div class="card-logo">
+								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
+							</div>
+							<div class="card-tag" id="view-cat">Ekonomi / Veri Analizi</div>
 							<div class="card-counter">01/04</div>
 						</div>
 						<div class="cover-center">
@@ -597,7 +736,9 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 					</div>
 					<div class="slide-card" id="card-2">
 						<div class="card-topbar">
-							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-logo">
+								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
+							</div>
 							<div class="card-counter">02/04</div>
 						</div>
 						<div>
@@ -629,11 +770,13 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 					</div>
 					<div class="slide-card" id="card-3">
 						<div class="card-topbar">
-							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-logo">
+								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
+							</div>
 							<div class="card-counter">03/04</div>
 						</div>
 						<div class="big-stat-wrap">
-							<div class="big-stat-eyebrow" id="view-stat-eyebrow">TARIMDA KADIN EMEĞİ</div>
+							<div class="big-stat-eyebrow" id="view-stat-eyebrow">Tarımda Kadın Emeği</div>
 							<div class="big-stat-number" id="view-stat-number">%91,9</div>
 							<div class="big-stat-desc" id="view-stat-desc">Tarımda çalışan kadınların neredeyse tamamı hiçbir sosyal güvenlik kaydı olmadan güvencesiz çalışıyor.</div>
 						</div>
@@ -652,7 +795,9 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 					</div>
 					<div class="slide-card" id="card-4">
 						<div class="card-topbar">
-							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-logo">
+								<img src="/logo.png" alt="HepsiVeri" class="card-logo-img" />
+							</div>
 							<div class="card-counter">04/04</div>
 						</div>
 						<div>
@@ -662,8 +807,8 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 								<li class="summary-item"><span class="summary-bullet">✓</span><span id="view-sum-2">Sendikalı kadın işçi oranı yalnızca %10,8'de kaldı.</span></li>
 								<li class="summary-item"><span class="summary-bullet">✓</span><span id="view-sum-3">Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.</span></li>
 							</ul>
-							<div class="source-box" id="view-source">Kaynak: TEPAV İstihdam İzleme Bülteni & SGK Temmuz 2026</div>
-							<div class="cta-banner">Haberin tamamı için profildeki linke tıklayın • hepsiveri.com</div>
+							<div class="source-box" id="view-source">Kaynak: TEPAV İstihdam İzleme Bülteni & SGK Raporu</div>
+							<div class="cta-banner">Haberin tamamı ve açık veri tabloları için link profilde • hepsiveri.com</div>
 						</div>
 						<div class="card-footer">
 							<span>Kaydet & Paylaş</span>
@@ -682,6 +827,10 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 
 	<!-- Veriler ve Script -->
 	<script is:inline define:vars={{ postsPayload }}>
+		// Resmi Logoyu Önceden Yükle (Canvas Çizimi İçin)
+		const logoImg = new Image();
+		logoImg.src = '/logo.png';
+
 		// Form - Önizleme Canlı Bağlantısı
 		const bindInput = (inpId, viewId) => {
 			const inp = document.getElementById(inpId);
@@ -691,6 +840,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			}
 		};
 
+		// Tüm Alanları Canlı Bağla
 		bindInput('inp-cat', 'view-cat');
 		bindInput('inp-title', 'view-title');
 		bindInput('inp-desc', 'view-desc');
@@ -708,7 +858,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 		bindInput('inp-sum-3', 'view-sum-3');
 		bindInput('inp-source', 'view-source');
 
-		// Haber Seçildiğinde Otomatik Doldur
+		// Haber Seçildiğinde 4 Slaytın Tamamını Otomatik Doldur
 		const selector = document.getElementById('post-selector');
 		selector.addEventListener('change', (e) => {
 			const idx = e.target.value;
@@ -716,23 +866,31 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			const post = postsPayload[idx];
 			if (!post) return;
 
-			document.getElementById('inp-cat').value = post.category.toUpperCase() + ' / VERİ ANALİZİ';
+			// Slayt 1 (Kapak)
+			document.getElementById('inp-cat').value = post.category;
 			document.getElementById('inp-title').value = post.title;
-			document.getElementById('inp-desc').value = post.description || '';
+			document.getElementById('inp-desc').value = post.desc || '';
 
-			if (post.bullets && post.bullets.length >= 2) {
-				document.getElementById('inp-comp-l-label').value = post.bullets[0].label;
-				document.getElementById('inp-comp-l-val').value = post.bullets[0].val;
-				document.getElementById('inp-comp-r-label').value = post.bullets[1].label;
-				document.getElementById('inp-comp-r-val').value = post.bullets[1].val;
-			}
+			// Slayt 2 (Kıyaslama)
+			document.getElementById('inp-comp-title').value = post.compTitle;
+			document.getElementById('inp-comp-l-label').value = post.compLLabel;
+			document.getElementById('inp-comp-l-val').value = post.compLVal;
+			document.getElementById('inp-comp-r-label').value = post.compRLabel;
+			document.getElementById('inp-comp-r-val').value = post.compRVal;
+			document.getElementById('inp-comp-note').value = post.compNote;
 
-			if (post.bullets && post.bullets.length >= 3) {
-				document.getElementById('inp-stat-number').value = post.bullets[2].val;
-				document.getElementById('inp-stat-eyebrow').value = post.bullets[2].label.toUpperCase();
-			}
+			// Slayt 3 (Büyük Rakam)
+			document.getElementById('inp-stat-eyebrow').value = post.statEyebrow;
+			document.getElementById('inp-stat-number').value = post.statNumber;
+			document.getElementById('inp-stat-desc').value = post.statDesc;
 
-			// Önizlemeleri tetikle
+			// Slayt 4 (Özet ve Kaynak)
+			document.getElementById('inp-sum-1').value = post.sum1;
+			document.getElementById('inp-sum-2').value = post.sum2;
+			document.getElementById('inp-sum-3').value = post.sum3;
+			document.getElementById('inp-source').value = post.source;
+
+			// Önizleme elemanlarını anında tetikle
 			const inputs = document.querySelectorAll('.form-input, .form-textarea');
 			inputs.forEach(i => i.dispatchEvent(new Event('input')));
 		});
@@ -753,19 +911,25 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 			ctx.lineWidth = 4;
 			ctx.strokeRect(40, 40, w - 80, h - 80);
 
-			// 3. Logo Çizimi
-			ctx.font = '800 48px "Plus Jakarta Sans", sans-serif';
-			ctx.fillStyle = '#4c1eb2';
-			ctx.fillText('Hepsi', 90, 140);
-			const hepsiWidth = ctx.measureText('Hepsi').width;
-			ctx.fillStyle = '#1f9a77';
-			ctx.fillText('Veri', 90 + hepsiWidth, 140);
+			// 3. Logo Çizimi (Görsel veya Vektörel)
+			if (logoImg.complete && logoImg.naturalHeight > 0) {
+				const logoH = 76;
+				const logoW = Math.round(logoH * (logoImg.naturalWidth / logoImg.naturalHeight));
+				ctx.drawImage(logoImg, 90, 95, logoW, logoH);
+			} else {
+				ctx.font = '800 48px "Plus Jakarta Sans", sans-serif';
+				ctx.fillStyle = '#4c1eb2';
+				ctx.fillText('Hepsi', 90, 145);
+				const hepsiWidth = ctx.measureText('Hepsi').width;
+				ctx.fillStyle = '#1f9a77';
+				ctx.fillText('Veri', 90 + hepsiWidth, 145);
+			}
 
 			// Slayt Numarası (Sağ Üst)
 			ctx.font = '700 32px "JetBrains Mono", monospace';
 			ctx.fillStyle = '#64748b';
 			ctx.textAlign = 'right';
-			ctx.fillText(`0${slideNum}/04`, w - 90, 140);
+			ctx.fillText(`0${slideNum}/04`, w - 90, 145);
 			ctx.textAlign = 'left';
 
 			// Alt Footer Çizgisi
@@ -778,7 +942,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 
 			ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
 			ctx.fillStyle = '#64748b';
-			ctx.fillText('Kaydırın ➔', 90, h - 90);
+			ctx.fillText(slideNum === 4 ? 'Kaydet & Paylaş' : 'Kaydırın ➔', 90, h - 90);
 			ctx.textAlign = 'right';
 			ctx.fillText('hepsiveri.com', w - 90, h - 90);
 			ctx.textAlign = 'left';
@@ -788,54 +952,58 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				// Kategori Rozeti
 				const cat = document.getElementById('inp-cat').value;
 				ctx.fillStyle = '#1f9a77';
-				ctx.font = '800 28px "Plus Jakarta Sans", sans-serif';
+				ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
 				ctx.fillText(cat, 90, 280);
 
-				// Ana Başlık (Metin Kaydırma ile)
+				// Ana Başlık
 				const title = document.getElementById('inp-title').value;
 				ctx.fillStyle = '#0f172a';
-				ctx.font = '800 68px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, title, 90, 420, 900, 90);
+				ctx.font = '800 64px "Plus Jakarta Sans", sans-serif';
+				const nextY = drawWrappedText(ctx, title, 90, 410, 900, 84);
 
 				// Spot
 				const desc = document.getElementById('inp-desc').value;
 				ctx.fillStyle = '#334155';
 				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, desc, 90, 850, 900, 56);
+				const spotY = Math.max(nextY + 40, 840);
+				drawWrappedText(ctx, desc, 90, spotY, 900, 54);
+
 			} else if (slideNum === 2) {
 				const compTitle = document.getElementById('inp-comp-title').value;
 				ctx.fillStyle = '#0f172a';
-				ctx.font = '800 56px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, compTitle, 90, 300, 900, 75);
+				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, compTitle, 90, 300, 900, 70);
 
-				// Sol Kutu (Erkek)
+				// Sol Kutu
 				ctx.fillStyle = '#ffffff';
 				ctx.strokeStyle = '#cbd5e1';
 				ctx.lineWidth = 3;
 				roundRect(ctx, 90, 480, 420, 360, 20, true, true);
 
 				ctx.fillStyle = '#64748b';
-				ctx.font = '600 30px "Plus Jakarta Sans", sans-serif';
+				ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
 				ctx.textAlign = 'center';
-				ctx.fillText(document.getElementById('inp-comp-l-label').value, 300, 570);
+				ctx.fillText(document.getElementById('inp-comp-l-label').value, 300, 565);
 
 				ctx.fillStyle = '#0f172a';
-				ctx.font = '800 84px "JetBrains Mono", monospace';
-				ctx.fillText(document.getElementById('inp-comp-l-val').value, 300, 720);
+				const lVal = document.getElementById('inp-comp-l-val').value || '';
+				ctx.font = lVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
+				ctx.fillText(lVal, 300, 715);
 
-				// Sağ Kutu (Kadın - Vurgulu)
+				// Sağ Kutu (Vurgulu)
 				ctx.fillStyle = '#f0fdf4';
 				ctx.strokeStyle = '#1f9a77';
 				ctx.lineWidth = 4;
 				roundRect(ctx, 570, 480, 420, 360, 20, true, true);
 
 				ctx.fillStyle = '#1f9a77';
-				ctx.font = '700 30px "Plus Jakarta Sans", sans-serif';
-				ctx.fillText(document.getElementById('inp-comp-r-label').value, 780, 570);
+				ctx.font = '700 28px "Plus Jakarta Sans", sans-serif';
+				ctx.fillText(document.getElementById('inp-comp-r-label').value, 780, 565);
 
 				ctx.fillStyle = '#1f9a77';
-				ctx.font = '800 84px "JetBrains Mono", monospace';
-				ctx.fillText(document.getElementById('inp-comp-r-val').value, 780, 720);
+				const rVal = document.getElementById('inp-comp-r-val').value || '';
+				ctx.font = rVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
+				ctx.fillText(rVal, 780, 715);
 				ctx.textAlign = 'left';
 
 				// Fark Notu
@@ -844,27 +1012,34 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				roundRect(ctx, 90, 900, 900, 160, 16, true, true);
 
 				ctx.fillStyle = '#334155';
-				ctx.font = '600 36px "Plus Jakarta Sans", sans-serif';
+				ctx.font = '600 34px "Plus Jakarta Sans", sans-serif';
 				drawWrappedText(ctx, document.getElementById('inp-comp-note').value, 130, 995, 820, 50);
+
 			} else if (slideNum === 3) {
 				ctx.textAlign = 'center';
 				ctx.fillStyle = '#1f9a77';
-				ctx.font = '800 36px "Plus Jakarta Sans", sans-serif';
+				ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
 				ctx.fillText(document.getElementById('inp-stat-eyebrow').value, 540, 360);
 
 				ctx.fillStyle = '#4c1eb2';
-				ctx.font = '800 170px "JetBrains Mono", monospace';
-				ctx.fillText(document.getElementById('inp-stat-number').value, 540, 580);
+				const statVal = document.getElementById('inp-stat-number').value || '';
+				if (statVal.length > 8) {
+					ctx.font = '800 110px "JetBrains Mono", monospace';
+				} else {
+					ctx.font = '800 160px "JetBrains Mono", monospace';
+				}
+				ctx.fillText(statVal, 540, 560);
 				ctx.textAlign = 'left';
 
 				ctx.fillStyle = '#ffffff';
 				ctx.strokeStyle = '#e2e8f0';
 				ctx.lineWidth = 3;
-				roundRect(ctx, 90, 720, 900, 320, 20, true, true);
+				roundRect(ctx, 90, 700, 900, 340, 20, true, true);
 
 				ctx.fillStyle = '#0f172a';
-				ctx.font = '500 40px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, document.getElementById('inp-stat-desc').value, 140, 830, 800, 64);
+				ctx.font = '500 38px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, document.getElementById('inp-stat-desc').value, 140, 800, 800, 60);
+
 			} else if (slideNum === 4) {
 				ctx.fillStyle = '#0f172a';
 				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
@@ -875,10 +1050,11 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				const m3 = '• ' + document.getElementById('inp-sum-3').value;
 
 				ctx.fillStyle = '#334155';
-				ctx.font = '500 34px "Plus Jakarta Sans", sans-serif';
-				drawWrappedText(ctx, m1, 90, 380, 900, 52);
-				drawWrappedText(ctx, m2, 90, 520, 900, 52);
-				drawWrappedText(ctx, m3, 90, 660, 900, 52);
+				ctx.font = '500 32px "Plus Jakarta Sans", sans-serif';
+				let currentY = 380;
+				currentY = drawWrappedText(ctx, m1, 90, currentY, 900, 48) + 24;
+				currentY = drawWrappedText(ctx, m2, 90, currentY, 900, 48) + 24;
+				currentY = drawWrappedText(ctx, m3, 90, currentY, 900, 48);
 
 				// Kaynak
 				ctx.fillStyle = '#ffffff';
@@ -895,16 +1071,16 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				ctx.fillStyle = '#ffffff';
 				ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
 				ctx.textAlign = 'center';
-				ctx.fillText('Haberin tamamı ve açık veri için link profilde', 540, 1055);
+				ctx.fillText('Haberin tamamı ve açık veri tabloları için link profilde', 540, 1055);
 				ctx.textAlign = 'left';
 			}
 
 			return canvas.toDataURL('image/png');
 		}
 
-		// Yardımcı Metin Kaydırma
+		// Yardımcı Metin Kaydırma (Son Y Koordinatını Döner)
 		function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
-			const words = text.split(' ');
+			const words = (text || '').split(' ');
 			let line = '';
 			for (let n = 0; n < words.length; n++) {
 				const testLine = line + words[n] + ' ';
@@ -918,6 +1094,7 @@ const postsPayload = allPosts.slice(0, 25).map(p => {
 				}
 			}
 			ctx.fillText(line, x, y);
+			return y + lineHeight;
 		}
 
 		// Yuvarlatılmış Kutu Çizimi
