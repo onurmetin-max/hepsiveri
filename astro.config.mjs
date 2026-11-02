@@ -10,7 +10,7 @@ export default defineConfig({
 	integrations: [
 		mdx(),
 		sitemap({
-			filter: (page) => !page.includes('/admin') && !page.includes('/api/'),
+			filter: (page) => !page.includes('/admin') && !page.includes('/api/') && !page.includes('/kart-uretici'),
 		}),
 	],
 	fonts: [

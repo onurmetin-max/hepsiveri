@@ -1,0 +1,958 @@
+---
+import { getCollection } from 'astro:content';
+
+// Sitedeki son haberleri çek (Taslaklar hariç)
+const allPosts = await getCollection('blog', ({ data }) => data.status !== 'Taslak');
+allPosts.sort((a, b) => new Date(b.data.pubDate || 0).getTime() - new Date(a.data.pubDate || 0).getTime());
+
+// Formun otomatik doldurması için gerekli veriler
+const postsPayload = allPosts.slice(0, 25).map(p => {
+	// Madde imli verileri tespit et
+	const bulletMatches = [];
+	const regex = /^[*-]\s+\*\*([^*]+)\*\*[:\s]*(.*)$/gm;
+	let match;
+	while ((match = regex.exec(p.body)) !== null) {
+		const label = match[1].replace(/:+$/, '').trim();
+		const val = match[2].replace(/\[(.*?)\]\(.*?\)/g, '$1').replace(/\*\*/g, '').trim();
+		if (val && (val.includes('%') || val.includes('TL') || /\d+/.test(val))) {
+			bulletMatches.push({ label, val });
+		}
+		if (bulletMatches.length >= 4) break;
+	}
+
+	return {
+		slug: p.slug,
+		title: p.data.title,
+		category: p.data.category || 'Veri Haberciliği',
+		description: p.data.description || '',
+		tags: p.data.tags || [],
+		bullets: bulletMatches,
+		date: p.data.pubDate ? new Date(p.data.pubDate).toLocaleDateString('tr-TR') : ''
+	};
+});
+---
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex, nofollow">
+	<title>HepsiVeri - Instagram Kart & Görsel Üreticisi</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+	
+	<style>
+		:root {
+			--font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+			--font-mono: 'JetBrains Mono', monospace;
+			--bg-canvas: #f4f4f5;
+			--card-bg: #fbfbfa;
+			--brand-purple: #4c1eb2;
+			--brand-green: #1f9a77;
+			--text-primary: #0f172a;
+			--text-secondary: #334155;
+			--text-muted: #64748b;
+			--border: #e2e8f0;
+		}
+
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+
+		body {
+			font-family: var(--font-main);
+			background-color: var(--bg-canvas);
+			color: var(--text-primary);
+			line-height: 1.5;
+			padding-bottom: 80px;
+		}
+
+		/* Üst Bar */
+		.app-header {
+			background: #ffffff;
+			border-bottom: 1px solid var(--border);
+			padding: 16px 24px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: sticky;
+			top: 0;
+			z-index: 50;
+		}
+
+		.app-brand {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.app-logo-text {
+			font-size: 20px;
+			font-weight: 800;
+			letter-spacing: -0.5px;
+		}
+		.app-logo-text .p1 { color: var(--brand-purple); }
+		.app-logo-text .p2 { color: var(--brand-green); }
+
+		.app-badge {
+			background: #f0fdf4;
+			color: var(--brand-green);
+			border: 1px solid #bbf7d0;
+			font-size: 11px;
+			font-weight: 700;
+			padding: 4px 8px;
+			border-radius: 6px;
+			text-transform: uppercase;
+		}
+
+		.header-actions {
+			display: flex;
+			gap: 12px;
+		}
+
+		.btn-download-all {
+			background: var(--brand-green);
+			color: #ffffff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 8px;
+			font-weight: 700;
+			font-size: 14px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			transition: background 0.2s;
+		}
+		.btn-download-all:hover { background: #15803d; }
+
+		/* Ana Düzen: Sol Panel (Form) - Sağ Panel (Önizleme) */
+		.studio-container {
+			max-width: 1600px;
+			margin: 24px auto;
+			padding: 0 24px;
+			display: grid;
+			grid-template-columns: 460px 1fr;
+			gap: 32px;
+			align-items: start;
+		}
+
+		/* Sol Form Alanı */
+		.editor-sidebar {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 24px;
+			max-height: calc(100vh - 120px);
+			overflow-y: auto;
+		}
+
+		.sidebar-section {
+			margin-bottom: 24px;
+			padding-bottom: 20px;
+			border-bottom: 1px solid var(--border);
+		}
+		.sidebar-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+		.section-title {
+			font-size: 14px;
+			font-weight: 800;
+			color: var(--text-primary);
+			margin-bottom: 12px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.form-group {
+			margin-bottom: 14px;
+		}
+		.form-label {
+			display: block;
+			font-size: 12px;
+			font-weight: 600;
+			color: var(--text-secondary);
+			margin-bottom: 6px;
+		}
+
+		.form-select, .form-input, .form-textarea {
+			width: 100%;
+			padding: 10px 12px;
+			border: 1px solid var(--border);
+			border-radius: 8px;
+			font-family: inherit;
+			font-size: 13px;
+			color: var(--text-primary);
+			background: #ffffff;
+			outline: none;
+			transition: border-color 0.2s;
+		}
+		.form-select:focus, .form-input:focus, .form-textarea:focus {
+			border-color: var(--brand-purple);
+			box-shadow: 0 0 0 2px rgba(76, 30, 178, 0.1);
+		}
+
+		.form-row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 12px;
+		}
+
+		/* Sağ Canlı Önizleme Alanı */
+		.preview-area {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.preview-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+			gap: 20px;
+		}
+
+		/* Tekil Kart Slayt Önizlemesi (4:5 Aspect Ratio) */
+		.slide-wrapper {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 12px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+		}
+
+		.slide-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 10px;
+			font-size: 12px;
+			font-weight: 700;
+			color: var(--text-muted);
+		}
+
+		.btn-save-slide {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			padding: 4px 10px;
+			border-radius: 6px;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+		.btn-save-slide:hover {
+			background: var(--brand-purple);
+			color: #ffffff;
+			border-color: var(--brand-purple);
+		}
+
+		/* 1080x1350 px Kart Kanvası */
+		.slide-card {
+			width: 100%;
+			aspect-ratio: 4 / 5;
+			background: var(--card-bg);
+			border: 1px solid rgba(0,0,0,0.08);
+			border-radius: 8px;
+			padding: 24px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			position: relative;
+			overflow: hidden;
+			box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+		}
+
+		/* Kart İçi Tipografi */
+		.card-topbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.card-logo {
+			font-size: 16px;
+			font-weight: 800;
+			letter-spacing: -0.5px;
+		}
+		.card-logo .p1 { color: var(--brand-purple); }
+		.card-logo .p2 { color: var(--brand-green); }
+
+		.card-tag {
+			background: rgba(31, 154, 119, 0.1);
+			color: var(--brand-green);
+			font-size: 11px;
+			font-weight: 700;
+			padding: 3px 8px;
+			border-radius: 4px;
+			text-transform: uppercase;
+		}
+
+		.card-counter {
+			font-family: var(--font-mono);
+			font-size: 11px;
+			font-weight: 700;
+			color: var(--text-muted);
+		}
+
+		/* Slayt 1: Kapak */
+		.cover-center {
+			margin: auto 0;
+		}
+		.cover-headline {
+			font-size: 20px;
+			font-weight: 800;
+			color: var(--text-primary);
+			line-height: 1.3;
+			margin-bottom: 12px;
+		}
+		.cover-sub {
+			font-size: 13px;
+			color: var(--text-secondary);
+			line-height: 1.5;
+		}
+
+		.card-footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 11px;
+			font-weight: 600;
+			color: var(--text-muted);
+			border-top: 1px solid rgba(0,0,0,0.06);
+			padding-top: 10px;
+		}
+
+		/* Slayt 2: Karşılaştırma */
+		.compare-title {
+			font-size: 15px;
+			font-weight: 800;
+			color: var(--text-primary);
+			margin-bottom: 12px;
+		}
+		.compare-boxes {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+		.stat-box {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 8px;
+			padding: 12px;
+			text-align: center;
+		}
+		.stat-box.highlight {
+			border-color: var(--brand-green);
+			background: #f0fdf4;
+		}
+		.stat-label {
+			font-size: 11px;
+			font-weight: 600;
+			color: var(--text-muted);
+			margin-bottom: 4px;
+		}
+		.stat-val {
+			font-size: 26px;
+			font-weight: 800;
+			color: var(--text-primary);
+			font-family: var(--font-mono);
+		}
+		.stat-box.highlight .stat-val {
+			color: var(--brand-green);
+		}
+		.compare-note {
+			font-size: 12px;
+			color: var(--text-secondary);
+			background: #ffffff;
+			padding: 8px 10px;
+			border-radius: 6px;
+			border: 1px solid var(--border);
+		}
+
+		/* Slayt 3: Dev Rakam */
+		.big-stat-wrap {
+			text-align: center;
+			margin: auto 0;
+		}
+		.big-stat-eyebrow {
+			font-size: 12px;
+			font-weight: 800;
+			color: var(--brand-purple);
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+		.big-stat-number {
+			font-size: 54px;
+			font-weight: 800;
+			color: var(--brand-purple);
+			font-family: var(--font-mono);
+			line-height: 1;
+			margin-bottom: 12px;
+		}
+		.big-stat-desc {
+			font-size: 12px;
+			color: var(--text-secondary);
+			line-height: 1.5;
+			background: #ffffff;
+			padding: 10px;
+			border-radius: 6px;
+			border: 1px solid var(--border);
+		}
+
+		/* Slayt 4: Özet & CTA */
+		.summary-title {
+			font-size: 15px;
+			font-weight: 800;
+			color: var(--text-primary);
+			margin-bottom: 10px;
+		}
+		.summary-list {
+			list-style: none;
+			margin-bottom: 12px;
+		}
+		.summary-item {
+			font-size: 12px;
+			color: var(--text-secondary);
+			padding: 6px 0;
+			border-bottom: 1px dashed var(--border);
+			display: flex;
+			gap: 6px;
+		}
+		.summary-item:last-child { border-bottom: none; }
+		.summary-bullet { color: var(--brand-green); font-weight: 800; }
+
+		.source-box {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			padding: 8px 10px;
+			border-radius: 6px;
+			font-size: 10px;
+			color: var(--text-muted);
+			margin-bottom: 10px;
+		}
+
+		.cta-banner {
+			background: var(--brand-green);
+			color: #ffffff;
+			padding: 8px 10px;
+			border-radius: 6px;
+			font-size: 11px;
+			font-weight: 700;
+			text-align: center;
+		}
+
+		/* Gizli Yüksek Çözünürlüklü Export Canvas'ı */
+		#export-canvas { display: none; }
+	</style>
+</head>
+<body>
+
+	<!-- Üst Çubuk -->
+	<header class="app-header">
+		<div class="app-brand">
+			<span class="app-logo-text"><span class="p1">Hepsi</span><span class="p2">Veri</span></span>
+			<span class="app-badge">Instagram Görsel Stüdyosu</span>
+		</div>
+		<div class="header-actions">
+			<button class="btn-download-all" id="btn-export-all">
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+				<span>4 Slaytı Birden İndir (1080x1350 PNG)</span>
+			</button>
+		</div>
+	</header>
+
+	<div class="studio-container">
+		
+		<!-- Sol Form Paneli -->
+		<aside class="editor-sidebar">
+
+			<div class="sidebar-section">
+				<h2 class="section-title">📂 1. Haberi Otomatik Seç</h2>
+				<div class="form-group">
+					<label class="form-label" for="post-selector">Haber Listesi</label>
+					<select class="form-select" id="post-selector">
+						<option value="">-- Haber Seçin (Veriler Otomatik Dolar) --</option>
+						{postsPayload.map((p, idx) => (
+							<option value={idx}>{p.title}</option>
+						))}
+					</select>
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h2 class="section-title">🎯 2. Slayt 1 (Kapak)</h2>
+				<div class="form-group">
+					<label class="form-label">Kategori Rozeti</label>
+					<input class="form-input" id="inp-cat" value="EKONOMİ / VERİ ANALİZİ">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Ana Başlık (Soru / Vurucu Cümle)</label>
+					<textarea class="form-textarea" id="inp-title" rows="3">Türkiye'de çalışan her üç kadından biri neden sosyal güvencesiz?</textarea>
+				</div>
+				<div class="form-group">
+					<label class="form-label">Alt Açıklama (Spot)</label>
+					<textarea class="form-textarea" id="inp-desc" rows="2">TEPAV ve SGK verileri, kadın çalışanların çifte kıskaç altında olduğunu ortaya koydu.</textarea>
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h2 class="section-title">⚖️ 3. Slayt 2 (Kıyaslama)</h2>
+				<div class="form-group">
+					<label class="form-label">Bölüm Başlığı</label>
+					<input class="form-input" id="inp-comp-title" value="Kayıt Dışılık Makası Açılıyor">
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label class="form-label">Sol Etiket</label>
+						<input class="form-input" id="inp-comp-l-label" value="Erkeklerde Kayıt Dışı">
+						<label class="form-label" style="margin-top:6px;">Sol Oran</label>
+						<input class="form-input" id="inp-comp-l-val" value="%21,9">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Sağ Etiket (Vurgulu)</label>
+						<input class="form-input" id="inp-comp-r-label" value="Kadınlarda Kayıt Dışı">
+						<label class="form-label" style="margin-top:6px;">Sağ Oran</label>
+						<input class="form-input" id="inp-comp-r-val" value="%29,4">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="form-label">Fark Özeti</label>
+					<input class="form-input" id="inp-comp-note" value="Kadın çalışanlar aleyhine fark 7,5 puana ulaştı.">
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h2 class="section-title">💥 4. Slayt 3 (Büyük Rakam)</h2>
+				<div class="form-group">
+					<label class="form-label">Üst Etiket</label>
+					<input class="form-input" id="inp-stat-eyebrow" value="TARIMDA KADIN EMEĞİ">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Büyük Rakam</label>
+					<input class="form-input" id="inp-stat-number" value="%91,9">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Rakamın Anlamı / Açıklaması</label>
+					<textarea class="form-textarea" id="inp-stat-desc" rows="3">Tarımda çalışan kadınların neredeyse tamamı hiçbir sosyal güvenlik kaydı olmadan güvencesiz çalışıyor.</textarea>
+				</div>
+			</div>
+
+			<div class="sidebar-section">
+				<h2 class="section-title">📌 5. Slayt 4 (Özet & Kaynak)</h2>
+				<div class="form-group">
+					<label class="form-label">Madde 1</label>
+					<input class="form-input" id="inp-sum-1" value="Her 3 kadından 1'i hiçbir sosyal güvenceye sahip değil.">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Madde 2</label>
+					<input class="form-input" id="inp-sum-2" value="Sendikalı kadın işçi oranı yalnızca %10,8'de kaldı.">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Madde 3</label>
+					<input class="form-input" id="inp-sum-3" value="Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.">
+				</div>
+				<div class="form-group">
+					<label class="form-label">Resmi Kaynak</label>
+					<input class="form-input" id="inp-source" value="TEPAV İstihdam İzleme Bülteni & SGK Temmuz 2026">
+				</div>
+			</div>
+
+		</aside>
+
+		<!-- Sağ Canlı Önizleme Alanı -->
+		<main class="preview-area">
+			<div class="preview-grid">
+
+				<!-- Slayt 1 -->
+				<div class="slide-wrapper">
+					<div class="slide-header">
+						<span>Slayt 1 (Kapak)</span>
+						<button class="btn-save-slide" onclick="downloadSingle(1)">PNG İndir</button>
+					</div>
+					<div class="slide-card" id="card-1">
+						<div class="card-topbar">
+							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-tag" id="view-cat">EKONOMİ / VERİ ANALİZİ</div>
+							<div class="card-counter">01/04</div>
+						</div>
+						<div class="cover-center">
+							<h3 class="cover-headline" id="view-title">Türkiye'de çalışan her üç kadından biri neden sosyal güvencesiz?</h3>
+							<p class="cover-sub" id="view-desc">TEPAV ve SGK verileri, kadın çalışanların çifte kıskaç altında olduğunu ortaya koydu.</p>
+						</div>
+						<div class="card-footer">
+							<span>Kaydırın ➔</span>
+							<span>hepsiveri.com</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Slayt 2 -->
+				<div class="slide-wrapper">
+					<div class="slide-header">
+						<span>Slayt 2 (Kıyaslama)</span>
+						<button class="btn-save-slide" onclick="downloadSingle(2)">PNG İndir</button>
+					</div>
+					<div class="slide-card" id="card-2">
+						<div class="card-topbar">
+							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-counter">02/04</div>
+						</div>
+						<div>
+							<h3 class="compare-title" id="view-comp-title">Kayıt Dışılık Makası Açılıyor</h3>
+							<div class="compare-boxes">
+								<div class="stat-box">
+									<div class="stat-label" id="view-comp-l-label">Erkeklerde Kayıt Dışı</div>
+									<div class="stat-val" id="view-comp-l-val">%21,9</div>
+								</div>
+								<div class="stat-box highlight">
+									<div class="stat-label" id="view-comp-r-label">Kadınlarda Kayıt Dışı</div>
+									<div class="stat-val" id="view-comp-r-val">%29,4</div>
+								</div>
+							</div>
+							<div class="compare-note" id="view-comp-note">Kadın çalışanlar aleyhine fark 7,5 puana ulaştı.</div>
+						</div>
+						<div class="card-footer">
+							<span>Kaydırın ➔</span>
+							<span>hepsiveri.com</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Slayt 3 -->
+				<div class="slide-wrapper">
+					<div class="slide-header">
+						<span>Slayt 3 (Büyük Rakam)</span>
+						<button class="btn-save-slide" onclick="downloadSingle(3)">PNG İndir</button>
+					</div>
+					<div class="slide-card" id="card-3">
+						<div class="card-topbar">
+							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-counter">03/04</div>
+						</div>
+						<div class="big-stat-wrap">
+							<div class="big-stat-eyebrow" id="view-stat-eyebrow">TARIMDA KADIN EMEĞİ</div>
+							<div class="big-stat-number" id="view-stat-number">%91,9</div>
+							<div class="big-stat-desc" id="view-stat-desc">Tarımda çalışan kadınların neredeyse tamamı hiçbir sosyal güvenlik kaydı olmadan güvencesiz çalışıyor.</div>
+						</div>
+						<div class="card-footer">
+							<span>Kaydırın ➔</span>
+							<span>hepsiveri.com</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Slayt 4 -->
+				<div class="slide-wrapper">
+					<div class="slide-header">
+						<span>Slayt 4 (Özet & CTA)</span>
+						<button class="btn-save-slide" onclick="downloadSingle(4)">PNG İndir</button>
+					</div>
+					<div class="slide-card" id="card-4">
+						<div class="card-topbar">
+							<div class="card-logo"><span class="p1">Hepsi</span><span class="p2">Veri</span></div>
+							<div class="card-counter">04/04</div>
+						</div>
+						<div>
+							<h3 class="summary-title">Özet ve Temel Çıkarımlar</h3>
+							<ul class="summary-list">
+								<li class="summary-item"><span class="summary-bullet">✓</span><span id="view-sum-1">Her 3 kadından 1'i hiçbir sosyal güvenceye sahip değil.</span></li>
+								<li class="summary-item"><span class="summary-bullet">✓</span><span id="view-sum-2">Sendikalı kadın işçi oranı yalnızca %10,8'de kaldı.</span></li>
+								<li class="summary-item"><span class="summary-bullet">✓</span><span id="view-sum-3">Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.</span></li>
+							</ul>
+							<div class="source-box" id="view-source">Kaynak: TEPAV İstihdam İzleme Bülteni & SGK Temmuz 2026</div>
+							<div class="cta-banner">Haberin tamamı için profildeki linke tıklayın • hepsiveri.com</div>
+						</div>
+						<div class="card-footer">
+							<span>Kaydet & Paylaş</span>
+							<span>hepsiveri.com</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</main>
+
+	</div>
+
+	<!-- Arka planda 1080x1350 PNG çizen Gizli Canvas -->
+	<canvas id="export-canvas" width="1080" height="1350"></canvas>
+
+	<!-- Veriler ve Script -->
+	<script is:inline define:vars={{ postsPayload }}>
+		// Form - Önizleme Canlı Bağlantısı
+		const bindInput = (inpId, viewId) => {
+			const inp = document.getElementById(inpId);
+			const view = document.getElementById(viewId);
+			if (inp && view) {
+				inp.addEventListener('input', () => { view.innerText = inp.value; });
+			}
+		};
+
+		bindInput('inp-cat', 'view-cat');
+		bindInput('inp-title', 'view-title');
+		bindInput('inp-desc', 'view-desc');
+		bindInput('inp-comp-title', 'view-comp-title');
+		bindInput('inp-comp-l-label', 'view-comp-l-label');
+		bindInput('inp-comp-l-val', 'view-comp-l-val');
+		bindInput('inp-comp-r-label', 'view-comp-r-label');
+		bindInput('inp-comp-r-val', 'view-comp-r-val');
+		bindInput('inp-comp-note', 'view-comp-note');
+		bindInput('inp-stat-eyebrow', 'view-stat-eyebrow');
+		bindInput('inp-stat-number', 'view-stat-number');
+		bindInput('inp-stat-desc', 'view-stat-desc');
+		bindInput('inp-sum-1', 'view-sum-1');
+		bindInput('inp-sum-2', 'view-sum-2');
+		bindInput('inp-sum-3', 'view-sum-3');
+		bindInput('inp-source', 'view-source');
+
+		// Haber Seçildiğinde Otomatik Doldur
+		const selector = document.getElementById('post-selector');
+		selector.addEventListener('change', (e) => {
+			const idx = e.target.value;
+			if (idx === '') return;
+			const post = postsPayload[idx];
+			if (!post) return;
+
+			document.getElementById('inp-cat').value = post.category.toUpperCase() + ' / VERİ ANALİZİ';
+			document.getElementById('inp-title').value = post.title;
+			document.getElementById('inp-desc').value = post.description || '';
+
+			if (post.bullets && post.bullets.length >= 2) {
+				document.getElementById('inp-comp-l-label').value = post.bullets[0].label;
+				document.getElementById('inp-comp-l-val').value = post.bullets[0].val;
+				document.getElementById('inp-comp-r-label').value = post.bullets[1].label;
+				document.getElementById('inp-comp-r-val').value = post.bullets[1].val;
+			}
+
+			if (post.bullets && post.bullets.length >= 3) {
+				document.getElementById('inp-stat-number').value = post.bullets[2].val;
+				document.getElementById('inp-stat-eyebrow').value = post.bullets[2].label.toUpperCase();
+			}
+
+			// Önizlemeleri tetikle
+			const inputs = document.querySelectorAll('.form-input, .form-textarea');
+			inputs.forEach(i => i.dispatchEvent(new Event('input')));
+		});
+
+		// 1080x1350 Piksel Yüksek Çözünürlüklü Canvas Çizici
+		function renderSlideToCanvas(slideNum) {
+			const canvas = document.getElementById('export-canvas');
+			const ctx = canvas.getContext('2d');
+			const w = 1080;
+			const h = 1350;
+
+			// 1. Zemin Rengi (#FBFBFA)
+			ctx.fillStyle = '#fbfbfa';
+			ctx.fillRect(0, 0, w, h);
+
+			// 2. İnce Dış Çerçeve
+			ctx.strokeStyle = '#e2e8f0';
+			ctx.lineWidth = 4;
+			ctx.strokeRect(40, 40, w - 80, h - 80);
+
+			// 3. Logo Çizimi
+			ctx.font = '800 48px "Plus Jakarta Sans", sans-serif';
+			ctx.fillStyle = '#4c1eb2';
+			ctx.fillText('Hepsi', 90, 140);
+			const hepsiWidth = ctx.measureText('Hepsi').width;
+			ctx.fillStyle = '#1f9a77';
+			ctx.fillText('Veri', 90 + hepsiWidth, 140);
+
+			// Slayt Numarası (Sağ Üst)
+			ctx.font = '700 32px "JetBrains Mono", monospace';
+			ctx.fillStyle = '#64748b';
+			ctx.textAlign = 'right';
+			ctx.fillText(`0${slideNum}/04`, w - 90, 140);
+			ctx.textAlign = 'left';
+
+			// Alt Footer Çizgisi
+			ctx.strokeStyle = '#e2e8f0';
+			ctx.lineWidth = 2;
+			ctx.beginPath();
+			ctx.moveTo(90, h - 140);
+			ctx.lineTo(w - 90, h - 140);
+			ctx.stroke();
+
+			ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
+			ctx.fillStyle = '#64748b';
+			ctx.fillText('Kaydırın ➔', 90, h - 90);
+			ctx.textAlign = 'right';
+			ctx.fillText('hepsiveri.com', w - 90, h - 90);
+			ctx.textAlign = 'left';
+
+			// Slayta Özel İçerik Çizimi
+			if (slideNum === 1) {
+				// Kategori Rozeti
+				const cat = document.getElementById('inp-cat').value;
+				ctx.fillStyle = '#1f9a77';
+				ctx.font = '800 28px "Plus Jakarta Sans", sans-serif';
+				ctx.fillText(cat, 90, 280);
+
+				// Ana Başlık (Metin Kaydırma ile)
+				const title = document.getElementById('inp-title').value;
+				ctx.fillStyle = '#0f172a';
+				ctx.font = '800 68px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, title, 90, 420, 900, 90);
+
+				// Spot
+				const desc = document.getElementById('inp-desc').value;
+				ctx.fillStyle = '#334155';
+				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, desc, 90, 850, 900, 56);
+			} else if (slideNum === 2) {
+				const compTitle = document.getElementById('inp-comp-title').value;
+				ctx.fillStyle = '#0f172a';
+				ctx.font = '800 56px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, compTitle, 90, 300, 900, 75);
+
+				// Sol Kutu (Erkek)
+				ctx.fillStyle = '#ffffff';
+				ctx.strokeStyle = '#cbd5e1';
+				ctx.lineWidth = 3;
+				roundRect(ctx, 90, 480, 420, 360, 20, true, true);
+
+				ctx.fillStyle = '#64748b';
+				ctx.font = '600 30px "Plus Jakarta Sans", sans-serif';
+				ctx.textAlign = 'center';
+				ctx.fillText(document.getElementById('inp-comp-l-label').value, 300, 570);
+
+				ctx.fillStyle = '#0f172a';
+				ctx.font = '800 84px "JetBrains Mono", monospace';
+				ctx.fillText(document.getElementById('inp-comp-l-val').value, 300, 720);
+
+				// Sağ Kutu (Kadın - Vurgulu)
+				ctx.fillStyle = '#f0fdf4';
+				ctx.strokeStyle = '#1f9a77';
+				ctx.lineWidth = 4;
+				roundRect(ctx, 570, 480, 420, 360, 20, true, true);
+
+				ctx.fillStyle = '#1f9a77';
+				ctx.font = '700 30px "Plus Jakarta Sans", sans-serif';
+				ctx.fillText(document.getElementById('inp-comp-r-label').value, 780, 570);
+
+				ctx.fillStyle = '#1f9a77';
+				ctx.font = '800 84px "JetBrains Mono", monospace';
+				ctx.fillText(document.getElementById('inp-comp-r-val').value, 780, 720);
+				ctx.textAlign = 'left';
+
+				// Fark Notu
+				ctx.fillStyle = '#ffffff';
+				ctx.strokeStyle = '#e2e8f0';
+				roundRect(ctx, 90, 900, 900, 160, 16, true, true);
+
+				ctx.fillStyle = '#334155';
+				ctx.font = '600 36px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, document.getElementById('inp-comp-note').value, 130, 995, 820, 50);
+			} else if (slideNum === 3) {
+				ctx.textAlign = 'center';
+				ctx.fillStyle = '#1f9a77';
+				ctx.font = '800 36px "Plus Jakarta Sans", sans-serif';
+				ctx.fillText(document.getElementById('inp-stat-eyebrow').value, 540, 360);
+
+				ctx.fillStyle = '#4c1eb2';
+				ctx.font = '800 170px "JetBrains Mono", monospace';
+				ctx.fillText(document.getElementById('inp-stat-number').value, 540, 580);
+				ctx.textAlign = 'left';
+
+				ctx.fillStyle = '#ffffff';
+				ctx.strokeStyle = '#e2e8f0';
+				ctx.lineWidth = 3;
+				roundRect(ctx, 90, 720, 900, 320, 20, true, true);
+
+				ctx.fillStyle = '#0f172a';
+				ctx.font = '500 40px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, document.getElementById('inp-stat-desc').value, 140, 830, 800, 64);
+			} else if (slideNum === 4) {
+				ctx.fillStyle = '#0f172a';
+				ctx.font = '800 52px "Plus Jakarta Sans", sans-serif';
+				ctx.fillText('Özet ve Temel Çıkarımlar', 90, 280);
+
+				const m1 = '• ' + document.getElementById('inp-sum-1').value;
+				const m2 = '• ' + document.getElementById('inp-sum-2').value;
+				const m3 = '• ' + document.getElementById('inp-sum-3').value;
+
+				ctx.fillStyle = '#334155';
+				ctx.font = '500 34px "Plus Jakarta Sans", sans-serif';
+				drawWrappedText(ctx, m1, 90, 380, 900, 52);
+				drawWrappedText(ctx, m2, 90, 520, 900, 52);
+				drawWrappedText(ctx, m3, 90, 660, 900, 52);
+
+				// Kaynak
+				ctx.fillStyle = '#ffffff';
+				ctx.strokeStyle = '#cbd5e1';
+				ctx.lineWidth = 2;
+				roundRect(ctx, 90, 820, 900, 110, 12, true, true);
+				ctx.fillStyle = '#64748b';
+				ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
+				ctx.fillText(document.getElementById('inp-source').value, 120, 888);
+
+				// CTA Buton
+				ctx.fillStyle = '#1f9a77';
+				roundRect(ctx, 90, 980, 900, 120, 16, true, false);
+				ctx.fillStyle = '#ffffff';
+				ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
+				ctx.textAlign = 'center';
+				ctx.fillText('Haberin tamamı ve açık veri için link profilde', 540, 1055);
+				ctx.textAlign = 'left';
+			}
+
+			return canvas.toDataURL('image/png');
+		}
+
+		// Yardımcı Metin Kaydırma
+		function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+			const words = text.split(' ');
+			let line = '';
+			for (let n = 0; n < words.length; n++) {
+				const testLine = line + words[n] + ' ';
+				const metrics = ctx.measureText(testLine);
+				if (metrics.width > maxWidth && n > 0) {
+					ctx.fillText(line, x, y);
+					line = words[n] + ' ';
+					y += lineHeight;
+				} else {
+					line = testLine;
+				}
+			}
+			ctx.fillText(line, x, y);
+		}
+
+		// Yuvarlatılmış Kutu Çizimi
+		function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+			ctx.beginPath();
+			ctx.moveTo(x + radius, y);
+			ctx.lineTo(x + width - radius, y);
+			ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+			ctx.lineTo(x + width, y + height - radius);
+			ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+			ctx.lineTo(x + radius, y + height);
+			ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+			ctx.lineTo(x, y + radius);
+			ctx.quadraticCurveTo(x, y, x + radius, y);
+			ctx.closePath();
+			if (fill) ctx.fill();
+			if (stroke) ctx.stroke();
+		}
+
+		// Tekli İndirme
+		window.downloadSingle = function(slideNum) {
+			const dataUrl = renderSlideToCanvas(slideNum);
+			const a = document.createElement('a');
+			a.download = `hepsiveri-slayt-0${slideNum}.png`;
+			a.href = dataUrl;
+			a.click();
+		};
+
+		// 4 Slaytı Birden İndir
+		document.getElementById('btn-export-all').addEventListener('click', async () => {
+			for (let i = 1; i <= 4; i++) {
+				downloadSingle(i);
+				await new Promise(r => setTimeout(r, 400));
+			}
+		});
+	</script>
+</body>
+</html>
