@@ -180,6 +180,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		sum4,
 		sum5,
 		source,
+		heroImage: p.data.heroImage ? (typeof p.data.heroImage === 'string' ? p.data.heroImage : (p.data.heroImage as any).src || '') : '',
 		date: p.data.pubDate ? new Date(p.data.pubDate).toLocaleDateString('tr-TR') : ''
 	};
 });
@@ -729,6 +730,92 @@ const encryptedBundle = {
 			border-color: var(--brand-purple);
 			color: var(--brand-purple);
 		}
+
+		/* Kapak Görsel Kontrolleri */
+		.img-control-box {
+			background: #ffffff;
+			border: 1px solid var(--border);
+			border-radius: 10px;
+			padding: 12px;
+		}
+		.img-preview-row {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+		.img-preview-thumb {
+			width: 68px;
+			height: 68px;
+			border-radius: 8px;
+			background: #f1f5f9;
+			border: 1px solid var(--border);
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			position: relative;
+		}
+		.img-preview-thumb img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.img-placeholder-text {
+			font-size: 11px;
+			font-weight: 600;
+			color: var(--text-muted);
+			text-align: center;
+			padding: 4px;
+		}
+		.img-control-actions {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			flex: 1;
+		}
+		.btn-upload-img {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			background: var(--brand-purple);
+			color: #ffffff;
+			border: none;
+			border-radius: 6px;
+			padding: 7px 10px;
+			font-size: 12px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		.btn-upload-img:hover {
+			background: #3b1691;
+		}
+		.btn-reset-img {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			background: #f8fafc;
+			border: 1px solid var(--border);
+			color: var(--text-secondary);
+			border-radius: 6px;
+			padding: 5px 8px;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+		.btn-reset-img:hover {
+			border-color: var(--brand-purple);
+			color: var(--brand-purple);
+		}
+		.img-help-note {
+			font-size: 11px;
+			color: var(--text-muted);
+			margin-top: 8px;
+			line-height: 1.4;
+		}
 	</style>
 </head>
 <body>
@@ -871,6 +958,46 @@ const encryptedBundle = {
 						<input class="form-input" id="inp-counter-1" value="01/04" title="Slayt Numarası" style="padding: 2px 6px; font-size: 11px; text-align: center; font-family: var(--font-mono); font-weight: 700;">
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="form-label">Kapak Görsel Düzeni</label>
+					<div class="segmented-control mode-grid-2">
+						<button type="button" class="btn-seg active" id="btn-img-mode-on">
+							🖼️ Fotoğraflı Kapak
+						</button>
+						<button type="button" class="btn-seg" id="btn-img-mode-off">
+							✍️ Sadece Metin
+						</button>
+					</div>
+				</div>
+
+				<div id="cover-img-controls" class="img-control-box" style="margin-bottom: 16px;">
+					<div class="img-preview-row">
+						<div class="img-preview-thumb" id="cover-thumb-box">
+							<img id="cover-thumb-img" src="" alt="Önizleme" style="display:none;" />
+							<span id="cover-thumb-placeholder" class="img-placeholder-text">Görsel Seçilmedi</span>
+						</div>
+						<div class="img-control-actions">
+							<button type="button" class="btn-upload-img" id="btn-trigger-upload">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+									<polyline points="17 8 12 3 7 8"></polyline>
+									<line x1="12" y1="3" x2="12" y2="15"></line>
+								</svg>
+								<span>Fotoğraf Seç / Değiştir</span>
+							</button>
+							<input type="file" id="inp-cover-file" accept="image/*" style="display:none;" />
+							
+							<button type="button" class="btn-reset-img" id="btn-reset-hero-img">
+								<span>Haber Görseline Dön</span>
+							</button>
+						</div>
+					</div>
+					<div class="img-help-note">
+						💡 Haberin kapak fotoğrafı otomatik yüklenir. İsterseniz bilgisayarınızdan başka bir grafik/fotoğraf da seçebilirsiniz.
+					</div>
+				</div>
+
 				<div class="form-group">
 					<div class="form-label-row">
 						<label class="form-label">Kategori Rozeti</label>
@@ -1268,6 +1395,101 @@ const encryptedBundle = {
 		let currentStudioMode = 'data'; // 'data' veya 'concept'
 		let totalSlideCount = 4; // 3 veya 4
 
+		// --- Slayt 1 (Kapak) Görsel Yönetimi ---
+		let slide1ImageMode = 'image'; // 'image' veya 'text'
+		let slide1Img = new Image();
+		let hasSlide1Img = false;
+		let currentHeroUrl = '/uploads/kadin-istihdami-guvencesizlik-tepav.jpg';
+
+		window.setSlide1ImageMode = function(mode) {
+			slide1ImageMode = mode;
+			const btnOn = document.getElementById('btn-img-mode-on');
+			const btnOff = document.getElementById('btn-img-mode-off');
+			const controls = document.getElementById('cover-img-controls');
+
+			if (mode === 'image') {
+				btnOn?.classList.add('active');
+				btnOff?.classList.remove('active');
+				if (controls) controls.style.display = 'block';
+			} else {
+				btnOff?.classList.add('active');
+				btnOn?.classList.remove('active');
+				if (controls) controls.style.display = 'none';
+			}
+			scheduleRender();
+		};
+
+		document.getElementById('btn-img-mode-on')?.addEventListener('click', () => setSlide1ImageMode('image'));
+		document.getElementById('btn-img-mode-off')?.addEventListener('click', () => setSlide1ImageMode('text'));
+
+		function updateImgThumb(url) {
+			const thumbImg = document.getElementById('cover-thumb-img');
+			const placeholder = document.getElementById('cover-thumb-placeholder');
+			if (url) {
+				if (thumbImg) {
+					thumbImg.src = url;
+					thumbImg.style.display = 'block';
+				}
+				if (placeholder) placeholder.style.display = 'none';
+			} else {
+				if (thumbImg) thumbImg.style.display = 'none';
+				if (placeholder) placeholder.style.display = 'block';
+			}
+		}
+
+		function loadSlide1Image(url) {
+			if (!url) {
+				hasSlide1Img = false;
+				updateImgThumb('');
+				scheduleRender();
+				return;
+			}
+			const img = new Image();
+			img.crossOrigin = 'anonymous';
+			img.onload = () => {
+				slide1Img = img;
+				hasSlide1Img = true;
+				updateImgThumb(url);
+				scheduleRender();
+			};
+			img.onerror = () => {
+				hasSlide1Img = false;
+				updateImgThumb('');
+				scheduleRender();
+			};
+			img.src = url;
+		}
+
+		// Bilgisayardan Fotoğraf Seç / Değiştir
+		document.getElementById('btn-trigger-upload')?.addEventListener('click', () => {
+			document.getElementById('inp-cover-file')?.click();
+		});
+
+		document.getElementById('inp-cover-file')?.addEventListener('change', (e) => {
+			const file = e.target.files && e.target.files[0];
+			if (!file) return;
+			const reader = new FileReader();
+			reader.onload = (ev) => {
+				const dataUrl = ev.target.result;
+				loadSlide1Image(dataUrl);
+				setSlide1ImageMode('image');
+			};
+			reader.readAsDataURL(file);
+		});
+
+		// Haberin Orijinal Görseline Dön
+		document.getElementById('btn-reset-hero-img')?.addEventListener('click', () => {
+			if (currentHeroUrl) {
+				loadSlide1Image(currentHeroUrl);
+				setSlide1ImageMode('image');
+			} else {
+				alert('Bu haber için sistemde kayıtlı bir kapak görseli bulunmuyor.');
+			}
+		});
+
+		// Varsayılan ilk görseli yükle
+		loadSlide1Image(currentHeroUrl);
+
 		// 3 veya 4 Slayt Seçimi
 		window.setSlideCount = function(count) {
 			totalSlideCount = count;
@@ -1470,6 +1692,18 @@ const encryptedBundle = {
 			document.getElementById('inp-sum-5').value = post.sum5 || '';
 			document.getElementById('inp-source').value = post.source;
 
+			// Kapak Görselini Otomatik Yükle
+			if (post.heroImage) {
+				currentHeroUrl = post.heroImage;
+				loadSlide1Image(post.heroImage);
+				setSlide1ImageMode('image');
+			} else {
+				currentHeroUrl = '';
+				hasSlide1Img = false;
+				updateImgThumb('');
+				setSlide1ImageMode('text');
+			}
+
 			// Otomatik Modu Uygula
 			setStudioMode(post.recommendedMode || 'data');
 			updateAllCounters();
@@ -1534,6 +1768,38 @@ const encryptedBundle = {
 			ctx.closePath();
 			if (fill) ctx.fill();
 			if (stroke) ctx.stroke();
+		}
+
+		// Görseli Oranını Bozmadan Kırparak Yuvarlak Köşeli Alana Çizen Yardımcı
+		function drawCoverImage(ctx, img, x, y, width, height, radius) {
+			if (!img || !img.complete || img.naturalWidth === 0) return;
+			ctx.save();
+			roundRect(ctx, x, y, width, height, radius, false, false);
+			ctx.clip();
+
+			const imgRatio = img.naturalWidth / img.naturalHeight;
+			const targetRatio = width / height;
+			let sx, sy, sWidth, sHeight;
+
+			if (imgRatio > targetRatio) {
+				sHeight = img.naturalHeight;
+				sWidth = img.naturalHeight * targetRatio;
+				sx = (img.naturalWidth - sWidth) / 2;
+				sy = 0;
+			} else {
+				sWidth = img.naturalWidth;
+				sHeight = img.naturalWidth / targetRatio;
+				sx = 0;
+				sy = (img.naturalHeight - sHeight) / 2;
+			}
+
+			ctx.drawImage(img, sx, sy, sWidth, sHeight, x, y, width, height);
+			ctx.restore();
+
+			// Şık 2.5px İnce Dış Çerçeve
+			ctx.strokeStyle = '#e2e8f0';
+			ctx.lineWidth = 2.5;
+			roundRect(ctx, x, y, width, height, radius, false, true);
 		}
 
 		function getCounter(slideNum) {
@@ -1601,57 +1867,122 @@ const encryptedBundle = {
 
 			// --- Slayt İçerik Çizimleri ---
 			if (slideNum === 1) {
-				// Slayt 1: Kapak (Dikeyde Dengeli Yerleşim)
-				const cat = (document.getElementById('inp-cat').value || '').trim();
-				if (cat) {
-					ctx.font = '700 24px "Plus Jakarta Sans", sans-serif';
-					const catMetrics = ctx.measureText(cat);
-					const catPillWidth = catMetrics.width + 36;
-					ctx.fillStyle = 'rgba(31, 154, 119, 0.1)';
-					roundRect(ctx, 70, 205, catPillWidth, 48, 10, true, false);
-					ctx.fillStyle = '#1f9a77';
-					ctx.fillText(cat, 88, 238);
-				}
+				const isVisualMode = (slide1ImageMode === 'image' && hasSlide1Img);
 
-				const title = (document.getElementById('inp-title').value || '').trim();
-				const desc = (document.getElementById('inp-desc').value || '').trim();
+				if (isVisualMode) {
+					// --- Slayt 1: Fotoğraflı Editoryal Kapak (FT / Bloomberg / NYT Stili) ---
+					const cat = (document.getElementById('inp-cat').value || '').trim();
+					let titleStartY = 205;
+					if (cat) {
+						ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
+						const catMetrics = ctx.measureText(cat);
+						const catPillWidth = catMetrics.width + 30;
+						ctx.fillStyle = 'rgba(31, 154, 119, 0.1)';
+						roundRect(ctx, 70, 165, catPillWidth, 40, 8, true, false);
+						ctx.fillStyle = '#1f9a77';
+						ctx.fillText(cat, 85, 193);
+						titleStartY = 250;
+					}
 
-				let titleFontSize = 64;
-				let titleLineHeight = 84;
-				if (title.length > 85) {
-					titleFontSize = 52;
-					titleLineHeight = 70;
-				} else if (title.length > 60) {
-					titleFontSize = 58;
-					titleLineHeight = 78;
-				}
+					const title = (document.getElementById('inp-title').value || '').trim();
+					const desc = (document.getElementById('inp-desc').value || '').trim();
 
-				ctx.font = `800 ${titleFontSize}px "Plus Jakarta Sans", sans-serif`;
-				const titleLines = getWrappedLines(ctx, title, 940);
-				const titleHeight = titleLines.length * titleLineHeight;
+					// Başlık Font Boyutu
+					let titleFontSize = 52;
+					let titleLineHeight = 68;
+					if (title.length > 70) {
+						titleFontSize = 46;
+						titleLineHeight = 60;
+					} else if (title.length > 45) {
+						titleFontSize = 49;
+						titleLineHeight = 64;
+					}
 
-				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
-				const descLines = getWrappedLines(ctx, desc, 940);
-				const descHeight = descLines.length * 54;
+					ctx.fillStyle = '#0f172a';
+					ctx.font = `800 ${titleFontSize}px "Plus Jakarta Sans", sans-serif`;
+					const titleLines = getWrappedLines(ctx, title, 940);
+					let curY = titleStartY;
+					for (const line of titleLines) {
+						ctx.fillText(line, 70, curY);
+						curY += titleLineHeight;
+					}
 
-				// Başlık ve Açıklamayı 290px ile 1200px arasında zarifçe ortala
-				const totalBlockHeight = titleHeight + 50 + descHeight;
-				const titleStartY = 290 + Math.max(30, (890 - totalBlockHeight) / 2);
+					// Görsel Alanı Hesaplama
+					const imgY = curY + 20;
+					const descLines = desc ? getWrappedLines(ctx, desc, 940) : [];
+					const maxDescLines = 3;
+					const visibleDescLines = descLines.slice(0, maxDescLines);
+					const descHeight = visibleDescLines.length > 0 ? (visibleDescLines.length * 44 + 32) : 0;
 
-				ctx.fillStyle = '#0f172a';
-				ctx.font = `800 ${titleFontSize}px "Plus Jakarta Sans", sans-serif`;
-				let curY = titleStartY;
-				for (const line of titleLines) {
-					ctx.fillText(line, 70, curY);
-					curY += titleLineHeight;
-				}
+					// 1220px taban çizgisine kadar kalan alandan görsel yüksekliğini belirle
+					const availableForImg = 1220 - imgY - descHeight;
+					const imgHeight = Math.min(520, Math.max(340, availableForImg));
 
-				curY += 45;
-				ctx.fillStyle = '#334155';
-				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
-				for (const line of descLines) {
-					ctx.fillText(line, 70, curY);
-					curY += 54;
+					// Fotoğrafı Çiz (Orantılı & Yuvarlak Köşeli)
+					drawCoverImage(ctx, slide1Img, 70, imgY, 940, imgHeight, 18);
+
+					// Açıklama Metni (Fotoğrafın Altında)
+					if (visibleDescLines.length > 0) {
+						let descY = imgY + imgHeight + 42;
+						ctx.fillStyle = '#334155';
+						ctx.font = '500 30px "Plus Jakarta Sans", sans-serif';
+						for (const line of visibleDescLines) {
+							ctx.fillText(line, 70, descY);
+							descY += 44;
+						}
+					}
+				} else {
+					// --- Slayt 1: Sadece Metin Kapağı (Mevcut Tipografik Düzen) ---
+					const cat = (document.getElementById('inp-cat').value || '').trim();
+					if (cat) {
+						ctx.font = '700 24px "Plus Jakarta Sans", sans-serif';
+						const catMetrics = ctx.measureText(cat);
+						const catPillWidth = catMetrics.width + 36;
+						ctx.fillStyle = 'rgba(31, 154, 119, 0.1)';
+						roundRect(ctx, 70, 205, catPillWidth, 48, 10, true, false);
+						ctx.fillStyle = '#1f9a77';
+						ctx.fillText(cat, 88, 238);
+					}
+
+					const title = (document.getElementById('inp-title').value || '').trim();
+					const desc = (document.getElementById('inp-desc').value || '').trim();
+
+					let titleFontSize = 64;
+					let titleLineHeight = 84;
+					if (title.length > 85) {
+						titleFontSize = 52;
+						titleLineHeight = 70;
+					} else if (title.length > 60) {
+						titleFontSize = 58;
+						titleLineHeight = 78;
+					}
+
+					ctx.font = `800 ${titleFontSize}px "Plus Jakarta Sans", sans-serif`;
+					const titleLines = getWrappedLines(ctx, title, 940);
+					const titleHeight = titleLines.length * titleLineHeight;
+
+					ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+					const descLines = getWrappedLines(ctx, desc, 940);
+					const descHeight = descLines.length * 54;
+
+					const totalBlockHeight = titleHeight + 50 + descHeight;
+					const titleStartY = 290 + Math.max(30, (890 - totalBlockHeight) / 2);
+
+					ctx.fillStyle = '#0f172a';
+					ctx.font = `800 ${titleFontSize}px "Plus Jakarta Sans", sans-serif`;
+					let curY = titleStartY;
+					for (const line of titleLines) {
+						ctx.fillText(line, 70, curY);
+						curY += titleLineHeight;
+					}
+
+					curY += 45;
+					ctx.fillStyle = '#334155';
+					ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
+					for (const line of descLines) {
+						ctx.fillText(line, 70, curY);
+						curY += 54;
+					}
 				}
 
 			} else if (slideNum === 2) {
