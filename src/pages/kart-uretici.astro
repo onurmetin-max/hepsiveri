@@ -1921,28 +1921,38 @@ const encryptedBundle = {
 						curY += titleLineHeight;
 					}
 
-					// Görsel Alanı Hesaplama
+					// Görsel ve Açıklama Alanı Hesaplama (Tam 940px Eninde ve Doğru Fontla)
 					const imgY = curY + 20;
-					const descLines = desc ? getWrappedLines(ctx, desc, 940) : [];
-					const maxDescLines = 3;
-					const visibleDescLines = descLines.slice(0, maxDescLines);
-					const descHeight = visibleDescLines.length > 0 ? (visibleDescLines.length * 44 + 32) : 0;
+					const descFontSize = 32;
+					const descLineHeight = 46;
+					ctx.font = `500 ${descFontSize}px "Plus Jakarta Sans", sans-serif`;
+					const allDescLines = desc ? getWrappedLines(ctx, desc, 940) : [];
+
+					// Başlığın dikey kapladığı alana göre açıklama satır sayısını 2 veya 3 olarak sınırla
+					const maxDescLines = titleLines.length >= 3 ? 2 : 3;
+					const visibleDescLines = allDescLines.slice(0, maxDescLines);
+					if (allDescLines.length > maxDescLines && visibleDescLines.length > 0) {
+						let lastLine = visibleDescLines[visibleDescLines.length - 1].replace(/[.,;:!?\s]+$/, '');
+						visibleDescLines[visibleDescLines.length - 1] = lastLine + '...';
+					}
+
+					const descTotalHeight = visibleDescLines.length > 0 ? (visibleDescLines.length * descLineHeight + 40) : 0;
 
 					// 1220px taban çizgisine kadar kalan alandan görsel yüksekliğini belirle
-					const availableForImg = 1220 - imgY - descHeight;
-					const imgHeight = Math.min(520, Math.max(340, availableForImg));
+					const availableForImg = 1220 - imgY - descTotalHeight;
+					const imgHeight = Math.min(520, Math.max(300, availableForImg));
 
-					// Fotoğrafı Çiz (Orantılı & Yuvarlak Köşeli)
+					// Fotoğrafı Çiz (Tam 940px Eninde, Orantılı & Yuvarlak Köşeli)
 					drawCoverImage(ctx, slide1Img, 70, imgY, 940, imgHeight, 18);
 
-					// Açıklama Metni (Fotoğrafın Altında)
+					// Açıklama Metni (Fotoğrafın Altında, Tam 940px Eninde)
 					if (visibleDescLines.length > 0) {
-						let descY = imgY + imgHeight + 42;
+						let descY = imgY + imgHeight + 46;
 						ctx.fillStyle = '#334155';
-						ctx.font = '500 30px "Plus Jakarta Sans", sans-serif';
+						ctx.font = `500 ${descFontSize}px "Plus Jakarta Sans", sans-serif`;
 						for (const line of visibleDescLines) {
 							ctx.fillText(line, 70, descY);
-							descY += 44;
+							descY += descLineHeight;
 						}
 					}
 				} else {
