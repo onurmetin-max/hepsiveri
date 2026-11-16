@@ -8,6 +8,7 @@ description: Saha Araştırmaları Merkezi (SAMER) tarafından hazırlanan “E�
   Paylaşımların metinsel ve tematik kodlama dökümü, konunun sadece mevzuat
   sınırlarında kalmadığını, doğrudan bir yaşam hakkı, ucuz emek ve kurumsal
   denetimsizlik krizine dönüştüğünü somut verilerle ortaya koyuyor.
+heroImage: /uploads/scholarship-debt-loan-student-academic-background-banking1-scaled.webp
 status: Yayında
 pubDate: 2026-11-17 10:00
 category: Ekonomi
