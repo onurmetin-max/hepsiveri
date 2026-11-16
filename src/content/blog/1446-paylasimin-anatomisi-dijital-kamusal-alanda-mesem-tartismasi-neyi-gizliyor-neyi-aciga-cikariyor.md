@@ -8,7 +8,7 @@ description: Saha Araştırmaları Merkezi (SAMER) tarafından hazırlanan “E�
   Paylaşımların metinsel ve tematik kodlama dökümü, konunun sadece mevzuat
   sınırlarında kalmadığını, doğrudan bir yaşam hakkı, ucuz emek ve kurumsal
   denetimsizlik krizine dönüştüğünü somut verilerle ortaya koyuyor.
-status: Taslak
+status: Yayında
 pubDate: 2026-11-15 10:00
 category: Ekonomi
 author: Onur Metin
