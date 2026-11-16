@@ -23,10 +23,10 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 
 	// 2. Yüzde ve kalın veri istatistiklerini topla
 	const boldStats: string[] = [];
-	const sRegex = /\*\*([%0-9][^*]{1,25})\*\*/g;
+	const sRegex = /(?:\*\*|<(?:strong|b)[^>]*>)([0-9%][^<*]{1,120})(?:\*\*|<\/(?:strong|b)>)/g;
 	let sm;
 	while ((sm = sRegex.exec(content)) !== null) {
-		const clean = sm[1].trim();
+		const clean = sm[1].replace(/<[^>]+>/g, '').trim();
 		if (clean.includes('%') || clean.includes('TL') || clean.includes('milyar') || clean.includes('milyon') || clean.includes('bin') || /\d+/.test(clean)) {
 			if (!boldStats.includes(clean)) boldStats.push(clean);
 		}
@@ -67,9 +67,9 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 
 	if (tableRows.length >= 2) {
 		compTitle = 'Sektörel Dağılım ve Karşılaştırma';
-		compLLabel = tableRows[0][0].slice(0, 24);
+		compLLabel = tableRows[0][0];
 		compLVal = tableRows[0][1] || boldStats[0] || '%50';
-		compRLabel = tableRows[1][0].slice(0, 24);
+		compRLabel = tableRows[1][0];
 		compRVal = tableRows[1][1] || boldStats[1] || '%30';
 		compNote = `${compLLabel} ile ${compRLabel} arasındaki gösterge farkı dikkat çekiyor.`;
 	} else if (bulletLines.length >= 2) {
@@ -77,7 +77,7 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		const b1 = bulletLines[1];
 		if (b0.includes(':')) {
 			const parts = b0.split(':');
-			compLLabel = parts[0].slice(0, 24);
+			compLLabel = parts[0].trim();
 			compLVal = parts[1].trim();
 		} else {
 			compLLabel = 'Birinci Gösterge';
@@ -85,13 +85,13 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		}
 		if (b1.includes(':')) {
 			const parts = b1.split(':');
-			compRLabel = parts[0].slice(0, 24);
+			compRLabel = parts[0].trim();
 			compRVal = parts[1].trim();
 		} else {
 			compRLabel = 'İkinci Gösterge';
 			compRVal = boldStats[1] || '%75';
 		}
-		compNote = desc.slice(0, 80) + (desc.length > 80 ? '...' : '');
+		compNote = desc;
 	}
 
 	let statEyebrow = 'Öne Çıkan Ana Gösterge';
@@ -1112,8 +1112,11 @@ const encryptedBundle = {
 					<textarea class="form-textarea" id="inp-stat-eyebrow" rows="2">Tarımda Kadın Emeği</textarea>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Büyük Rakam / Veri</label>
-					<input class="form-input" id="inp-stat-number" value="%91,9">
+					<div class="form-label-row">
+						<label class="form-label">Büyük Rakam / Veri / Vurgulu Başlık</label>
+						<span class="char-count" id="cnt-stat-number">0 / 30 kr.</span>
+					</div>
+					<textarea class="form-textarea" id="inp-stat-number" rows="2">%91,9</textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
@@ -1140,8 +1143,11 @@ const encryptedBundle = {
 					<textarea class="form-textarea" id="inp-concept-stat-eyebrow" rows="2">Aramalarda ve Kullanımda Patlama</textarea>
 				</div>
 				<div class="form-group">
-					<label class="form-label">Vurgulu Değer / Trend Göstergesi</label>
-					<input class="form-input" id="inp-concept-stat-num" value="+%1.000">
+					<div class="form-label-row">
+						<label class="form-label">Vurgulu Değer / Trend Göstergesi</label>
+						<span class="char-count" id="cnt-concept-stat-num">0 / 30 kr.</span>
+					</div>
+					<textarea class="form-textarea" id="inp-concept-stat-num" rows="2">+%1.000</textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
@@ -1602,8 +1608,10 @@ const encryptedBundle = {
 			{ inp: 'inp-concept-quote', cnt: 'cnt-concept-quote', ideal: 140, hard: 210 },
 			{ inp: 'inp-concept-context', cnt: 'cnt-concept-context', ideal: 90, hard: 130 },
 			{ inp: 'inp-stat-eyebrow', cnt: 'cnt-stat-eyebrow', ideal: 60, hard: 140 },
+			{ inp: 'inp-stat-number', cnt: 'cnt-stat-number', ideal: 45, hard: 90 },
 			{ inp: 'inp-stat-desc', cnt: 'cnt-stat-desc', ideal: 120, hard: 165 },
 			{ inp: 'inp-concept-stat-eyebrow', cnt: 'cnt-concept-stat-eyebrow', ideal: 60, hard: 140 },
+			{ inp: 'inp-concept-stat-num', cnt: 'cnt-concept-stat-num', ideal: 45, hard: 90 },
 			{ inp: 'inp-concept-stat-desc', cnt: 'cnt-concept-stat-desc', ideal: 120, hard: 165 },
 			{ inp: 'inp-sum-1', cnt: 'cnt-sum-1', ideal: 115, hard: 165 },
 			{ inp: 'inp-sum-2', cnt: 'cnt-sum-2', ideal: 115, hard: 165 },
@@ -2090,8 +2098,13 @@ const encryptedBundle = {
 					}
 
 					ctx.fillStyle = '#0f172a';
-					const lVal = document.getElementById('inp-comp-l-val').value || '';
-					ctx.font = lVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
+					const lVal = (document.getElementById('inp-comp-l-val').value || '').trim();
+					let lFontSize = 84;
+					if (lVal.length > 12) lFontSize = 46;
+					else if (lVal.length > 8) lFontSize = 60;
+					else if (lVal.length > 6) lFontSize = 72;
+					const lFontFam = (/\s/.test(lVal) || lVal.length > 7) ? '"Plus Jakarta Sans", sans-serif' : '"JetBrains Mono", monospace';
+					ctx.font = `800 ${lFontSize}px ${lFontFam}`;
 					const valY = Math.max(boxTop + 240, lY + 65);
 					ctx.fillText(lVal, 292, valY);
 
@@ -2110,8 +2123,13 @@ const encryptedBundle = {
 					}
 
 					ctx.fillStyle = '#1f9a77';
-					const rVal = document.getElementById('inp-comp-r-val').value || '';
-					ctx.font = rVal.length > 7 ? '800 68px "JetBrains Mono", monospace' : '800 84px "JetBrains Mono", monospace';
+					const rVal = (document.getElementById('inp-comp-r-val').value || '').trim();
+					let rFontSize = 84;
+					if (rVal.length > 12) rFontSize = 46;
+					else if (rVal.length > 8) rFontSize = 60;
+					else if (rVal.length > 6) rFontSize = 72;
+					const rFontFam = (/\s/.test(rVal) || rVal.length > 7) ? '"Plus Jakarta Sans", sans-serif' : '"JetBrains Mono", monospace';
+					ctx.font = `800 ${rFontSize}px ${rFontFam}`;
 					ctx.fillText(rVal, 787, valY);
 					ctx.textAlign = 'left';
 
@@ -2158,15 +2176,40 @@ const encryptedBundle = {
 				const ebLines = getWrappedLines(ctx, eyebrow, 880);
 				const ebHeight = ebLines.length * ebLineHeight;
 
-				// Büyük Rakam / Veri Ölçümü
+				// Büyük Rakam / Veri / Vurgulu Başlık Ölçümü (Asla Kesilmez & Dinamik Boyutlandırılır)
 				const statVal = ((isConcept 
 					? document.getElementById('inp-concept-stat-num').value 
 					: document.getElementById('inp-stat-number').value) || '').trim();
 
-				let numFontSize = 145;
-				if (statVal.length > 8) numFontSize = 95;
-				else if (statVal.length > 5) numFontSize = 120;
-				const numHeight = Math.round(numFontSize * 0.9);
+				const maxStatWidth = 880;
+				// Kelime veya boşluk içeriyorsa ya da 8 karakterden uzunsa orantılı ve okunaklı Plus Jakarta Sans kullan, saf kısa sayı/yüzde ise JetBrains Mono
+				const isWordy = /\s/.test(statVal) || statVal.length > 8;
+				const statFontFamily = isWordy ? '"Plus Jakarta Sans", sans-serif' : '"JetBrains Mono", monospace';
+
+				// Metin uzunluğuna göre akıllı başlangıç fontu
+				let statFontSize = 135;
+				if (statVal.length > 40) statFontSize = 54;
+				else if (statVal.length > 25) statFontSize = 68;
+				else if (statVal.length > 15) statFontSize = 84;
+				else if (statVal.length > 7) statFontSize = 105;
+
+				let statLines = [];
+				let statLineHeight = 0;
+
+				// Genişlik ve satır sayısına göre dinamik küçültme döngüsü
+				while (statFontSize >= 28) {
+					ctx.font = `800 ${statFontSize}px ${statFontFamily}`;
+					statLines = getWrappedLines(ctx, statVal, maxStatWidth);
+					statLineHeight = Math.round(statFontSize * 1.18);
+					const allFit = statLines.every(l => ctx.measureText(l).width <= maxStatWidth);
+					const maxAllowedLines = statFontSize > 75 ? 2 : 3;
+					if (allFit && statLines.length <= maxAllowedLines) {
+						break;
+					}
+					statFontSize -= 2;
+				}
+
+				const totalStatHeight = statLines.length * statLineHeight;
 
 				// Açıklama Kutusu Ölçümü
 				const descText = ((isConcept 
@@ -2175,12 +2218,12 @@ const encryptedBundle = {
 
 				ctx.font = '500 36px "Plus Jakarta Sans", sans-serif';
 				const descLines = getWrappedLines(ctx, descText, 840);
-				const dBoxHeight = Math.max(descLines.length * 52 + 70, 220);
+				const dBoxHeight = Math.max(descLines.length * 52 + 70, 200);
 
 				// Dikey Denge: y=180 ile y=1220 arasındaki kullanılabilir alanı (1040px) orantılı kullan
-				const gap1 = 25; // Başlık ile rakam arası
-				const gap2 = 35; // Rakam ile kutu arası
-				const totalGroupHeight = ebHeight + gap1 + numHeight + gap2 + dBoxHeight;
+				const gap1 = 25; // Başlık ile mor rakam/başlık arası
+				const gap2 = 35; // Mor rakam/başlık ile kutu arası
+				const totalGroupHeight = ebHeight + gap1 + totalStatHeight + gap2 + dBoxHeight;
 				const startY = 180 + Math.max(20, (1040 - totalGroupHeight) / 2);
 
 				// 1. Üst Başlık (Ortalı)
@@ -2193,15 +2236,18 @@ const encryptedBundle = {
 					ebY += ebLineHeight;
 				}
 
-				// 2. Büyük Rakam / Veri (Ortalı)
-				const numBaseline = ebY - ebLineHeight + gap1 + numHeight;
+				// 2. Büyük Rakam / Vurgulu Veri (Ortalı, Çok Satırlı, Dinamik Boyutlu)
+				let sY = ebY - ebLineHeight + gap1 + Math.round(statFontSize * 0.95);
 				ctx.fillStyle = isConcept ? '#1f9a77' : '#4c1eb2';
-				ctx.font = `800 ${numFontSize}px "JetBrains Mono", monospace`;
-				ctx.fillText(statVal, 540, numBaseline);
+				ctx.font = `800 ${statFontSize}px ${statFontFamily}`;
+				for (const l of statLines) {
+					ctx.fillText(l, 540, sY);
+					sY += statLineHeight;
+				}
 				ctx.textAlign = 'left';
 
 				// 3. Alt Açıklama Kutusu
-				const dBoxTop = numBaseline + gap2;
+				const dBoxTop = sY - statLineHeight + gap2;
 				ctx.fillStyle = '#ffffff';
 				ctx.strokeStyle = '#e2e8f0';
 				ctx.lineWidth = 3;
