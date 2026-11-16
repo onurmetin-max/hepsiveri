@@ -142,12 +142,18 @@ const postsPayload = allPosts.slice(0, 45).map(p => {
 		conceptStatDesc = `Kelimenin kullanımı ve aramaları 2026 yılında yaklaşık yüzde ${percMatch[1]} artış gösterdi.`;
 	}
 
-	// --- C) Slayt 4 Özet Çıkarımları ---
-	let sum1 = bulletLines[0] ? bulletLines[0].slice(0, 115) : desc.slice(0, 100);
-	let sum2 = bulletLines[1] ? bulletLines[1].slice(0, 115) : (boldStats[1] ? `Öne çıkan veri boyutu: ${boldStats[1]}` : 'Resmi raporda ve araştırmada paylaşılan temel göstergeler incelendi.');
-	let sum3 = bulletLines[2] ? bulletLines[2].slice(0, 115) : 'Haberin tam metni, veri tabloları ve açık kaynaklar sitemizde.';
-	let sum4 = bulletLines[3] ? bulletLines[3].slice(0, 115) : '';
-	let sum5 = bulletLines[4] ? bulletLines[4].slice(0, 115) : '';
+	// --- C) Slayt 4 Özet Çıkarımları (250 karaktere kadar tam ve eksiksiz metin)
+	const cleanBullet = (txt: string) => {
+		const t = (txt || '').trim();
+		if (t.length <= 250) return t;
+		return t.slice(0, 247).trim() + '...';
+	};
+
+	let sum1 = bulletLines[0] ? cleanBullet(bulletLines[0]) : desc.slice(0, 240);
+	let sum2 = bulletLines[1] ? cleanBullet(bulletLines[1]) : (boldStats[1] ? `Öne çıkan veri boyutu: ${boldStats[1]}` : 'Resmi raporda ve araştırmada paylaşılan temel göstergeler incelendi.');
+	let sum3 = bulletLines[2] ? cleanBullet(bulletLines[2]) : 'Haberin tam metni, veri tabloları ve açık kaynaklar sitemizde.';
+	let sum4 = bulletLines[3] ? cleanBullet(bulletLines[3]) : '';
+	let sum5 = bulletLines[4] ? cleanBullet(bulletLines[4]) : '';
 
 	return {
 		slug: p.id || p.slug || '',
@@ -1169,37 +1175,37 @@ const encryptedBundle = {
 				<div class="form-group">
 					<div class="form-label-row">
 						<label class="form-label">Madde 1</label>
-						<span class="char-count" id="cnt-sum-1">0 / 125 kr.</span>
+						<span class="char-count" id="cnt-sum-1">0 / 250 kr.</span>
 					</div>
-					<textarea class="form-textarea" id="inp-sum-1" rows="2">Her 3 kadından 1'i hiçbir sosyal güvenceye sahip değil.</textarea>
+					<textarea class="form-textarea" id="inp-sum-1" rows="3">Her 3 kadından 1'i hiçbir sosyal güvenceye sahip değil.</textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
 						<label class="form-label">Madde 2</label>
-						<span class="char-count" id="cnt-sum-2">0 / 125 kr.</span>
+						<span class="char-count" id="cnt-sum-2">0 / 250 kr.</span>
 					</div>
-					<textarea class="form-textarea" id="inp-sum-2" rows="2">Sendikalı kadın işçi oranı yalnızca %10,8'de kaldı.</textarea>
+					<textarea class="form-textarea" id="inp-sum-2" rows="3">Sendikalı kadın işçi oranı yalnızca %10,8'de kaldı.</textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
 						<label class="form-label">Madde 3</label>
-						<span class="char-count" id="cnt-sum-3">0 / 125 kr.</span>
+						<span class="char-count" id="cnt-sum-3">0 / 250 kr.</span>
 					</div>
-					<textarea class="form-textarea" id="inp-sum-3" rows="2">Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.</textarea>
+					<textarea class="form-textarea" id="inp-sum-3" rows="3">Kırsalda ücretsiz aile işçiliği güvencesizliği derinleştiriyor.</textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
 						<label class="form-label">Madde 4 (İsteğe Bağlı)</label>
-						<span class="char-count" id="cnt-sum-4">0 / 125 kr.</span>
+						<span class="char-count" id="cnt-sum-4">0 / 250 kr.</span>
 					</div>
-					<textarea class="form-textarea" id="inp-sum-4" rows="2" placeholder="Boş bırakılırsa kartta yer kaplamaz..."></textarea>
+					<textarea class="form-textarea" id="inp-sum-4" rows="3" placeholder="Boş bırakılırsa kartta yer kaplamaz..."></textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
 						<label class="form-label">Madde 5 (İsteğe Bağlı)</label>
-						<span class="char-count" id="cnt-sum-5">0 / 125 kr.</span>
+						<span class="char-count" id="cnt-sum-5">0 / 250 kr.</span>
 					</div>
-					<textarea class="form-textarea" id="inp-sum-5" rows="2" placeholder="Boş bırakılırsa kartta yer kaplamaz..."></textarea>
+					<textarea class="form-textarea" id="inp-sum-5" rows="3" placeholder="Boş bırakılırsa kartta yer kaplamaz..."></textarea>
 				</div>
 				<div class="form-group">
 					<div class="form-label-row">
@@ -1613,11 +1619,11 @@ const encryptedBundle = {
 			{ inp: 'inp-concept-stat-eyebrow', cnt: 'cnt-concept-stat-eyebrow', ideal: 60, hard: 140 },
 			{ inp: 'inp-concept-stat-num', cnt: 'cnt-concept-stat-num', ideal: 45, hard: 90 },
 			{ inp: 'inp-concept-stat-desc', cnt: 'cnt-concept-stat-desc', ideal: 120, hard: 165 },
-			{ inp: 'inp-sum-1', cnt: 'cnt-sum-1', ideal: 115, hard: 165 },
-			{ inp: 'inp-sum-2', cnt: 'cnt-sum-2', ideal: 115, hard: 165 },
-			{ inp: 'inp-sum-3', cnt: 'cnt-sum-3', ideal: 115, hard: 165 },
-			{ inp: 'inp-sum-4', cnt: 'cnt-sum-4', ideal: 115, hard: 165 },
-			{ inp: 'inp-sum-5', cnt: 'cnt-sum-5', ideal: 115, hard: 165 },
+			{ inp: 'inp-sum-1', cnt: 'cnt-sum-1', ideal: 250, hard: 300 },
+			{ inp: 'inp-sum-2', cnt: 'cnt-sum-2', ideal: 250, hard: 300 },
+			{ inp: 'inp-sum-3', cnt: 'cnt-sum-3', ideal: 250, hard: 300 },
+			{ inp: 'inp-sum-4', cnt: 'cnt-sum-4', ideal: 250, hard: 300 },
+			{ inp: 'inp-sum-5', cnt: 'cnt-sum-5', ideal: 250, hard: 300 },
 			{ inp: 'inp-source', cnt: 'cnt-source', ideal: 55, hard: 75 }
 		];
 
@@ -2281,39 +2287,43 @@ const encryptedBundle = {
 				const ctaTop = 1115;
 				const srcTop = 1010;
 
-				// Madde sayısına ve toplam uzunluğa göre akıllı font ölçekleme
+				// Madde sayısına ve toplam uzunluğa göre akıllı dinamik font ölçekleme (250 karaktere kadar kusursuz sığar)
 				const totalChars = bullets.reduce((sum, b) => sum + b.length, 0);
 
-				let bFontSize = 36;
-				let bLineHeight = 52;
-				if (count >= 5 || totalChars > 420) {
-					bFontSize = 28;
-					bLineHeight = 40;
-				} else if (count === 4 || totalChars > 300) {
-					bFontSize = 31;
-					bLineHeight = 44;
-				} else if (totalChars > 220) {
-					bFontSize = 34;
-					bLineHeight = 48;
-				} else {
-					bFontSize = 38;
-					bLineHeight = 56;
-				}
+				let bFontSize = 38;
+				if (totalChars > 750 || count >= 5) bFontSize = 24;
+				else if (totalChars > 450 || count === 4) bFontSize = 27;
+				else if (totalChars > 280) bFontSize = 31;
+				else if (totalChars > 160) bFontSize = 34;
 
-				ctx.font = `500 ${bFontSize}px "Plus Jakarta Sans", sans-serif`;
-				// x=70 onay imi, x=125 metin başlangıcı -> maxWidth: 880
-				const wrappedBullets = bullets.map(text => getWrappedLines(ctx, text, 880));
-				const totalLines = wrappedBullets.reduce((acc, lines) => acc + lines.length, 0);
-				const totalTextHeight = totalLines * bLineHeight;
-
+				let bLineHeight = Math.round(bFontSize * 1.38);
+				let wrappedBullets = [];
+				let totalLines = 0;
+				let totalTextHeight = 0;
 				// y=260 ile y=srcTop-20 (990) arasındaki kullanılabilir alan: 730px
 				const availableZone = srcTop - 20 - 260;
-				const remainingSpace = Math.max(0, availableZone - totalTextHeight);
 
-				// Maddeler arası boşluk ve başlangıç konumu
+				while (bFontSize >= 18) {
+					bLineHeight = Math.round(bFontSize * 1.36);
+					ctx.font = `500 ${bFontSize}px "Plus Jakarta Sans", sans-serif`;
+					// x=70 onay imi, x=125 metin başlangıcı -> maxWidth: 885
+					wrappedBullets = bullets.map(text => getWrappedLines(ctx, text, 885));
+					totalLines = wrappedBullets.reduce((acc, lines) => acc + lines.length, 0);
+					totalTextHeight = totalLines * bLineHeight;
+					
+					// Her madde arasında en az 14px boşluk garanti edilsin
+					const minGapNeeded = Math.max(0, count - 1) * 14;
+					if (totalTextHeight + minGapNeeded <= availableZone) {
+						break;
+					}
+					bFontSize -= 1;
+				}
+
+				// Kalan boşluğu maddeler arasına orantılı ve estetik biçimde yay
+				const remainingSpace = Math.max(0, availableZone - totalTextHeight);
 				const bulletCount = Math.max(count, 1);
-				const bulletGap = Math.max(20, Math.min(75, remainingSpace / (bulletCount + 0.5)));
-				const startY = 265 + Math.max(10, (remainingSpace - (bulletCount - 1) * bulletGap) / 2);
+				const bulletGap = count > 1 ? Math.max(14, Math.min(65, remainingSpace / (bulletCount - 0.2))) : 0;
+				const startY = 265 + Math.max(0, (remainingSpace - (bulletCount - 1) * bulletGap) / 2);
 
 				let curY = startY;
 				for (let i = 0; i < count; i++) {
