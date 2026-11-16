@@ -9,7 +9,7 @@ description: Saha Araştırmaları Merkezi (SAMER) tarafından hazırlanan “E�
   sınırlarında kalmadığını, doğrudan bir yaşam hakkı, ucuz emek ve kurumsal
   denetimsizlik krizine dönüştüğünü somut verilerle ortaya koyuyor.
 status: Taslak
-pubDate: 2026-11-18 10:00
+pubDate: 2026-11-15 10:00
 category: Ekonomi
 author: Onur Metin
 ---
