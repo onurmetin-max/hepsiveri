@@ -1,20 +1,24 @@
 ---
-title: "TÜİK araştırması: Türkiye'nin Ar-Ge harcamaları 1 trilyon TL eşiğinde - Payı %1,55'e çıktı"
-description: "TÜİK'in son yayımladığı Ar-Ge Faaliyetleri Araştırması'na göre Türkiye'nin Ar-Ge harcaması 980 milyar TL'yi aştı. Harcamaların yüzde 65'ini özel sektör yaparken, 318 bin araştırmacının yüzde 34'ünü kadınlar oluşturdu."
-pubDate: 2026-11-03 10:00
-category: "Ekonomi"
-author: "Onur Metin"
-status: "Taslak"
-readTime: "5 dk okuma"
-heroImage: "/uploads/tuik-arge-harcamalari-arastirma-2026.jpg"
-heroImageCaption: "Türkiye'de Ar-Ge harcamalarının GSYH içindeki payı yüzde 1,55'e yükseldi / Fotoğraf: HepsiVeri Arşivi"
+title: "TÜİK araştırması: Türkiye'nin Ar-Ge harcamaları 1 trilyon TL eşiğinde -
+  Payı %1,55'e çıktı"
+description: TÜİK'in son yayımladığı Ar-Ge Faaliyetleri Araştırması'na göre
+  Türkiye'nin Ar-Ge harcaması 980 milyar TL'yi aştı. Harcamaların yüzde 65'ini
+  özel sektör yaparken, 318 bin araştırmacının yüzde 34'ünü kadınlar oluşturdu.
 tags:
-  - "Ar-Ge"
-  - "TÜİK"
-  - "Teknoloji"
-  - "İnovasyon"
-  - "Ekonomi"
-  - "Bilim"
+  - Ar-Ge
+  - TÜİK
+  - Teknoloji
+  - İnovasyon
+  - Ekonomi
+  - Bilim
+heroImage: /uploads/tuik-arge-harcamalari-arastirma-2026.jpg
+readTime: 5 dk okuma
+heroImageCaption: "Türkiye'de Ar-Ge harcamalarının GSYH içindeki payı yüzde
+  1,55'e yükseldi / Fotoğraf: HepsiVeri Arşivi"
+status: Yayında
+pubDate: 2026-11-16 10:00
+category: Ekonomi
+author: Onur Metin
 ---
 
 Türkiye İstatistik Kurumu (TÜİK) tarafından kamuoyuna duyurulan *Araştırma-Geliştirme Faaliyetleri Araştırması* sonuçları, Türkiye'nin teknoloji ve yenilik üretme kapasitesindeki son tabloyu netleştirdi. 
