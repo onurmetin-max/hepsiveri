@@ -56,6 +56,10 @@ Saha Araştırmaları Merkezi (SAMER) tarafından hazırlanan ve 140 sayfadan ol
 
 * **Ekim 2026 tarihi zirvesi (483 paylaşım):** İncelenen 21 aylık kümedeki tüm paylaşımların **üçte biri (%33,4)** tek bir ayda gerçekleşti. Millî Eğitim Bakanı Yusuf Tekin’e yönelik protestolar ve iki üniversite öğrencisinin tutuklanması, MESEM tartışmasını doğrudan siyasal sorumluluk ve ifade özgürlüğü zeminine kilitledi.
 
+<div class="flourish-wrapper">
+<div class="flourish-embed flourish-chart" data-src="visualisation/30928552"></div>
+</div>
+
 **Tartışmayı sürükleyen ilk 10 aktör / hesap türü**
 
 | Kullanıcı / Hesap | Paylaşım sayısı | Nitelik / Kimlik |
