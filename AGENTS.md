@@ -38,4 +38,12 @@ Consult these guides before working on related tasks:
   - **Noktalı Virgül (`;`):** Haddinden fazla kullanılmamalıdır. Yalnızca çok nadir ve dil bilgisi açısından kesinlikle zorunlu olduğu durumlarda yer verilmelidir. Genellikle nokta veya virgülle sadeleştirilmelidir.
   - **Çizgi / Tire Kullanımı:** Uzun çizgi (`—` / em-dash) kullanılmamalıdır. Bunun yerine kısa çizgi (`-`) veya uygunsa iki nokta üst üste (`:`) tercih edilmelidir.
 
+## Editor Modules & Custom Components (CMS Modülleri)
+
+Decap CMS (`/admin`) editöründe haber metnine eklenebilen özel bileşenler:
+1. **📊 Tablo Ekle (`table`):** Excel, Google Sheets veya CSV verilerini kopyalayıp doğrudan tabloya dönüştürür.
+2. **📈 Flourish Grafiği Ekle (`flourish`):** Flourish görselleştirme ID'sini veya embed kodunu yerleştirir.
+3. **💻 Özel HTML / Kod Ekle (`html_embed`):** Harici iframe, script, Datawrapper, etkileşimli widget veya özel HTML bloklarını güvenle yerleştirir (`<div class="hepsiveri-html-embed">...</div>`).
+
+
 

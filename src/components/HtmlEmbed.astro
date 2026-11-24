@@ -1,0 +1,32 @@
+---
+interface Props {
+	content?: string;
+	title?: string;
+}
+
+const { content, title } = Astro.props;
+---
+
+<div class="hepsiveri-html-embed" data-title={title}>
+	{title && <div class="html-embed-title">{title}</div>}
+	{content ? <Fragment set:html={content} /> : <slot />}
+</div>
+
+<style>
+	.hepsiveri-html-embed {
+		margin: 2.25rem 0;
+		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+	}
+	.html-embed-title {
+		font-weight: 700;
+		font-size: 1.05rem;
+		margin-bottom: 0.75rem;
+		color: var(--text-primary, #0f172a);
+	}
+	.hepsiveri-html-embed :global(iframe) {
+		max-width: 100%;
+		border: none;
+	}
+</style>

@@ -421,6 +421,52 @@
               </div>`;
             }
           });
+
+          // 4.3 Özel HTML / Embed Ekleme Bileşeni
+          window.CMS.registerEditorComponent({
+            id: 'html_embed',
+            label: '💻 Özel HTML / Kod Ekle',
+            icon: 'code',
+            fields: [
+              {
+                name: 'title',
+                label: 'Açıklama / Başlık (İsteğe Bağlı)',
+                widget: 'string',
+                required: false,
+                hint: 'Örn: "Datawrapper Haritası" veya "Etkileşimli Hesaplama Modülü"'
+              },
+              {
+                name: 'content',
+                label: 'HTML / Embed Kodu',
+                widget: 'text',
+                required: true,
+                hint: 'iframe, script, div, svg veya herhangi bir özel HTML kodunu buraya doğrudan yapıştırabilirsiniz.'
+              }
+            ],
+            pattern: /^<div class="hepsiveri-html-embed"(?:\s+data-title="([^"]*)")?>\s*([\s\S]+?)\s*<\/div>/,
+            fromBlock: function(match) {
+              return {
+                title: match[1] || '',
+                content: match[2] ? match[2].trim() : ''
+              };
+            },
+            toBlock: function(data) {
+              if (!data.content) return '';
+              const titleAttr = data.title ? ` data-title="${data.title.replace(/"/g, '&quot;')}"` : '';
+              return `<div class="hepsiveri-html-embed"${titleAttr}>\n${data.content.trim()}\n</div>`;
+            },
+            toPreview: function(data) {
+              const titleText = data.title ? `<strong>💻 ${data.title}</strong><br>` : '<strong>💻 Özel HTML / Embed Bloğu</strong><br>';
+              const raw = (data.content || '').trim();
+              const snippet = raw.length > 150 ? raw.substring(0, 150) + '...' : raw;
+              const safeSnippet = snippet.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+              return `<div style="padding:14px;background:#f8fafc;border:1px solid #cbd5e1;border-left:4px solid #3b82f6;border-radius:6px;font-size:13px;color:#1e293b;margin:12px 0;">
+                ${titleText}
+                <code style="display:block;margin-top:6px;padding:6px 10px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;font-size:11px;color:#475569;word-break:break-all;font-family:monospace;white-space:pre-wrap;">${safeSnippet}</code>
+                <span style="color:#64748b;font-size:11px;margin-top:6px;display:block;">(Haber yayınlandığında bu HTML/iframe/widget doğrudan sayfa üzerinde çalışacaktır)</span>
+              </div>`;
+            }
+          });
         }
 
         // 5. CMS'i başlat
