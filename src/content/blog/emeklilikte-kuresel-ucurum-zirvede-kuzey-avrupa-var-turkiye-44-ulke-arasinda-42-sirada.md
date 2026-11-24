@@ -97,44 +97,79 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
 * Yaşam kalitesi puanı (yüzde 32): Hava kalitesi, su ve sanitasyon, çevresel etkenler ile mutluluk göstergelerinden oluşan bu alanda yüzde 32’lik puan, Türkiye’yi 40. sıradaki Çin’in (yüzde 27) hemen üzerinde ama üst sıralardaki ülkelerin oldukça gerisinde bırakıyor.
 * Sağlık puanı (yüzde 55): Türkiye’nin dört ana başlık içindeki en yüksek skoru sağlık kategorisinde görülüyor. Yaşam beklentisi, kişi başı sağlık harcamaları ve sigorta kapsamı gibi göstergeleri kapsayan bu alan yüzde 55’e ulaşsa da ilk 20 ülkenin yüzde 85’in üzerindeki ortalamasıyla kıyaslandığında belirgin bir fark bulunuyor.
 
-`<div style="max-width: 780px; margin: 24px auto; font-family: system-ui, sans-serif;">
-  <h3 style="margin: 0 0 6px;">Türkiye 2026 Emeklilik Endeksi kırılımı</h3>
-  <p style="margin: 0 0 16px; color: #555; font-size: 14px;">
-    Türkiye puanları (%) ile İlk 20 ülke ortalaması (%) kıyaslaması
-  </p>
-  <canvas id="trRetirementChart" height="260"></canvas>
-</div>`
+`<div style="max-width: 780px; margin: 24px auto; font-family: system-ui, sans-serif;">`
+
+`  <h3 style="margin: 0 0 6px;">Türkiye 2026 Emeklilik Endeksi kırılımı</h3>`
+
+`  <p style="margin: 0 0 16px; color: #555; font-size: 14px;">`
+
+`    Türkiye puanları (%) ile İlk 20 ülke ortalaması (%) kıyaslaması`
+
+`  </p>`
+
+`  <canvas id="trRetirementChart" height="260"></canvas>`
+
+`</div>`
+
+``
 
 `<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>`
 
-`<script>
-  const ctx = document.getElementById('trRetirementChart');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Sağlık', 'Emeklilik finansmanı', 'Yaşam kalitesi', 'Maddi refah', 'Genel skor'],
-      datasets: [
-        {
-          label: 'Türkiye (%)',
-          data: [55, 45, 32, 28, 39],
-          borderWidth: 1
-        },
-        {
-          label: 'İlk 20 ortalaması (%)',
-          data: [84.5, 67.1, 76.4, 69.4, 74.35],
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      scales: {
-        x: { min: 0, max: 100 }
-      }
-    }
-  });
-</script>`
+`<script>`
+
+`  const ctx = document.getElementById('trRetirementChart');`
+
+`  new Chart(ctx, {`
+
+`    type: 'bar',`
+
+`    data: {`
+
+`      labels: ['Sağlık', 'Emeklilik finansmanı', 'Yaşam kalitesi', 'Maddi refah', 'Genel skor'],`
+
+`      datasets: [`
+
+`        {`
+
+`          label: 'Türkiye (%)',`
+
+`          data: [55, 45, 32, 28, 39],`
+
+`          borderWidth: 1`
+
+`        },`
+
+`        {`
+
+`          label: 'İlk 20 ortalaması (%)',`
+
+`          data: [84.5, 67.1, 76.4, 69.4, 74.35],`
+
+`          borderWidth: 1`
+
+`        }`
+
+`      ]`
+
+`    },`
+
+`    options: {`
+
+`      indexAxis: 'y',`
+
+`      responsive: true,`
+
+`      scales: {`
+
+`        x: { min: 0, max: 100 }`
+
+`      }`
+
+`    }`
+
+`  });`
+
+`</script>`
 
 ### Ulusal veriler de aynı baskıya işaret ediyor
 
