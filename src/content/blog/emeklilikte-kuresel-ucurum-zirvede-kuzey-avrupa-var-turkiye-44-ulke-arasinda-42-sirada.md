@@ -8,7 +8,7 @@ description: >+
   yüzde 39 genel puanla 42. sırada yer alırken, otomatik katılım uygulamasıyla
   öne çıkan ülkeler arasında açıkça anılıyor.
 
-datasetUrl: "*2025 ilk yarı karşılaştırmalı aktif sigortalı verisi. Kaynak: SGK ve TÜİK."
+datasetUrl: https://www.im.natixis.com/content/dam/natixis/website/insights/investor-sentiment/2026/2026-gri/2026-natixis-global-retirement-index.pdf
 status: Taslak
 pubDate: 2026-11-24 10:00
 category: Veri Haberciliği
@@ -18,7 +18,7 @@ Uzayan ömürler, daralan çalışma çağındaki nüfus ve inatçı enflasyon, 
 
 Endeksin genel görünümünde Kuzey ve Batı Avrupa’nın ağırlığı net biçimde hissediliyor. İlk 10 sıranın 9’unu Avrupa ülkeleri oluştururken, kıta dışından bu gruba girebilen tek ülke 6. sıradaki Avustralya oluyor.
 
-## Zirvede Kuzey Avrupa ve İrlanda, alt sıralarda sert kırılmalar
+## Zirvede Kuzey Avrupa ve İrlanda, alt sıralarda sert kırılmalar var
 
 2026 raporuna göre Norveç, yüzde 83’lük genel puanıyla üst üste ikinci kez zirvede yer alıyor. Hiçbir alt başlıkta tek başına lider olmamasına rağmen sağlıkta (yüzde 92) ve yaşam kalitesinde (yüzde 90) üçüncü, maddi refahta (yüzde 81) ise üst sıralarda tutunması, dengeli yapısını öne çıkarıyor. İrlanda yüzde 81 puanla ikinci sırada bulunurken; düşük kamu borcu ve nispeten genç nüfusu sayesinde emeklilik finansmanı kategorisinde (yüzde 76) üst üste üçüncü yıl liderliğini koruyor.
 
@@ -85,6 +85,8 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
 | 43 | Kolombiya | 35 | 58 | 60 | 8 | 54 |
 | 44 | Hindistan | 9 | 4 | 65 | 17 | 2 |
 
+![](/uploads/natixis-global-retirement-index-2026-natixis-global-retirement-index.png)
+
 ## Türkiye analizi: Rapor ne diyor, tablo nasıl şekilleniyor?
 
 2026 Natixis Global Retirement Index raporunda Türkiye, yüzde 39 genel puanla 44 ülke arasında 42. sırada yer alıyor. Listenin alt kısmında Türkiye’nin ardında yalnızca Kolombiya (yüzde 35 - 43. sıra) ve Hindistan (yüzde 9 - 44. sıra) bulunuyor. Bu tablo, Türkiye’yi değerlendirmeye alınan tüm Avrupa ve OECD ülkelerinin son sırasında konumlandırıyor.
@@ -97,270 +99,15 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
 * Yaşam kalitesi puanı (yüzde 32): Hava kalitesi, su ve sanitasyon, çevresel etkenler ile mutluluk göstergelerinden oluşan bu alanda yüzde 32’lik puan, Türkiye’yi 40. sıradaki Çin’in (yüzde 27) hemen üzerinde ama üst sıralardaki ülkelerin oldukça gerisinde bırakıyor.
 * Sağlık puanı (yüzde 55): Türkiye’nin dört ana başlık içindeki en yüksek skoru sağlık kategorisinde görülüyor. Yaşam beklentisi, kişi başı sağlık harcamaları ve sigorta kapsamı gibi göstergeleri kapsayan bu alan yüzde 55’e ulaşsa da ilk 20 ülkenin yüzde 85’in üzerindeki ortalamasıyla kıyaslandığında belirgin bir fark bulunuyor.
 
-<section class="hv-chart-box" aria-label="Türkiye 2026 Küresel Emeklilik Endeksi kırılımı">
-
-  <style>
-    .hv-chart-box {
-      max-width: 820px;
-      margin: 28px auto;
-      padding: 20px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      background: #ffffff;
-      color: #111827;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      box-sizing: border-box;
-    }
-    .hv-chart-box *, .hv-chart-box *::before, .hv-chart-box *::after {
-      box-sizing: border-box;
-    }
-    .hv-chart-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .hv-chart-title {
-      margin: 0 0 4px 0;
-      font-size: 18px;
-      line-height: 1.3;
-      font-weight: 700;
-    }
-    .hv-chart-subtitle {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.45;
-      color: #4b5563;
-    }
-    .hv-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .hv-btn {
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      background: #f9fafb;
-      color: #374151;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .hv-btn.is-active {
-      background: #111827;
-      color: #ffffff;
-      border-color: #111827;
-    }
-    .hv-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      font-size: 12px;
-      color: #374151;
-      margin-bottom: 14px;
-    }
-    .hv-legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .hv-swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      display: inline-block;
-    }
-    .hv-line-swatch {
-      width: 14px;
-      height: 0;
-      border-top: 2px dashed #2563eb;
-      display: inline-block;
-    }
-    .hv-line-swatch.top10 {
-      border-top-style: solid;
-      border-top-color: #0f766e;
-    }
-    .hv-canvas-wrap {
-      position: relative;
-      width: 100%;
-      min-height: 310px;
-    }
-    .hv-footer {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid #f3f4f6;
-      font-size: 11.5px;
-      color: #6b7280;
-    }
-  </style>
-
-  <div class="hv-chart-header">
-    <div>
-      <h3 class="hv-chart-title">Türkiye 2026 emeklilik endeksi kırılımı</h3>
-      <p class="hv-chart-subtitle">Türkiye puanları (%) ile küresel referans gruplarının ortalaması</p>
-    </div>
-    <div class="hv-controls" role="group" aria-label="Karşılaştırma grubu seçici">
-      <button type="button" class="hv-btn is-active" data-mode="both">Her ikisi</button>
-      <button type="button" class="hv-btn" data-mode="top20">İlk 20 ortalaması</button>
-      <button type="button" class="hv-btn" data-mode="top10">İlk 10 ortalaması</button>
-    </div>
-  </div>
-
-  <div class="hv-legend">
-    <span class="hv-legend-item"><span class="hv-swatch" style="background:#dc2626;"></span>Türkiye (%)</span>
-    <span class="hv-legend-item" id="hv-leg-top20"><span class="hv-line-swatch"></span>İlk 20 ortalaması (%)</span>
-    <span class="hv-legend-item" id="hv-leg-top10"><span class="hv-line-swatch top10"></span>İlk 10 ortalaması (%)</span>
-  </div>
-
-  <div class="hv-canvas-wrap">
-    <canvas id="hvTrRetirementCanvas"></canvas>
-  </div>
-
-  <div class="hv-footer">
-    Kaynak: 2026 Natixis Global Retirement Index (Ek B). Genel skor satırı dört alt kategorinin ortalaması yerine endeks bileşik skorunu gösterir.
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-  <script>
-    (function () {
-      const labels = [
-        'Sağlık',
-        'Emeklilik finansmanı',
-        'Yaşam kalitesi',
-        'Maddi refah',
-        'Genel skor'
-      ];
-      const trScores = [55, 45, 32, 28, 39];
-      const top20Avg = [84.5, 67.1, 76.4, 69.4, 74.35];
-      const top10Avg = [88.1, 69.0, 83.1, 73.8, 78.5];
-
-      let currentMode = 'both';
-
-      const refMarkerPlugin = {
-        id: 'hvRefMarkerPlugin',
-        afterDatasetsDraw(chart) {
-          const { ctx, chartArea, scales } = chart;
-          if (!chartArea || !scales.x || !scales.y) return;
-
-          ctx.save();
-          trScores.forEach((_, idx) => {
-            const yCenter = scales.y.getPixelForValue(idx);
-            const bandHeight = scales.y.getPixelForValue(1) - scales.y.getPixelForValue(0);
-            const halfBand = Math.min(22, Math.abs(bandHeight) * 0.36);
-
-            if (currentMode === 'both' || currentMode === 'top20') {
-              const x20 = scales.x.getPixelForValue(top20Avg[idx]);
-              ctx.beginPath();
-              ctx.setLineDash([4, 3]);
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = '#2563eb';
-              ctx.moveTo(x20, yCenter - halfBand);
-              ctx.lineTo(x20, yCenter + halfBand);
-              ctx.stroke();
-            }
-
-            if (currentMode === 'both' || currentMode === 'top10') {
-              const x10 = scales.x.getPixelForValue(top10Avg[idx]);
-              ctx.beginPath();
-              ctx.setLineDash([]);
-              ctx.lineWidth = 2;
-              ctx.strokeStyle = '#0f766e';
-              ctx.moveTo(x10, yCenter - halfBand);
-              ctx.lineTo(x10, yCenter + halfBand);
-              ctx.stroke();
-            }
-          });
-          ctx.restore();
-        }
-      };
-
-      const canvas = document.getElementById('hvTrRetirementCanvas');
-      const chart = new Chart(canvas, {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Türkiye (%)',
-              data: trScores,
-              backgroundColor: '#dc2626',
-              borderRadius: 6,
-              barPercentage: 0.62,
-              categoryPercentage: 0.75
-            }
-          ]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: { duration: 300 },
-          scales: {
-            x: {
-              min: 0,
-              max: 100,
-              ticks: {
-                callback: (val) => val + '%'
-              },
-              grid: { color: '#f3f4f6' }
-            },
-            y: {
-              grid: { display: false }
-            }
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label(context) {
-                  const i = context.dataIndex;
-                  const tr = trScores[i];
-                  const t20 = top20Avg[i];
-                  const t10 = top10Avg[i];
-                  const lines = [`Türkiye: %${tr}`];
-                  if (currentMode === 'both' || currentMode === 'top20') {
-                    lines.push(`İlk 20 ort.: %${t20} (Fark: ${(tr - t20).toFixed(1)} puan)`);
-                  }
-                  if (currentMode === 'both' || currentMode === 'top10') {
-                    lines.push(`İlk 10 ort.: %${t10} (Fark: ${(tr - t10).toFixed(1)} puan)`);
-                  }
-                  return lines;
-                }
-              }
-            }
-          }
-        },
-        plugins: [refMarkerPlugin]
-      });
-
-      const buttons = document.querySelectorAll('.hv-chart-box .hv-btn');
-      const leg20 = document.getElementById('hv-leg-top20');
-      const leg10 = document.getElementById('hv-leg-top10');
-
-      buttons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          currentMode = btn.getAttribute('data-mode');
-          buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
-          leg20.style.display = (currentMode === 'both' || currentMode === 'top20') ? 'inline-flex' : 'none';
-          leg10.style.display = (currentMode === 'both' || currentMode === 'top10') ? 'inline-flex' : 'none';
-          chart.update();
-        });
-      });
-    })();
-  </script>
-
-</section>
+<
 
 ### Ulusal veriler de aynı baskıya işaret ediyor
 
 Natixis’in bulguları, ulusal düzeydeki kurumların verileriyle birleştiğinde sistemin önündeki yapısal sınırları daha görünür kılıyor. SGK’nın 2026 ilk yarı verilerine göre 24,11 milyon aktif sigortalıya karşılık 17,12 milyon aylık alan (emekli, dul ve yetim) bulunuyor; bu da 1,64 aktif/pasif oranına karşılık geliyor. Aynı dönemde emekli aylığı alırken çalışmaya devam edenlerin sayısı 2,23 milyona çıkarken, TÜİK verilerine göre 65 yaş ve üzeri nüfus 9,58 milyona ulaşmış durumda.
 
 **Türkiye sosyal güvenlik ve demografi göstergeleri (2020 - 2026)**
+
+**2025 ilk yarı karşılaştırmalı aktif sigortalı verisi. Kaynak: SGK ve TÜİK.**
 
 | Gösterge | 2020 | 2022 | 2024 | 2025 | 2026 (İlk yarı / güncel) |  |  |  |  |  |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
