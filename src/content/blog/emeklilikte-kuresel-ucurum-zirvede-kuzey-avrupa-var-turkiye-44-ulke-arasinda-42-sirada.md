@@ -87,6 +87,8 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
 
 ![](/uploads/natixis-global-retirement-index-2026-natixis-global-retirement-index.png)
 
+
+
 ## Türkiye analizi: Rapor ne diyor, tablo nasıl şekilleniyor?
 
 2026 Natixis Global Retirement Index raporunda Türkiye, yüzde 39 genel puanla 44 ülke arasında 42. sırada yer alıyor. Listenin alt kısmında Türkiye’nin ardında yalnızca Kolombiya (yüzde 35 - 43. sıra) ve Hindistan (yüzde 9 - 44. sıra) bulunuyor. Bu tablo, Türkiye’yi değerlendirmeye alınan tüm Avrupa ve OECD ülkelerinin son sırasında konumlandırıyor.
