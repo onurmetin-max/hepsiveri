@@ -10,7 +10,7 @@ description: >+
 
 datasetUrl: https://www.im.natixis.com/content/dam/natixis/website/insights/investor-sentiment/2026/2026-gri/2026-natixis-global-retirement-index.pdf
 status: Yayında
-pubDate: 2026-11-24 10:00
+pubDate: 2026-11-24 23:41
 category: Veri Haberciliği
 author: Onur Metin
 ---
