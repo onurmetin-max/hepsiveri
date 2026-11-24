@@ -9,8 +9,9 @@ description: >+
   öne çıkan ülkeler arasında açıkça anılıyor.
 
 datasetUrl: https://www.im.natixis.com/content/dam/natixis/website/insights/investor-sentiment/2026/2026-gri/2026-natixis-global-retirement-index.pdf
+heroImage: /uploads/emekliler-hv.jpg
 status: Yayında
-pubDate: 2026-11-24 23:41
+pubDate: 2026-11-24 10:00
 category: Veri Haberciliği
 author: Onur Metin
 ---
@@ -224,6 +225,7 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
 
   <div class="hv-footer">
     Kaynak: 2026 Natixis Global Retirement Index (Ek B). Genel skor satırı dört alt kategorinin ortalaması yerine endeks bileşik skorunu gösterir.
+<br> Grafik: Onur Metin | HepsiVeri 
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -365,13 +367,15 @@ Natixis’in bulguları, ulusal düzeydeki kurumların verileriyle birleştiğin
 
 **2025 ilk yarı karşılaştırmalı aktif sigortalı verisi. Kaynak: SGK ve TÜİK.**
 
-| Gösterge | 2020 | 2022 | 2024 | 2025 | 2026 (İlk yarı / güncel) |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| SGK aktif / pasif oranı (Çalışan / emekli) | "1 | 87" | "2 | 01" | "1 | 61" | "1 | 62" | "1 | 64" |
-| Aktif sigortalı sayısı (Milyon) | — | — | — | "23 | 53*" | "24 | 11" |  |  |  |
-| Pasif sigortalı / aylık alanlar (Milyon) | — | — | — | "17 | 01" | "17 | 12" |  |  |  |
-| Çalışmaya devam eden emekli sayısı (Milyon) | — | — | — | "2 | 15" | "2 | 23" |  |  |  |
-| 65+ yaşlı nüfus (Milyon) | "7 | 95" | — | — | "9 | 58" | — |  |  |  |
+**OECD emeklilik gelir ikame oranı **
+
+| Gösterge | 2020 | 2022 | 2024 | 2025 | 2026 (İlk yarı / güncel) |
+| --- | --- | --- | --- | --- | --- |
+| SGK aktif / pasif oranı (Çalışan / emekli) | 1,87 | 2,01 | 1,61 | 1,62 | 1,64 |
+| Aktif sigortalı sayısı (Milyon) | — | — | — | 23,53* | 24,11 |
+| Pasif sigortalı / aylık alanlar (Milyon) | — | — | — | 17,01 | 17,12 |
+| Çalışmaya devam eden emekli sayısı (Milyon) | — | — | — | 2,15 | 2,23 |
+| 65+ yaşlı nüfus (Milyon) | 7,95 | — | — | 9,58 | — |
 
 ### Demografik pencere kapanırken ne gerekiyor?
 
