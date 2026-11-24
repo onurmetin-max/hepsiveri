@@ -97,7 +97,8 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
 * Yaşam kalitesi puanı (yüzde 32): Hava kalitesi, su ve sanitasyon, çevresel etkenler ile mutluluk göstergelerinden oluşan bu alanda yüzde 32’lik puan, Türkiye’yi 40. sıradaki Çin’in (yüzde 27) hemen üzerinde ama üst sıralardaki ülkelerin oldukça gerisinde bırakıyor.
 * Sağlık puanı (yüzde 55): Türkiye’nin dört ana başlık içindeki en yüksek skoru sağlık kategorisinde görülüyor. Yaşam beklentisi, kişi başı sağlık harcamaları ve sigorta kapsamı gibi göstergeleri kapsayan bu alan yüzde 55’e ulaşsa da ilk 20 ülkenin yüzde 85’in üzerindeki ortalamasıyla kıyaslandığında belirgin bir fark bulunuyor.
 
-`<section class="hv-chart-box" aria-label="Türkiye 2026 Küresel Emeklilik Endeksi kırılımı">
+<section class="hv-chart-box" aria-label="Türkiye 2026 Küresel Emeklilik Endeksi kırılımı">
+
   <style>
     .hv-chart-box {
       max-width: 820px;
@@ -224,6 +225,7 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
   <script>
     (function () {
       const labels = [
@@ -351,7 +353,8 @@ Rapordaki küresel yatırımcı anketi verileri de bireylerin kaygılarını net
       });
     })();
   </script>
-</section>`
+
+</section>
 
 ### Ulusal veriler de aynı baskıya işaret ediyor
 
