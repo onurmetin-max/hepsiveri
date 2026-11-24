@@ -9,8 +9,8 @@ description: >+
   öne çıkan ülkeler arasında açıkça anılıyor.
 
 datasetUrl: "*2025 ilk yarı karşılaştırmalı aktif sigortalı verisi. Kaynak: SGK ve TÜİK."
-status: Yayında
-pubDate: 2026-11-25 10:00
+status: Taslak
+pubDate: 2026-11-24 10:00
 category: Veri Haberciliği
 author: Onur Metin
 ---
